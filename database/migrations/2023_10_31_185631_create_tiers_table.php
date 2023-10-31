@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skins', function (Blueprint $table) {
+        Schema::create('tiers', function (Blueprint $table) {
             $table->id();
-            $table->uuid("uuid");
-            $table->uuid("tier_uuid");
-            $table->string("name");
-            $table->uuid("weapon_uuid");
+            $table->uuid('uuid');
+            $table->string('name');
+            $table->string('devName');
+            $table->integer('rank');
+            $table->string('color');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('skins');
+        Schema::dropIfExists('tiers');
     }
 };

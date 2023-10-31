@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Skin extends Model
+class Tier extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'uuid', 'tier_uuid', 'weapon_uuid'];
-
+    protected $fillable = ['uuid', 'name', 'devName', 'rank', 'color'];
 }

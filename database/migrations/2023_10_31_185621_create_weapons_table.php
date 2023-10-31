@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('skins', function (Blueprint $table) {
+        Schema::create('weapons', function (Blueprint $table) {
             $table->id();
-            $table->uuid("uuid");
-            $table->uuid("tier_uuid");
-            $table->string("name");
-            $table->uuid("weapon_uuid");
+            $table->uuid('uuid');
+            $table->string('name');
             $table->timestamps();
+
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('skins');
+        Schema::dropIfExists('weapons');
     }
 };

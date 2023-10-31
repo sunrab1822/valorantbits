@@ -10,10 +10,6 @@
 
     let crates = ref([]);
 
-    for(let i = 1; i < 36; i++) {
-        crates.value.push({name: "Test Case " + i});
-    }
-
     loadCrates();
 
     async function loadCrates() {

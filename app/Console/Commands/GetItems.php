@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Skin;
+use App\Models\Weapon;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
@@ -31,9 +33,28 @@ class GetItems extends Command
         $body = json_decode($request->getBody()->getContents(), true);
 
         foreach ($body['data'] as $item) {
-            foreach ($item['skins'] as $skin){
+            Weapon::updateOrCreate([
+                'uuid' => $item['uuid'],
+            ],
+            [
+                'name' => $item['displayName'],
+            ]);
 
+            foreach ($item['skins'] as $skin){
+                if ($skin['contentTierUuid'] == null){
+                    continue;
+                }
+                Skin::updateOrCreate([
+                    'uuid' => $skin['uuid'],
+                ],
+                [
+                    'name' => trim(str_replace($item['displayName'], "" ,$skin['displayName'])),
+                    'tier_uuid' => $skin['contentTierUuid'],
+                    'weapon_uuid' => $item['uuid'],
+                ]);
             }
         }
     }
+
+
 }
