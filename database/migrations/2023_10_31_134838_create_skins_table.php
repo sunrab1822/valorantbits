@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('skins', function (Blueprint $table) {
             $table->id();
+            $table->uuid("uuid");
+            $table->uuid("tier_uuid");
+            $table->string("name");
+            $table->string("weapon");
             $table->timestamps();
         });
     }

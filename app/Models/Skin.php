@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Skin extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'UUID', 'tierUUID', 'weapon'];
+    protected $fillable = ['name', 'uuid', 'tier_uuid', 'weapon'];
 
 }
