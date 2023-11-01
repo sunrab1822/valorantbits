@@ -8,6 +8,8 @@ use App\Models\Category;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
+use function Ramsey\Uuid\v4;
+
 class GetItems extends Command
 {
     /**
@@ -27,6 +29,9 @@ class GetItems extends Command
     /**
      * Execute the console command.
      */
+
+    protected $spray_uuid = "5bb0b1ff-f288-4177-ad2d-750be7b49f95";
+
     public function handle()
     {
         $client = new Client();
@@ -55,6 +60,29 @@ class GetItems extends Command
                 ]);
             }
         }
+
+        $client = new Client();
+        $request = $client->get('https://valorant-api.com/v1/sprays');
+        $body = json_decode($request->getBody()->getContents(), true);
+
+        $category = Weapon::firstOrCreate([
+            'uuid' => $this->spray_uuid,
+        ],
+        [
+            'name' => "Spray"
+        ]);
+
+        foreach ($body['data'] as $spray){
+            Skin::updateOrCreate([
+                'uuid' => $spray['uuid'],
+            ],
+            [
+                'name' => $spray['displayName'],
+                'category' => $category->id,
+            ]);
+        }
+
+
     }
 
 
