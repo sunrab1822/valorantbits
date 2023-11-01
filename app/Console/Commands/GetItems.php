@@ -3,7 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Skin;
-use App\Models\Weapon;
+use App\Models\Tier;
+use App\Models\Category;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
@@ -33,7 +34,7 @@ class GetItems extends Command
         $body = json_decode($request->getBody()->getContents(), true);
 
         foreach ($body['data'] as $item) {
-            Weapon::updateOrCreate([
+            Category::updateOrCreate([
                 'uuid' => $item['uuid'],
             ],
             [
@@ -49,8 +50,8 @@ class GetItems extends Command
                 ],
                 [
                     'name' => $skin['displayName'],
-                    'tier_uuid' => $skin['contentTierUuid'],
-                    'weapon_uuid' => $item['uuid'],
+                    'tier_id' => Tier::where("uuid", $skin['contentTierUuid'])->first()->id,
+                    'category_id' => Category::where('uuid', $item['uuid'])->first()->id,
                 ]);
             }
         }
