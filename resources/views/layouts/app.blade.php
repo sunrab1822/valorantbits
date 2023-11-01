@@ -19,14 +19,17 @@
 <body class="bg-dark text-white">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
-            <div class="container-fluid mx-5">
-                <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <div class="container-fluid mx-3 fixed-navbar-height">
+                <a class="navbar-brand brand-small bg-secondary p-25 rounded-2" href="{{ url('/') }}">
+                    <svg class="d-block" stroke="#fff" fill="#fff" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M208 448V320h96v128h97.6V256H464L256 64 48 256h62.4v192z"></path></svg>
+                </a>
+                <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <a class="navbar-brand brand-expanded" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
-                    <a class="navbar-brand brand-medium bg-secondary" href="{{ url('/') }}">
-                        <i class="fa-solid fa-house"></i>
+                    <a class="navbar-brand brand-medium bg-secondary p-25 rounded-2" href="{{ url('/') }}">
+                        <svg class="d-block" stroke="#fff" fill="#fff" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M208 448V320h96v128h97.6V256H464L256 64 48 256h62.4v192z"></path></svg>
                     </a>
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item">

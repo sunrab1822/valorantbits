@@ -1,6 +1,6 @@
 <template>
-    <div class="row row-cols-4 g-2">
-        <crate v-if="crates.length > 0" v-for="crate in crates" :name="crate.name" />
+    <div class="row row-cols-md-4 row-cols-sm-3 g-2">
+        <crate v-if="crates.length > 0" v-for="crate in crates" :name="crate.name" :id="crate.id" />
     </div>
 </template>
 
@@ -13,10 +13,9 @@
     loadCrates();
 
     async function loadCrates() {
-        let cratesRequest = await axios.get("api/crate-list");
+        let cratesRequest = await axios.get("/api/crate-list");
         if(cratesRequest.status != 200) return;
 
         crates.value = cratesRequest.data.data;
-        console.log(cratesRequest.data)
     }
 </script>

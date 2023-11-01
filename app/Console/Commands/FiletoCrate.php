@@ -48,7 +48,7 @@ class FiletoCrate extends Command
                 print_r($line);
                 if(str_starts_with($line, '*')){
                     $crate = new Crate();
-                    $crate->name = substr($line, 1, strlen($line)-1);
+                    $crate->name = substr($line, 1, strlen($line)-2);
                     $crate->price = 0;
                     $crate->save();
                     $crateId = $crate->id;

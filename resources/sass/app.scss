@@ -13,9 +13,13 @@
 @import "@fortawesome/fontawesome-free/scss/brands";
 @import "@fortawesome/fontawesome-free/scss/regular";
 
+.p-25 {
+    padding: 0.75rem;
+}
+
 .currency-icon {
-    width: 14px;
-    height: 28px;
+    width: 13px;
+    height: 26px;
     margin-right: .5rem;
 }
 
@@ -27,7 +31,7 @@
     min-width: 5rem;
 }
 
-.brand-medium, .brand-expanded {
+.brand-medium, .brand-expanded, .brand-small {
     display: none;
 }
 
@@ -38,8 +42,18 @@
     }
 }
 
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 1199px) and (min-width: 769px) {
     .brand-medium {
         display: block;
     }
+}
+
+@media screen and (max-width: 768px) {
+    .brand-small {
+        display: block;
+    }
+}
+
+.fixed-navbar-height {
+    min-height: 45px;
 }

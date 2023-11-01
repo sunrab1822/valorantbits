@@ -1,5 +1,5 @@
 <template>
-    <a href="">
+    <a :href="'/crate/' + id">
         <div class="card col m-2">
             <img class="card-img" src="https://placehold.co/600x400">
             <div class="card-img-overlay d-flex align-items-end">
@@ -10,5 +10,5 @@
 </template>
 
 <script setup>
-    defineProps(["name"]);
+    defineProps(["name", "id"]);
 </script>
