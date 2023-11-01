@@ -18,22 +18,33 @@
 </head>
 <body class="bg-dark text-white">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm ">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+            <div class="container-fluid mx-5">
+                <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
                     <!-- Left Side Of Navbar -->
+                    <a class="navbar-brand brand-expanded" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                    <a class="navbar-brand brand-medium bg-secondary" href="{{ url('/') }}">
+                        <i class="fa-solid fa-house"></i>
+                    </a>
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('crates') }}">{{ __('Crates') }}</a>
+                        </li>
                     </ul>
+                </div>
 
-                    <!-- Right Side Of Navbar -->
+                @auth
+                <div class="mx-auto order-0">
+                    <div class="d-flex bg-secondary p-2 align-items-center rounded-2 balance-box mx-auto">
+                        <img src="{{ asset('storage/radianite.png') }}" class="currency-icon">
+                        <div class="balance-text">{{ number_format(Auth::user()->balance, 2) }}</div>
+                    </div>
+                </div>
+                @endauth
+
+                <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @guest
@@ -56,8 +67,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -69,6 +80,9 @@
                         @endguest
                     </ul>
                 </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
             </div>
         </nav>
 

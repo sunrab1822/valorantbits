@@ -6,3 +6,40 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+//$fa-font-path:        "../webfonts";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/regular";
+
+.currency-icon {
+    width: 14px;
+    height: 28px;
+    margin-right: .5rem;
+}
+
+.balance-text {
+    font-size: larger;
+}
+
+.balance-box {
+    min-width: 5rem;
+}
+
+.brand-medium, .brand-expanded {
+    display: none;
+}
+
+
+@media screen and (min-width: 1200px) {
+    .brand-expanded {
+        display: block;
+    }
+}
+
+@media screen and (max-width: 1199px) {
+    .brand-medium {
+        display: block;
+    }
+}
