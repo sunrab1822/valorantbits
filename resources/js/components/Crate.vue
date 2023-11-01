@@ -10,7 +10,5 @@
 </template>
 
 <script setup>
-    import { ref, defineProps } from 'vue';
-
     defineProps(["name"]);
 </script>
