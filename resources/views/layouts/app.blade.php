@@ -19,7 +19,7 @@
 <body class="bg-dark text-white">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm ">
-            <div class="container">
+            <div class="container-fluid mx-5">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -30,8 +30,21 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('crates') }}">{{ __('Crates') }}</a>
+                        </li>
                     </ul>
+
+                    @auth
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <div class="d-flex bg-secondary p-2 align-items-center rounded-2 balance-box">
+                                    <img src="{{ asset('storage/radianite.png') }}" class="currency-icon">
+                                    <div class="balance-text">{{ number_format(Auth::user()->balance, 2) }}</div>
+                                </div>
+                            </li>
+                        </ul>
+                    @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">

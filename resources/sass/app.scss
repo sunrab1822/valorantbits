@@ -6,3 +6,17 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+.currency-icon {
+    width: 14px;
+    height: 28px;
+    margin-right: .5rem;
+}
+
+.balance-text {
+    font-size: larger;
+}
+
+.balance-box {
+    min-width: 5rem;
+}
