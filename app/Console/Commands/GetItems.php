@@ -65,7 +65,7 @@ class GetItems extends Command
         $request = $client->get('https://valorant-api.com/v1/sprays');
         $body = json_decode($request->getBody()->getContents(), true);
 
-        $category = Weapon::firstOrCreate([
+        $category = Category::firstOrCreate([
             'uuid' => $this->spray_uuid,
         ],
         [
@@ -78,12 +78,9 @@ class GetItems extends Command
             ],
             [
                 'name' => $spray['displayName'],
-                'category' => $category->id,
+                'tier_id' => Tier::where('rank', 0)->first()->id,
+                'category_id' => $category->id,
             ]);
         }
-
-
     }
-
-
 }
