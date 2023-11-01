@@ -16,6 +16,7 @@
         let cratesRequest = await axios.get("api/crate-list");
         if(cratesRequest.status != 200) return;
 
-        crates.value = cratesRequest.data;
+        crates.value = cratesRequest.data.data;
+        console.log(cratesRequest.data)
     }
 </script>

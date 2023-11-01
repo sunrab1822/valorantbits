@@ -48,7 +48,7 @@ class GetItems extends Command
                     'uuid' => $skin['uuid'],
                 ],
                 [
-                    'name' => trim(str_replace($item['displayName'], "" ,$skin['displayName'])),
+                    'name' => $skin['displayName'],
                     'tier_uuid' => $skin['contentTierUuid'],
                     'weapon_uuid' => $item['uuid'],
                 ]);

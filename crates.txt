@@ -1,0 +1,38 @@
+*Custom Crate 1*
+Altitude Odin,5.5
+Xenohunter Odin,7.2
+Glitchpop Odin,3.8
+Rush Ares,10.1
+Celestial Ares,4.3
+Hivemind Ares,6.2
+Reaver Odin,5.8
+Recon Phantom,8.6
+Undercity Phantom,6.9
+Depths Vandal,4.2
+Artisan Bucky,6.7
+Hivemind Vandal,4.1
+Radiant Entertainment System Bulldog,3.4
+Sentinels of Light Vandal,7.5
+Nitro Vandal,10.2
+
+*Luxury Collection Crate*
+Altitude Vandal,15.5
+Rush Phantom,12.3
+Sensation Vandal,10.5
+Prism II Vandal,9.8
+Celestial Ares,8.2
+Immortalized Vandal,7.6
+Elderflame Operator,6.4
+Luxe Vandal,6.1
+Divine Swine Marshal,5.2
+Topotek Odin,4.3
+Soulstrife Phantom,3.9
+Blade of Chaos,3.1
+Singularity Spectre,2.4
+Winterwunderland Phantom,2.1
+Sakura Classic,1.7
+
+*Risky Crate*
+VALORANT GO! Vol. 1 Phantom,1.5
+Elderflame Vandal,0.5
+Spectrum Classic,98.0
