@@ -10,4 +10,8 @@ class Skin extends Model
     use HasFactory;
     protected $fillable = ['name', 'uuid', 'tier_uuid', 'weapon_uuid'];
 
+
+    public function getImage(){
+
+    }
 }
