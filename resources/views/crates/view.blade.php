@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
-    <Crates></Crates>
+
+    <open-crate :crate="`{{$crate}}`"></open-crate>
 </div>
 @endsection

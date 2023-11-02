@@ -19,5 +19,5 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/crates', [CrateController::class, 'index'])->name('crates');
-Route::get('/crate/{name}', [CrateController::class, 'view']);
+Route::get('/crate/{id}', [CrateController::class, 'view']);
 

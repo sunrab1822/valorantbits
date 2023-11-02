@@ -14,10 +14,12 @@ class CrateController extends Controller
         return view('crates/index')->with(['crates' => $crates]);
     }
 
-    public function view() {
-        $crates = Crate::all();
+    public function view($id) {
+        $crate = Crate::find($id);
+        $crate->contents;
 
-        return view('crates/view')->with(['crates' => $crates]);
+
+        return view('crates/view')->with(['crate' => $crate]);
     }
 
     function getCrateList() {

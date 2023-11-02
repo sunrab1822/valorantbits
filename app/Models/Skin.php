@@ -12,6 +12,6 @@ class Skin extends Model
 
 
     public function getImage(){
-
+        return "https://media.valorant-api.com/contenttiers/" . $this->uuid ."/displayicon.png";
     }
 }
