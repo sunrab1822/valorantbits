@@ -18,8 +18,8 @@
 }
 
 .currency-icon {
-    width: 13px;
-    height: 26px;
+    width: 24px;
+    height: 24px;
     margin-right: .5rem;
 }
 
@@ -29,6 +29,7 @@
 
 .balance-box {
     min-width: 5rem;
+    padding: 0.45rem;
 }
 
 .brand-medium, .brand-expanded, .brand-small {
@@ -55,5 +56,22 @@
 }
 
 .fixed-navbar-height {
-    min-height: 45px;
+    min-height: 48px;
+}
+
+.navbar-collapse {
+    height: 42px;
+}
+
+.navbar-nav {
+    height: 100%;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link {
+    color: white;
 }

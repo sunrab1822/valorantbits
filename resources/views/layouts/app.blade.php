@@ -32,7 +32,7 @@
                         <svg class="d-block" stroke="#fff" fill="#fff" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M208 448V320h96v128h97.6V256H464L256 64 48 256h62.4v192z"></path></svg>
                     </a>
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
+                        <li class="nav-item bg-secondary rounded-2">
                             <a class="nav-link" href="{{ route('crates') }}">{{ __('Crates') }}</a>
                         </li>
                     </ul>
@@ -40,7 +40,7 @@
 
                 @auth
                 <div class="mx-auto order-0">
-                    <div class="d-flex bg-secondary p-2 align-items-center rounded-2 balance-box mx-auto">
+                    <div class="d-flex bg-secondary align-items-center rounded-2 balance-box mx-auto">
                         <img src="{{ asset('storage/radianite.png') }}" class="currency-icon">
                         <div class="balance-text">{{ number_format(Auth::user()->balance, 2) }}</div>
                     </div>
@@ -52,13 +52,13 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
+                                <li class="nav-item bg-primary rounded-2 me-1 px-1">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
+                                <li class="nav-item bg-secondary rounded-2 px-1">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
