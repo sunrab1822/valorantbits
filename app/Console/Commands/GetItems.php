@@ -57,6 +57,7 @@ class GetItems extends Command
                     'name' => $skin['displayName'],
                     'tier_id' => Tier::where("uuid", $skin['contentTierUuid'])->first()->id,
                     'category_id' => Category::where('uuid', $item['uuid'])->first()->id,
+                    'image' => $this->getItemImage($skin)
                 ]);
             }
         }
@@ -82,5 +83,25 @@ class GetItems extends Command
                 'category_id' => $category->id,
             ]);
         }
+    }
+
+    public function getItemImage($item) {
+        if($item["displayIcon"] !== null) {
+            return $item["displayIcon"];
+        }
+
+        if($item["chromas"][0]["displayIcon"] !== null) {
+            return $item["chromas"][0]["displayIcon"];
+        }
+
+        if($item["chromas"][0]["fullRender"] !== null) {
+            return $item["chromas"][0]["fullRender"];
+        }
+
+        if($item["levels"][0]["displayIcon"] !== null) {
+            return $item["levels"][0]["displayIcon"];
+        }
+
+        return "/storage/weapons/" . $item['uuid'] . '.png';
     }
 }

@@ -7,11 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Skin extends Model
 {
+    protected $hidden = ['laravel_through_key'];
+
     use HasFactory;
-    protected $fillable = ['name', 'uuid', 'tier_id', 'category_id'];
-
-
-    public function getImage(){
-        return "https://media.valorant-api.com/contenttiers/" . $this->uuid ."/displayicon.png";
-    }
+    protected $fillable = ['name', 'uuid', 'tier_id', 'category_id', 'image'];
 }

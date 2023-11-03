@@ -17,8 +17,6 @@ class CrateController extends Controller
     public function view($id) {
         $crate = Crate::find($id);
         $crate->contents;
-
-
         return view('crates/view')->with(['crate' => $crate]);
     }
 
