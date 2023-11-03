@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <div class="col">
-            <button class="btn btn-success" >&lsaquo;  Back</button>
+            <button class="btn btn-success" @click="back" >&lsaquo;  Back</button>
         </div>
         <div class="col text-center">
             <h1 class="">{{ crateObj.name }}</h1>
@@ -103,5 +103,9 @@
 
     function getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
+    }
+
+    function back(){
+        history.back()
     }
 </script>

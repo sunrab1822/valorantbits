@@ -81,26 +81,34 @@ class GetItems extends Command
                 'name' => $spray['displayName'],
                 'tier_id' => Tier::where('rank', 0)->first()->id,
                 'category_id' => $category->id,
+                'image' => $this->getItemImage($skin)
             ]);
         }
     }
 
     public function getItemImage($item) {
-        if($item["displayIcon"] !== null) {
+
+        if (isset($item["fullTransparentIcon"]) && $item["fullTransparentIcon"] !== null){
+
+            return $item["fullTransparentIcon"];
+        }
+
+        if(isset($item["displayIcon"]) && $item["displayIcon"] !== null) {
             return $item["displayIcon"];
         }
 
-        if($item["chromas"][0]["displayIcon"] !== null) {
+        if(isset($item["chromas"][0]["displayIcon"]) && $item["chromas"][0]["displayIcon"] !== null) {
             return $item["chromas"][0]["displayIcon"];
         }
 
-        if($item["chromas"][0]["fullRender"] !== null) {
+        if(isset($item["chromas"][0]["fullRender"]) && $item["chromas"][0]["fullRender"] !== null) {
             return $item["chromas"][0]["fullRender"];
         }
 
-        if($item["levels"][0]["displayIcon"] !== null) {
+        if(isset($item["levels"][0]["displayIcon"]) && $item["levels"][0]["displayIcon"] !== null) {
             return $item["levels"][0]["displayIcon"];
         }
+
 
         return "/storage/weapons/" . $item['uuid'] . '.png';
     }
