@@ -11,8 +11,8 @@
 
     <div class="spin-wrapper mb-3">
         <div class="spin-selector"></div>
-        <div class="spin-wheel d-flex" style="transform: translate3d(78px, 0px, 0px)">
-            <div v-for="skin in spinItems" class="spin-element">
+        <div class="spin-wheel d-flex" style="transform: translate3d(7098px, 0px, 0px)">
+            <div v-for="(skin, key) in spinItems" class="spin-element" :class="`element-`+key">
                 <img :src="skin.image" alt="">
             </div>
         </div>
@@ -39,33 +39,61 @@
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
+    import { onBeforeMount, ref } from 'vue';
+    import axios from 'axios';
 
     const prop = defineProps(['crate'])
     let crateObj = JSON.parse(prop.crate)
     console.log(crateObj);
 
     let isSpinning = ref(false);
-    let spinItems = [];
+    let spinItems = ref([]);
 
-    function initCrate() {
-        for(let i = 0; i < 200; i++) {
-            let randomNum = getRandomInt(0, crateObj.contents.length);
-            spinItems.push(crateObj.contents[randomNum]);
+    function initCrate(winning_item = null) {
+        let chances = {};
+        let chance_num = 0;
+        Object.values(crateObj.contents).forEach((value) => {
+            chance_num += Math.round(10000*(value.chance/100));
+            chances[chance_num] = value["skin_id"];
+        });
+
+        spinItems.value = [];
+        for(let i = 0; i < 100; i++) {
+            let randomNum = getRandomInt(0, 10001);
+            for(const [chanceLimit, skin_id] of Object.entries(chances)) {
+                if(randomNum <= chanceLimit) {
+                    spinItems.value.push(crateObj.contents[Object.keys(crateObj.contents).find(key => crateObj.contents[key]["skin_id"] === skin_id)]);
+                    break;
+                }
+            }
+        }
+
+        if(winning_item) {
+            let $winningElement = $(".spin-wheel .spin-element:nth-child(81)");
+
+            $winningElement.find("img").attr('src', winning_item.image);
         }
     }
 
     initCrate();
 
-    function resetCratePosition() {
-        let $wheel = $('.spin-wrapper .spin-wheel');
-        $wheel.css({'transform': 'translate3d(78px, 0px, 0px)'});
-        setTimeout(doOpenCrate, 400);
-    }
-
-    function openCrate() {
+    async function openCrate() {
         isSpinning.value = true;
-        resetCratePosition()
+        let $wheel = $('.spin-wrapper .spin-wheel');
+        $wheel.css({'transform': 'translate3d(7098px, 0px, 0px)'});
+        let openedItem = await axios.post("/api/crate/open", {
+            'clientSeed': '123456789',
+            'id': crateObj.id
+        });
+
+        if(openedItem.data.data.drop == undefined || openedItem.data.data.drop == null) {
+            isSpinning.value = false;
+            return;
+        }
+
+        initCrate(openedItem.data.data.drop);
+
+        setTimeout(doOpenCrate, 400);
     }
 
     function doOpenCrate() {
@@ -86,19 +114,19 @@
         $wheel.css({
             'transition-timing-function':'cubic-bezier(0,'+ object.x +','+ object.y + ',1)',
             'transition-duration':'6s',
-            'transform':'translate3d(-'+landingPosition+'px, 0px, 0px)'
+            'transform':'translate3d(-4758px, 0px, 0px)'
         });
 
-        setTimeout(function(){
-            isSpinning.value = false;
-            $wheel.css({
-                'transition-timing-function':'',
-                'transition-duration':'',
-            });
+        setTimeout(postOpenCrate, 6 * 1000);
+    }
 
-            //let resetTo = -(position * card + randomize);
-            //$wheel.css('transform', 'translate3d('+resetTo+'px, 0px, 0px)');
-         }, 6 * 1000);
+    function postOpenCrate() {
+        isSpinning.value = false;
+        let $wheel = $('.spin-wrapper .spin-wheel');
+        $wheel.css({
+            'transition-timing-function':'',
+            'transition-duration':'',
+        });
     }
 
     function getRandomInt(min, max) {

@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/crate-list', [CrateController::class, 'getCrateList']);
 Route::get('/crate-contents/{crate_id}', [CrateController::class, 'getCrateContents']);
+Route::get('/server_hash', [CrateController::class, 'getServerHash']);
+Route::post('/crate/open', [CrateController::class, 'openCrate']);

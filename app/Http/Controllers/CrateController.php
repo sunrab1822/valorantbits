@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Crate;
 use App\Models\CrateItems;
+use App\Models\Skin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CrateController extends Controller
 {
@@ -20,16 +22,56 @@ class CrateController extends Controller
         return view('crates/view')->with(['crate' => $crate]);
     }
 
-    function getCrateList() {
+    public function getCrateList() {
         $crates = Crate::all();
 
         return response(json_encode(["status" => 200, "data" => $crates]));
     }
 
-    function getCrateContents($crate_id) {
+    public function getCrateContents($crate_id) {
         $Crate = Crate::find($crate_id);
         $Crate->contents;
 
         return response(json_encode(["status" => 200, "data" => $Crate]));
+    }
+
+    function getServerHash() {
+
+    }
+
+    public function openCrate(Request $request) {
+        if(Auth::check()) {
+            return response(json_encode(["status" => 403, "data" => "Unauthorized"]));
+        }
+
+        $clientSeed = $request->get("clientSeed");
+        $case_id = $request->get("id");
+
+        $Crate = Crate::find($case_id);
+
+        if($Crate) {
+            $chances = array_map(function($item){ return $item['chance']; }, $Crate->contents->toArray());
+            $items = array_map(function($item){ return $item['skin_id']; }, $Crate->contents->toArray());
+
+            $wonItemId = $this->determineItemOutcome($chances, $items);
+
+            $wonItem = Skin::find($wonItemId);
+
+            return response(["status" => 200, "data" => ["drop" => $wonItem]]);
+        }
+
+        return response(["status" => 404, "data" => "An error has occured."]);
+    }
+
+    function determineItemOutcome($chances, $items) {
+        $rand = rand(0, 10000);
+        $cumulativeProbability = 0;
+        foreach ($chances as $index => $chance) {
+            $cumulativeProbability += 10000*($chance/100);
+            if ($rand < $cumulativeProbability) {
+                return $items[$index];
+            }
+        }
+        return null; // Return null if no item is found
     }
 }

@@ -15,21 +15,23 @@
     width:100%;
     margin:0 auto;
     overflow:hidden;
-}
 
-.spin-wrapper .spin-wheel .spin-element {
-    height:150px;
-    width:150px;
-    margin:3px;
-    border-radius:8px;
-    border:3px solid rgba(0,0,0,0.2);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
+    .spin-wheel {
+        .spin-element {
+            height:150px;
+            width:150px;
+            margin:3px;
+            border-radius:8px;
+            border:3px solid rgba(0,0,0,0.2);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            color:white;
 
-    img {
-        max-width: 100%;
-        max-height: 32px;
+            img {
+                max-width: 100%;
+                max-height: 32px;
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ class Crate extends Model
     use HasFactory;
 
     public function contents() {
-        return $this->hasManyThrough(Skin::class, CrateItems::class, 'crate_id', 'id', 'id', 'skin_id')->select('*');
+        return $this->hasManyThrough(Skin::class, CrateItems::class, 'crate_id', 'id', 'id', 'skin_id')->select('*')->orderBy("chance");
     }
 
     public function crate_items() {
