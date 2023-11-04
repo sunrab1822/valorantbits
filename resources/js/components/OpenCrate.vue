@@ -8,7 +8,6 @@
         </div>
         <div class="col"></div>
     </div>
-
     <div class="spin-wrapper mb-3">
         <div class="spin-selector"></div>
         <div class="spin-wheel d-flex" style="transform: translate3d(7098px, 0px, 0px)">
@@ -34,8 +33,6 @@
             <CrateItem v-for="skin in crateObj.contents" :name="skin.name" :image="skin.image" :chance="skin.chance"></CrateItem>
         </div>
     </div>
-
-
 </template>
 
 <script setup>
