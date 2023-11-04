@@ -31,7 +31,7 @@
     <div>
         <h3>Crate items</h3>
         <div class="row">
-            <CrateItem v-for="skin in crateObj.contents" :name="skin.name" :image="skin.image"></CrateItem>
+            <CrateItem v-for="skin in crateObj.contents" :name="skin.name" :image="skin.image" :chance="skin.chance"></CrateItem>
         </div>
     </div>
 
@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue';
+    import { ref } from 'vue';
     import axios from 'axios';
 
     const prop = defineProps(['crate'])
