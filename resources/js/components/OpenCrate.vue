@@ -24,7 +24,7 @@
             <button class="btn btn-secondary">4</button>
         </div>
         <div>
-            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning">Open</button>
+            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="isAuthenticated">Open</button>
         </div>
     </div>
     <div>
@@ -39,7 +39,7 @@
     import { ref } from 'vue';
     import axios from 'axios';
 
-    const prop = defineProps(['crate'])
+    const prop = defineProps(['crate', 'isAuthenticated'])
     let crateObj = JSON.parse(prop.crate)
     console.log(crateObj);
 
