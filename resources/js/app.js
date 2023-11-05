@@ -36,4 +36,15 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+
+$(document).ready(function () {
+    $('.dropdown').hover(function () {
+        $(this).addClass('show');
+        $(this).find('.dropdown-menu').addClass('show');
+    }, function () {
+        $(this).removeClass('show');
+        $(this).find('.dropdown-menu').removeClass('show');
+    });
+});
+
 app.mount('#app');
