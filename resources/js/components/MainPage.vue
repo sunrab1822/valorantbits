@@ -2,41 +2,41 @@
     <div class="row row-cols-4 g-2 main-page-cards mx-auto">
         <div class="game-choice-card">
             <a class="styleless-link" href="/crates">
-                <div class="col m-2 game-choice-inner-card" @click="">
+                <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
                     <img class="card-img" src="/storage/crate.png">
                 </div>
-                <h4>
-                    Crate Opening
+                <h4 class="text-center">
+                    Open Crates
                 </h4>
             </a>
         </div>
         <div class="game-choice-card">
-            <a class="styleless-link" href="">
-                <div class="col m-2 game-choice-inner-card" @click="">
-                    <img class="card-img" src="https://placehold.co/600x400">
+            <a class="styleless-link" href="/crates">
+                <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
+                    <img class="card-img" src="/storage/crate.png">
                 </div>
-                <h4>
-                    Crate Opening
+                <h4 class="text-center">
+                    Open Crates
                 </h4>
             </a>
         </div>
         <div class="game-choice-card">
-            <a class="styleless-link" href="">
-                <div class="col m-2 game-choice-inner-card " @click="">
-                    <img class="card-img" src="https://placehold.co/600x400">
+            <a class="styleless-link" href="/crates">
+                <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
+                    <img class="card-img" src="/storage/crate.png">
                 </div>
-                <h4>
-                    Crate Opening
+                <h4 class="text-center">
+                    Open Crates
                 </h4>
             </a>
         </div>
         <div class="game-choice-card">
-            <a class="styleless-link" href="">
-                <div class="col m-2 game-choice-inner-card " @click="">
-                    <img class="card-img" src="https://placehold.co/600x400">
+            <a class="styleless-link" href="/crates">
+                <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
+                    <img class="card-img" src="/storage/crate.png">
                 </div>
-                <h4>
-                    Crate Opening
+                <h4 class="text-center">
+                    Open Crates
                 </h4>
             </a>
         </div>

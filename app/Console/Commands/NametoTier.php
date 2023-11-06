@@ -13,7 +13,7 @@ class NametoTier extends Command
      *
      * @var string
      */
-    protected $signature = 'val:nameto-tier';
+    protected $signature = 'valo:tiers';
 
     /**
      * The console command description.

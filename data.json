@@ -1,0 +1,829 @@
+{
+    "RGX 11z Pro": {
+        "image": "https://media.valorant-api.com/bundles/ed453815-44aa-4c4d-f3aa-77b4bcf048d7/displayicon.png",
+        "hype": 10,
+        "appeal": 8
+    },
+    "Altitude": {
+        "image": "https://media.valorant-api.com/bundles/a4937ee9-4148-8ff2-2c11-c28891880306/displayicon.png",
+        "hype": 3,
+        "appeal": 4
+    },
+    "Xenohunter": {
+        "image": "https://media.valorant-api.com/bundles/3941ad01-4e3b-46e0-ba3a-ab94f7c67f98/displayicon.png",
+        "hype": 9,
+        "appeal": 8
+    },
+    "Intergrade": {
+        "image": "https://media.valorant-api.com/bundles/2bec0257-49a2-77ac-718b-09af04de6a9e/displayicon.png",
+        "hype": 6,
+        "appeal": 5
+    },
+    "VALORANT GO! Vol. 1": {
+        "image": "https://media.valorant-api.com/bundles/b37b6a01-40f9-af81-ed34-fd8563539d44/displayicon.png",
+        "hype": 7,
+        "appeal": 5
+    },
+    "VALORANT GO! Vol. 2": {
+        "image": "https://media.valorant-api.com/bundles/5c8b9297-465f-080c-3c0d-c9b9811432ed/displayicon.png",
+        "hype": 6,
+        "appeal": 5
+    },
+    "Araxys": {
+        "image": "https://media.valorant-api.com/bundles/a4c613c9-4970-61ca-e52a-918ae22f5315/displayicon.png",
+        "hype": 9,
+        "appeal": 9
+    },
+    "Neptune": {
+        "image": "https://media.valorant-api.com/bundles/ce15405a-4471-3290-1a16-abab355f97da/displayicon.png",
+        "hype": 8,
+        "appeal": 7
+    },
+    "Radiant Entertainment System": {
+        "image": "https://media.valorant-api.com/bundles/3d2fd628-4ceb-0029-a737-9682ce8eb5e9/displayicon.png",
+        "hype": 10,
+        "appeal": 10
+    },
+    "Gaia's Vengeance": {
+        "image": "https://media.valorant-api.com/bundles/e10e00ae-4dcc-3c4a-16f7-7e885314f0d0/displayicon.png",
+        "hype": 9,
+        "appeal": 7
+    },
+    "Endeavour": {
+        "image": "https://media.valorant-api.com/bundles/957f55ff-48a1-d0e2-41b1-ca89bf036b6e/displayicon.png",
+        "hype": 3,
+        "appeal": 3
+    },
+    "Spectrum": {
+        "image": "https://media.valorant-api.com/bundles/f7f37856-4af7-9b0e-08aa-91a5207c0439/displayicon.png",
+        "hype": 10,
+        "appeal": 10
+    },
+    "Avalanche": {
+        "image": "https://media.valorant-api.com/bundles/0dee7ef6-d3ea-400a-b15c-5b9524243439/displayicon.png",
+        "hype": 4,
+        "appeal": 3
+    },
+    "Ignite": {
+        "image": "https://media.valorant-api.com/bundles/3bd7465d-4257-8583-c563-188ae47cc7c6/displayicon.png",
+        "hype": 7,
+        "appeal": 7
+    },
+    "Champions 2021": {
+        "image": "https://media.valorant-api.com/bundles/bf987f36-4a33-45e4-3c49-1ab9a2502607/displayicon.png",
+        "hype": 10,
+        "appeal": 10
+    },
+    "Champions 2022": {
+        "image": "https://media.valorant-api.com/bundles/f99e5b38-48c7-1146-acfa-9baaf773b844/displayicon.png",
+        "hype": 9,
+        "appeal": 9
+    },
+    "Champions 2023": {
+        "image": "https://media.valorant-api.com/bundles/90ee89df-40cf-03d3-420f-3d9a1b81d85b/displayicon.png",
+        "hype": 8,
+        "appeal": 7
+    },
+    "Origin": {
+        "image": "https://media.valorant-api.com/bundles/54f8793c-4daa-6e45-bcfd-e9bfc742dc30/displayicon.png",
+        "hype": 8,
+        "appeal": 9
+    },
+    "Radiant Crisis 001": {
+        "image": "https://media.valorant-api.com/bundles/3a824027-4414-5a08-64f0-c8905a2aaa66/displayicon.png",
+        "hype": 7,
+        "appeal": 6
+    },
+    "Nebula": {
+        "image": "https://media.valorant-api.com/bundles/c520fbb0-492c-960e-8b77-f69fc4ce1838/displayicon.png",
+        "hype": 3,
+        "appeal": 2
+    },
+    "Glitchpop": {
+        "image": "https://media.valorant-api.com/bundles/05e8add9-404d-5d37-8973-9f93f8880e2d/displayicon.png",
+        "hype": 8,
+        "appeal": 7
+    },
+    "ChronoVoid": {
+        "image": "https://media.valorant-api.com/bundles/a5da7b5a-49a4-8fa9-a1c6-01a9aced0f9f/displayicon.png",
+        "hype": 9,
+        "appeal": 10
+    },
+    "Abyssal": {
+        "image": "https://media.valorant-api.com/bundles/afa6651a-4b93-b7f8-b136-b6b081fc3258/displayicon.png",
+        "hype": 4,
+        "appeal": 5
+    },
+    "Prelude to Chaos": {
+        "image": "https://media.valorant-api.com/bundles/526f7d0c-414b-24bb-bcd0-10aed1f3e824/displayicon.png",
+        "hype": 8,
+        "appeal": 8
+    },
+    "Doodle Buds": {
+        "image": "https://media.valorant-api.com/bundles/2ed936df-4959-acc7-9aca-358d34a50619/displayicon.png",
+        "hype": 3,
+        "appeal": 4
+    },
+    "Elderflame": {
+        "image": "https://media.valorant-api.com/bundles/1ba50cf0-46dd-848f-13a9-dc92fb0a3e3b/displayicon.png",
+        "hype": 10,
+        "appeal": 9
+    },
+    "Imperium": {
+        "image": "https://media.valorant-api.com/bundles/e6032bbf-403e-47e4-8fbc-a1b212d966e7/displayicon.png",
+        "hype": 7,
+        "appeal": 6
+    },
+    "Singularity": {
+        "image": "https://media.valorant-api.com/bundles/ef72e3c0-467b-ab15-076a-1e9690d16d6f/displayicon.png",
+        "hype": 8,
+        "appeal": 8
+    },
+    "Sarmad": {
+        "image": "https://media.valorant-api.com/bundles/83e78a53-435b-f891-9e04-a9b59ed8fa44/displayicon.png",
+        "hype": 4,
+        "appeal": 4
+    },
+    "VCT LOCK//IN": {
+        "image": "https://media.valorant-api.com/bundles/2654d506-4d05-e7e9-c996-63ac6fdaf767/displayicon.png",
+        "hype": 8,
+        "appeal": 9
+    },
+    "Forsaken": {
+        "image": "https://media.valorant-api.com/bundles/1b98ee1c-4d9a-9e9d-0b36-f1a001a76628/displayicon.png",
+        "hype": 8,
+        "appeal": 7
+    },
+    "Team Ace": {
+        "image": "https://media.valorant-api.com/bundles/f7bf90a6-4e39-6c04-c12a-b79c8842359c/displayicon.png",
+        "hype": 2,
+        "appeal": 2
+    },
+    "Neo Frontier": {
+        "image": "https://media.valorant-api.com/bundles/550d9d34-4942-a605-ba3c-b09452e52f83/displayicon.png",
+        "hype": 9,
+        "appeal": 8
+    },
+    "Soulstrife": {
+        "image": "https://media.valorant-api.com/bundles/bd94a6b3-4dfc-d333-8ba0-82a34d924ed7/displayicon.png",
+        "hype": 8,
+        "appeal": 5
+    },
+    "Infantry": {
+        "image": "https://media.valorant-api.com/bundles/9be3549b-4124-7fc2-aa79-8d817f728a18/displayicon.png",
+        "hype": 9,
+        "appeal": 7
+    },
+    "Horizon": {
+        "image": "https://media.valorant-api.com/bundles/abba1438-4900-ce9b-8b81-38b6975a419f/displayicon.png",
+        "hype": 2,
+        "appeal": 3
+    },
+    "Prime//2.0": {
+        "image": "https://media.valorant-api.com/bundles/de041dd5-4e17-2924-6d09-b4a3ccd82e6f/displayicon.png",
+        "hype": 10,
+        "appeal": 8
+    },
+    "Prime": {
+        "image": "https://media.valorant-api.com/bundles/2116a38e-4b71-f169-0d16-ce9289af4bfa/displayicon.png",
+        "hype": 10,
+        "appeal": 10
+    },
+    "Black.Market": {
+        "image": "https://media.valorant-api.com/bundles/82a56e4c-4de3-0195-4889-788992b2790d/displayicon.png",
+        "hype": 10,
+        "appeal": 7
+    },
+    "Prism II": {
+        "image": "https://media.valorant-api.com/bundles/224ddcc4-4a2b-cc61-01a2-97835777b3f6/displayicon.png",
+        "hype": 1,
+        "appeal": 1
+    },
+    "Prism": {
+        "image": "https://media.valorant-api.com/bundles/ce6c1fa1-4eae-6db9-779f-f6988b866de4/displayicon.png",
+        "hype": 1,
+        "appeal": 1
+    },
+    "Ruination": {
+        "image": "https://media.valorant-api.com/bundles/ae0c9cc4-4c03-f8d6-745c-84953db684fc/displayicon.png",
+        "hype": 7,
+        "appeal": 6
+    },
+    "Kohaku & Matsuba": {
+        "image": "https://media.valorant-api.com/bundles/31827d9c-4ccb-8687-a5c1-69991ad1ec98/displayicon.png",
+        "hype": 4,
+        "appeal": 3
+    },
+    "Smite": {
+        "image": "https://media.valorant-api.com/bundles/adec612c-4c82-a4b2-a5f2-b7909e638a67/displayicon.png",
+        "hype": 1,
+        "appeal": 2
+    },
+    "Daydreams": {
+        "image": "https://media.valorant-api.com/bundles/7c30157f-4e5d-c929-3c9d-5988d3480105/displayicon.png",
+        "hype": 3,
+        "appeal": 4
+    },
+    "Nunca Olvidados": {
+        "image": "https://media.valorant-api.com/bundles/a4d5c5f5-4647-d984-011d-dea2ef7b56c5/displayicon.png",
+        "hype": 3,
+        "appeal": 3
+    },
+    "Celestial": {
+        "image": "https://media.valorant-api.com/bundles/473e694c-4940-078b-fb49-e994dff766cf/displayicon.png",
+        "hype": 4,
+        "appeal": 3
+    },
+    "Luxe": {
+        "image": "https://media.valorant-api.com/bundles/1703b166-4e32-63da-9d16-a7a144aab574/displayicon.png",
+        "hype": 1,
+        "appeal": 1
+    },
+    "Magepunk": {
+        "image": "https://media.valorant-api.com/bundles/a981af4a-4d81-9668-8923-9c84c43da3d3/displayicon.png",
+        "hype": 5,
+        "appeal": 7
+    },
+    "Spline": {
+        "image": "https://media.valorant-api.com/bundles/c1b255e2-411d-b159-6da3-5ab6c011a8cf/displayicon.png",
+        "hype": 5,
+        "appeal": 5
+    },
+    "Minima": {
+        "image": "https://media.valorant-api.com/bundles/cd095669-4a29-a7f3-e00d-f694186863cc/displayicon.png",
+        "hype": 1,
+        "appeal": 2
+    },
+    "Valiant Hero": {
+        "image": "https://media.valorant-api.com/bundles/f79f85ec-48f8-6573-873a-75b4627b615e/displayicon.png",
+        "hype": 3,
+        "appeal": 3
+    },
+    "Silvanus": {
+        "image": "https://media.valorant-api.com/bundles/3aaeac8c-469f-bf29-7802-a09cc8729a3e/displayicon.png",
+        "hype": 2,
+        "appeal": 3
+    },
+    "Crimsonbeast": {
+        "image": "https://media.valorant-api.com/bundles/bd4f586d-469c-731d-5018-19835db2b086/displayicon.png",
+        "hype": 3,
+        "appeal": 4
+    },
+    "Ion": {
+        "image": "https://media.valorant-api.com/bundles/693d675e-4ed2-c00a-5e38-6b859b275565/displayicon.png",
+        "hype": 10,
+        "appeal": 10
+    },
+    "Oni": {
+        "image": "https://media.valorant-api.com/bundles/ebfb909d-45ba-c514-3369-55bf014ba293/displayicon.png",
+        "hype": 8,
+        "appeal": 9
+    },
+    "Cryostasis": {
+        "image": "https://media.valorant-api.com/bundles/3ae56d5e-423d-97c5-1aa2-4faccccec1a2/displayicon.png",
+        "hype": 9,
+        "appeal": 4
+    },
+    "Luna": {
+        "image": "https://media.valorant-api.com/bundles/ef488eb7-4405-3b3f-7fd1-63af0824a639/displayicon.png",
+        "hype": 4,
+        "appeal": 3
+    },
+    "Sensation": {
+        "image": "https://media.valorant-api.com/bundles/54cbf45c-4b92-5cd9-07ab-3d98175fafa6/displayicon.png",
+        "hype": 4,
+        "appeal": 5
+    },
+    "Gravitational Uranium Neuroblaster": {
+        "image": "https://media.valorant-api.com/bundles/e84d5a16-462f-6fbf-bee0-5a80191a19e5/displayicon.png",
+        "hype": 6,
+        "appeal": 7
+    },
+    "Orion": {
+        "image": "https://media.valorant-api.com/bundles/e4c7da33-4e16-8eb5-ad4d-388753a0e179/displayicon.png",
+        "hype": 4,
+        "appeal": 4
+    },
+    "Sakura": {
+        "image": "https://media.valorant-api.com/bundles/49d7951e-4e5d-304c-31a0-589b79096d5a/displayicon.png",
+        "hype": 2,
+        "appeal": 3
+    },
+    "Sentinels of Light": {
+        "image": "https://media.valorant-api.com/bundles/13d427c1-49d7-44f9-6576-27a9c83d787f/displayicon.png",
+        "hype": 9,
+        "appeal": 10
+    },
+    "Reaver": {
+        "image": "https://media.valorant-api.com/bundles/81d85522-4651-4f66-72de-5fa057b3514c/displayicon.png",
+        "hype": 10,
+        "appeal": 9
+    },
+    "Tethered Realms": {
+        "image": "https://media.valorant-api.com/bundles/1b632bcd-4e3d-eb8e-cca6-cebf937e6ebb/displayicon.png",
+        "hype": 6,
+        "appeal": 7
+    },
+    "Sovereign": {
+        "image": "https://media.valorant-api.com/bundles/fd9fd08f-446f-018f-c632-0e96428f2978/displayicon.png",
+        "hype": 8,
+        "appeal": 7
+    },
+    "Recon": {
+        "image": "https://media.valorant-api.com/bundles/b6b1b7ea-4a10-f810-a416-03adbb69d379/displayicon.png",
+        "hype": 8,
+        "appeal": 8
+    },
+    "Titanmail": {
+        "image": "https://media.valorant-api.com/bundles/866ce9c2-4493-daba-a025-7c805c4e3eed/displayicon.png",
+        "hype": 5,
+        "appeal": 4
+    },
+    "Reverie": {
+        "image": "https://media.valorant-api.com/bundles/9a4ad6ad-4aa9-695a-b73e-cf874223db0c/displayicon.png",
+        "hype": 3,
+        "appeal": 2
+    },
+    "NO LIMITS": {
+        "image": "https://media.valorant-api.com/bundles/dcf781ee-4f66-8dac-cfaa-e2ad412bce32/displayicon.png",
+        "hype": 3,
+        "appeal": 4
+    },
+    "Ego": {
+        "image": "https://media.valorant-api.com/bundles/2d6ec1d9-4152-8a43-5f7f-ff96b29c857f/displayicon.png",
+        "hype": 3,
+        "appeal": 3
+    },
+    "BlastX": {
+        "image": "https://media.valorant-api.com/bundles/a31f7d1f-89d8-47ae-875b-1ae2117655c2/displayicon.png",
+        "hype": 8,
+        "appeal": 5
+    },
+    "Wasteland": {
+        "image": "https://media.valorant-api.com/bundles/4e3a244b-4482-0541-3eab-b8912cdb72d6/displayicon.png",
+        "hype": 7,
+        "appeal": 6
+    },
+    "Winterwunderland": {
+        "image": "https://media.valorant-api.com/bundles/79d2f4b9-4066-8b5b-884f-1d95b33d2ac5/displayicon.png",
+        "hype": 3,
+        "appeal": 6
+    },
+    "Arcane": {
+        "image": "https://media.valorant-api.com/bundles/2270b116-4255-8a14-4486-db9de4979b89/displayicon.png",
+        "hype": 10,
+        "appeal": 10
+    },
+    "Undercity": {
+        "image": "https://media.valorant-api.com/bundles/d84cd2bf-42e5-34e8-062f-cba8d2c66fb2/displayicon.png",
+        "hype": 5,
+        "appeal": 5
+    },
+    "Protocol 781-A": {
+        "image": "https://media.valorant-api.com/bundles/ab83f73d-485f-e010-8ea0-24b538468a1a/displayicon.png",
+        "hype": 9,
+        "appeal": 6
+    },
+    "Snowfall": {
+        "image": "https://media.valorant-api.com/bundles/8a3507cd-44ef-0695-1d66-4da0f87e7522/displayicon.png",
+        "hype": 3,
+        "appeal": 3
+    },
+    "Tigris": {
+        "image": "https://media.valorant-api.com/bundles/f1befd6b-4270-01b6-8a43-06b52fa417ae/displayicon.png",
+        "hype": 3,
+        "appeal": 3
+    },
+    "Nitro": {
+        "hype": 2,
+        "appeal": 2
+    },
+    ".EXE": {
+        "hype": 2,
+        "appeal": 2
+    },
+    "9 Lives": {
+        "hype": 3,
+        "appeal": 4
+    },
+    "Aero": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Aerosol": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Blush": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Coalition: Cobra": {
+        "hype": 2,
+        "appeal": 2
+    },
+    "Couture": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Depths": {
+        "hype": 3,
+        "appeal": 3
+    },
+    "Digihex": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Divine Swine": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Freehand": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Goldwing": {
+        "hype": 2,
+        "appeal": 1
+    },
+    "Gridcrash": {
+        "hype": 3,
+        "appeal": 2
+    },
+    "Hue Shift": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Hydrodip": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Immortalized": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Jigsaw": {
+        "hype": 3,
+        "appeal": 2
+    },
+    "Libretto": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Lightwave": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Monarch": {
+        "hype": 2,
+        "appeal": 1
+    },
+    "Monstrocity": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Moondash": {
+        "hype": 3,
+        "appeal": 2
+    },
+    "Outpost": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Panoramic": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "POLYfox": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Premiere Collision": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Prism III": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Rune Stone": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Schema": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Serenity": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Shimmer": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Silhouette": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Signature": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Spitfire": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Starlit Odyssey": {
+        "hype": 2,
+        "appeal": 2
+    },
+    "Striker": {
+        "hype": 2,
+        "appeal": 2
+    },
+    "Topotek": {
+        "hype": 2,
+        "appeal": 1
+    },
+    "Varnish": {
+        "hype": 1,
+        "appeal": 1
+    },
+    ".SYS": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Artisan": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Bound": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Cavalier": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Composite": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Genesis": {
+        "hype": 2,
+        "appeal": 1
+    },
+    "Hivemind": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Infinity": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Kingdom": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Iridian Thorn": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Surge": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "K/TAC": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "POLYfrog": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "RDVR": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Lycan's Bane": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Ruin": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Sandswept": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Songsteel": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Task Force 809": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Tilde": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Transition": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Velocity": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Venturi": {
+        "hype": 1,
+        "appeal": 3
+    },
+    "Rush": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Aristocrat": {
+        "hype": 1,
+        "appeal": 2
+    },
+    "Piedra del Sol": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Convex": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Red Alert": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Galleria": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Swooping": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Live Wire": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "RagnaRocker": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Pistolinha": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Finesse": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "FIRE/arm": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Final Chamber": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Hush": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Soul Silencer": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Vendetta": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Eclipse": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Wayfarer": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Protektor": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Mythmaker": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Game Over": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Death Wish": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Peacekeeper": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Sidekick": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Karabasan": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Snakebite": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Wayfinder": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Wunderkind": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Yoru's Stylish Butterfly Comb": {
+        "hype": 6,
+        "appeal": 5
+    },
+    "Power Fist": {
+        "hype": 10,
+        "appeal": 10
+    },
+    "Gaia's Wrath": {
+        "hype": 9,
+        "appeal": 7
+    },
+    "Gaia's Fury": {
+        "hype": 9,
+        "appeal": 7
+    },
+    "Waveform": {
+        "hype": 10,
+        "appeal": 10
+    },
+    "Obsidiana": {
+        "hype": 1,
+        "appeal": 1
+    },
+    "Hack": {
+        "hype": 5,
+        "appeal": 5
+    },
+    "Terminus A Quo": {
+        "hype": 9,
+        "appeal": 10
+    },
+    "Caeruleus": {
+        "hype": 4,
+        "appeal": 5
+    },
+    "Blade of Chaos": {
+        "hype": 4,
+        "appeal": 4
+    },
+    "Equilibrium": {
+        "hype": 4,
+        "appeal": 3
+    },
+    "Catrina": {
+        "hype": 3,
+        "appeal": 3
+    },
+    "Ruyi Staff": {
+        "hype": 3,
+        "appeal": 3
+    },
+    "Personal Administrative Melee Unit": {
+        "hype": 9,
+        "appeal": 6
+    },
+    "Relic of the Sentinel": {
+        "hype": 9,
+        "appeal": 10
+    },
+    "Prosperity": {
+        "hype": 6,
+        "appeal": 7
+    },
+    "Hu Else": {
+        "hype": 3,
+        "appeal": 3
+    },
+    "Blade of Serket": {
+        "hype": 4,
+        "appeal": 4
+    }
+}

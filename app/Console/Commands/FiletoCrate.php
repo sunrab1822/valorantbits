@@ -16,7 +16,7 @@ class FiletoCrate extends Command
      *
      * @var string
      */
-    protected $signature = 'val:fileto-crate {file}';
+    protected $signature = 'valo:crates {file}';
 
     /**
      * The console command description.

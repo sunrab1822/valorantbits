@@ -17,7 +17,7 @@ class GetItems extends Command
      *
      * @var string
      */
-    protected $signature = 'val:get-items';
+    protected $signature = 'valo:items';
 
     /**
      * The console command description.

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger('balance')->default(0)->after('email');
+        Schema::create('collection_skins', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('collection_id');
+            $table->unsignedBigInteger('skin_id');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['balance']);
-        });
+        Schema::dropIfExists('collection_skins');
     }
 };

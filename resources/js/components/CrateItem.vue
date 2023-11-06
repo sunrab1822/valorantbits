@@ -6,7 +6,7 @@
         <div class="card-img-overlay d-flex justify-content-between align-items-end ">
             <p>{{ chance }}%</p>
             <div>
-                <p><img src="/storage/radianite.png" class="currency-icon">300</p>
+                <p><img src="/storage/radianite.png" class="currency-icon">{{ price }}</p>
             </div>
         </div>
         <img class="card-img " :src="image">
@@ -14,5 +14,5 @@
 </template>
 
 <script setup>
-    defineProps(['name', 'image','chance'])
+    defineProps(['name', 'image', 'chance', 'price'])
 </script>

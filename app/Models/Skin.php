@@ -11,4 +11,8 @@ class Skin extends Model
 
     use HasFactory;
     protected $fillable = ['name', 'uuid', 'tier_id', 'category_id', 'image'];
+
+    public function tier() {
+        return $this->belongsTo(Tier::class);
+    }
 }

@@ -5,6 +5,7 @@
         </div>
         <div class="col text-center">
             <h1 class="">{{ crateObj.name }}</h1>
+            <h5><span class="d-flex justify-content-center align-items-center"><img src="/storage/radianite.png" class="currency-icon"/> {{ crateObj.price }}</span></h5>
         </div>
         <div class="col"></div>
     </div>
@@ -30,7 +31,7 @@
     <div>
         <h3>Crate items</h3>
         <div class="row">
-            <CrateItem v-for="skin in crateObj.contents" :name="skin.name" :image="skin.image" :chance="skin.chance"></CrateItem>
+            <CrateItem v-for="skin in crateObj.contents" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
         </div>
     </div>
 </template>
@@ -39,9 +40,8 @@
     import { ref } from 'vue';
     import axios from 'axios';
 
-    const prop = defineProps(['crate', 'isAuthenticated'])
-    let crateObj = JSON.parse(prop.crate)
-    console.log(crateObj);
+    const prop = defineProps(['crate', 'isAuthenticated']);
+    let crateObj = JSON.parse(prop.crate);
 
     let isSpinning = ref(false);
     let spinItems = ref([]);
@@ -66,9 +66,7 @@
         }
 
         if(winning_item) {
-            let $winningElement = $(".spin-wheel .spin-element:nth-child(81)");
-
-            $winningElement.find("img").attr('src', winning_item.image);
+            spinItems.value[80] = winning_item;
         }
     }
 
