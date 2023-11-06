@@ -63,8 +63,7 @@
                                 </li>
                             @endif
                         @else
-                        <div>
-                            <li class="nav-item dropdown d-flex flex-column">
+                            <li class="nav-item dropdown user-profile-dropdown bg-secondary rounded-2" style="width: 8rem;">
                                 {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->username }}
                                 </a>
@@ -80,31 +79,29 @@
                                         @csrf
                                     </form>
                                 </div> --}}
+                                <div class="d-flex flex-column w-100 px-2">
+                                    <div id="navbarDropdown" class="nav-link dropdown-toggle user-profile-nav" role="button" v-pre>
+                                        <span class="user-level">{{ 1 }}</span>
+                                        <span class="username-text">{{ Auth::user()->username }}</span>
+                                    </div>
+                                    <div class="progress w-100" role="progressbar">
+                                        <div class="progress-bar user-level-progress" style="width: 95%"></div>
+                                    </div>
+                                </div>
 
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="dropdown-item">
+                                        Profile
+                                    </div>
 
-
-                                        <div id="navbarDropdown" class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" v-pre>
-                                            {{ 1 }}
-                                            {{ Auth::user()->username }}
-                                        </div>
-                                        <div class="progress w-100" role="progressbar" >
-                                            <div class="progress-bar bg-success" style="width: 25%"></div>
-                                        </div>
-
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <div class="dropdown-item">
-                                                Profile
-                                            </div>
-
-                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                            </a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                @csrf
-                                            </form>
-                                        </div>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
                             </li>
-                        </div>
                         @endguest
                     </ul>
                 </div>

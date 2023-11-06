@@ -37,13 +37,17 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
  */
 
 
-$(document).ready(function () {
-    $('.dropdown').hover(function () {
-        $(this).addClass('show');
+$(function () {
+    $('.user-profile-dropdown').on("mouseenter", function () {
+        $(this).find(".dropdown-toggle").addClass('show');
         $(this).find('.dropdown-menu').addClass('show');
-    }, function () {
-        $(this).removeClass('show');
+        $(this).find('.dropdown-menu').attr('data-popper-placement', "static");
+    });
+
+    $('.user-profile-dropdown').on("mouseleave", function () {
+        $(this).find(".dropdown-toggle").removeClass('show');
         $(this).find('.dropdown-menu').removeClass('show');
+        $(this).find('.dropdown-menu').removeAttr('data-popper-placement');
     });
 });
 
