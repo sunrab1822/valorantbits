@@ -39,7 +39,7 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
+    import { ref, nextTick } from 'vue';
     import axios from 'axios';
 
     const prop = defineProps(['crate', 'isAuthenticated']);
@@ -48,13 +48,15 @@
     let isSpinning = ref(false);
     let spinItems = ref([]);
 
-    function initCrate(winning_item = null) {
+    async function initCrate(winning_item = null) {
         let chances = {};
         let chance_num = 0;
         Object.values(crateObj.contents).forEach((value) => {
             chance_num += Math.round(10000*(value.chance/100));
             chances[chance_num] = value["skin_id"];
         });
+
+        console.log("item reset");
 
         spinItems.value = [];
         for(let i = 0; i < 100; i++) {
@@ -67,6 +69,10 @@
             }
         }
 
+        let $wheel = $('.spin-wrapper .spin-wheel');
+        $wheel.css({'transform': 'translate3d(7098px, 0px, 0px)'});
+        await nextTick();
+
         if(winning_item) {
             spinItems.value[80] = winning_item;
         }
@@ -76,8 +82,6 @@
 
     async function openCrate() {
         isSpinning.value = true;
-        let $wheel = $('.spin-wrapper .spin-wheel');
-        $wheel.css({'transform': 'translate3d(7098px, 0px, 0px)'});
         let openedItem = await axios.post("/api/crate/open", {
             'clientSeed': '123456789',
             'id': crateObj.id
@@ -90,7 +94,7 @@
             return;
         }
 
-        initCrate(openedItem.data.data.drop);
+        await initCrate(openedItem.data.data.drop);
 
         setTimeout(doOpenCrate, 400, openedItem.data.data.drop.price);
     }

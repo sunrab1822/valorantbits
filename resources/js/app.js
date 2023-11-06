@@ -46,8 +46,6 @@ $(function(){
 
         $balancePopup.find(".balance-text").text(updateAmount.toLocaleString());
 
-        console.log(updateAmount < 0);
-
         if(updateAmount < 0) {
             showBalancePopup(updateAmount * -1, false);
         } else {
