@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.bunny.net/css?family=Nunito');
+@import url(https://fonts.bunny.net/css?family=albert-sans:100,200,300,400,500,600,700,800,900);
 
 // Variables
 @import 'variables';
@@ -7,13 +7,13 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
-//$fa-font-path:        "../webfonts";
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
-@import "@fortawesome/fontawesome-free/scss/solid";
-@import "@fortawesome/fontawesome-free/scss/brands";
-@import "@fortawesome/fontawesome-free/scss/regular";
 
 @import "spin";
+
+body {
+    font-family: 'Albert Sans', sans-serif !important;
+}
 
 .p-25 {
     padding: 0.75rem;
@@ -22,7 +22,7 @@
 .currency-icon {
     width: 24px;
     height: 24px;
-    margin-right: .5rem;
+    margin-right: .25rem;
 }
 
 .currency-icon-small {
@@ -127,9 +127,9 @@
 }
 
 .user-level {
-    background-image: linear-gradient(to top right, #237912, #38c20e);
+    background-image: linear-gradient(to top right, #31a819, #38c20e);
     -webkit-background-clip: text;
-    font-weight: 700;
+    font-weight: 900;
     color: transparent;
 }
 
@@ -141,4 +141,26 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+
+.balance-popup {
+    z-index: 999;
+    position: fixed;
+    left: 50%;
+    top: 3%;
+    transform: translate(-50%, -9%);
+    opacity: 0;
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 0.2rem;
+}
+
+.balance-popup-negative {
+    border-color: #b60f1f;
+    background-color: #DC3545;
+}
+
+.balance-popup-positive {
+    border-color: #085a34;
+    background-color: #198754;
 }

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Crate;
-use App\Models\CrateItems;
 use App\Models\Skin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,7 +40,7 @@ class CrateController extends Controller
     }
 
     public function openCrate(Request $request) {
-        if(Auth::check()) {
+        if(!Auth::check()) {
             return response(json_encode(["status" => 403, "data" => "Unauthorized"]));
         }
 
@@ -48,14 +48,25 @@ class CrateController extends Controller
         $case_id = $request->get("id");
 
         $Crate = Crate::find($case_id);
+        $User = User::find(Auth::id());
 
         if($Crate) {
+            if($User->balance < $Crate->price) {
+                return ["status" => "500", "data" => "Not enough balance"];
+            }
+
+            $User->balance -= $Crate->price;
+            $User->save();
+
             $chances = array_map(function($item){ return $item['chance']; }, $Crate->contents->toArray());
             $items = array_map(function($item){ return $item['skin_id']; }, $Crate->contents->toArray());
 
             $wonItemId = $this->determineItemOutcome($chances, $items);
 
             $wonItem = Skin::find($wonItemId);
+
+            $User->balance += $wonItem->price;
+            $User->save();
 
             return response(["status" => 200, "data" => ["drop" => $wonItem]]);
         }

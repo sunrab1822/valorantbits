@@ -39,10 +39,10 @@
                 </div>
 
                 @auth
-                <div class="mx-auto order-0">
+                <div class="mx-auto order-0 nav-balance">
                     <div class="d-flex bg-secondary align-items-center rounded-2 balance-box mx-auto">
                         <img src="{{ asset('storage/radianite.png') }}" class="currency-icon">
-                        <div class="balance-text">{{ number_format(Auth::user()->balance / 100, 2) }}</div>
+                        <div class="balance-text nav_balance">{{ number_format(Auth::user()->balance) }}</div>
                     </div>
                 </div>
                 @endauth
@@ -63,12 +63,24 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown user-profile-dropdown bg-secondary rounded-2" style="width: 8rem;">
-                                {{-- <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->username }}
-                                </a>
+                            <li class="nav-item dropdown user-profile-dropdown bg-secondary rounded-2" data-bs-theme="dark">
+                                <div id="navbarDropdown" class="nav-link d-flex" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <div class="pe-1" style="width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                                        <div>
+                                            <span class="user-level me-1">21</span>
+                                            <span class="username-text">{{ Auth::user()->username }}</span>
+                                        </div>
+                                        <div class="progress" role="progressbar">
+                                            <div class="progress-bar user-level-progress" style="width: 95%"></div>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-toggle"></div>
+                                </div>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}">
+                                        {{ __('Profile') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                         document.getElementById('logout-form').submit();">
@@ -78,8 +90,8 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-                                </div> --}}
-                                <div class="d-flex flex-column w-100 px-2">
+                                </div>
+                                {{-- <div class="d-flex flex-column w-100 px-2">
                                     <div id="navbarDropdown" class="nav-link dropdown-toggle user-profile-nav" role="button" v-pre>
                                         <span class="user-level">{{ 1 }}</span>
                                         <span class="username-text">{{ Auth::user()->username }}</span>
@@ -87,7 +99,7 @@
                                     <div class="progress w-100" role="progressbar">
                                         <div class="progress-bar user-level-progress" style="width: 95%"></div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="dropdown-item">

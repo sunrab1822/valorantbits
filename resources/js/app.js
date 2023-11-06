@@ -36,19 +36,60 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+app.mount('#app');
 
-$(function () {
-    $('.user-profile-dropdown').on("mouseenter", function () {
-        $(this).find(".dropdown-toggle").addClass('show');
-        $(this).find('.dropdown-menu').addClass('show');
-        $(this).find('.dropdown-menu').attr('data-popper-placement', "static");
-    });
 
-    $('.user-profile-dropdown').on("mouseleave", function () {
-        $(this).find(".dropdown-toggle").removeClass('show');
-        $(this).find('.dropdown-menu').removeClass('show');
-        $(this).find('.dropdown-menu').removeAttr('data-popper-placement');
+$(function(){
+    $(".nav_balance").on("updateBalance", function(event, amount){
+        let updateAmount = Number(amount);
+        let $balancePopup = $(".balance-popup");
+
+        $balancePopup.find(".balance-text").text(updateAmount.toLocaleString());
+
+        console.log(updateAmount < 0);
+
+        if(updateAmount < 0) {
+            showBalancePopup(updateAmount * -1, false);
+        } else {
+            showBalancePopup(updateAmount, true);
+        }
+
+        let updatedBalance = Number($(this).text().replace(",", "")) + updateAmount;
+        $(this).text(updatedBalance.toLocaleString());
     });
 });
 
-app.mount('#app');
+function showBalancePopup(amount, positive) {
+    let $popupDiv = null;
+    if(positive) {
+        $popupDiv = $("<div>", {
+            "class": "d-flex balance-popup",
+            "style": "z-index: 999; position: fixed; left: 50%; top: 3%; transform: translate(-50%, -9%); opacity: 0.2; border: 1px #085a34 solid; border-radius: 4px; padding: 0.2rem; background-color: #198754;"
+        });
+    } else {
+        $popupDiv = $("<div>", {
+            "class": "d-flex balance-popup",
+            "style": "z-index: 999; position: fixed; left: 50%; top: 3%; transform: translate(-50%, -9%); opacity: 0.2; border: 1px #b60f1f solid; border-radius: 4px; padding: 0.2rem; background-color: #DC3545;"
+        });
+    }
+
+    $popupDiv.append($("<img>", {"src": "/storage/radianite.png", "class": "currency-icon"}));
+    $popupDiv.append($("<div>", {"class": "balance-text", "text": amount.toLocaleString()}));
+
+    $(".nav-balance").append($popupDiv);
+
+    setTimeout(function(){
+        $popupDiv.css({
+            'transition-timing-function':'linear',
+            'transition-duration':'0.5s',
+            'transform':'translate(-50%, 71%)',
+            'opacity': '1'
+        });
+    }, 20);
+
+    setTimeout(resetBalancePopup, 650);
+}
+
+function resetBalancePopup() {
+    $(".nav-balance .balance-popup").remove();
+}

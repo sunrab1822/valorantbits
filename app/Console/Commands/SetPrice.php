@@ -26,11 +26,6 @@ class SetPrice extends Command
      */
     public function handle()
     {
-
-        $Skins = Skin::all();
-
-        $appeal = 5;
-        $hype = 7;
         $multiplier = 4;
         $divisor = 10;
 
@@ -46,7 +41,7 @@ class SetPrice extends Command
                 $min = $min_max['min'];
                 $max = $min_max['max'];
 
-                $float_value = ($appeal + $hype) / ($multiplier * $divisor);
+                $float_value = ($data['appeal'] + $data['hype']) / ($multiplier * $divisor);
 
                 $float_value *= $this->getWeaponTypeMultiplier($Skin->category_id);
 
@@ -97,7 +92,7 @@ class SetPrice extends Command
             case 17:
                 return 0.9;
             case 18:
-                return 1.6;
+                return 2.3;
             case 19:
                 return 1;
         }

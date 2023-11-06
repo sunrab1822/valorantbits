@@ -18,8 +18,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/crate-list', [CrateController::class, 'getCrateList']);
-Route::get('/crate-contents/{crate_id}', [CrateController::class, 'getCrateContents']);
-Route::get('/server_hash', [CrateController::class, 'getServerHash']);
-Route::post('/crate/open', [CrateController::class, 'openCrate']);

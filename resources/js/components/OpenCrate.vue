@@ -5,7 +5,6 @@
         </div>
         <div class="col text-center">
             <h1 class="">{{ crateObj.name }}</h1>
-            <h5><span class="d-flex justify-content-center align-items-center"><img src="/storage/radianite.png" class="currency-icon"/> {{ crateObj.price }}</span></h5>
         </div>
         <div class="col"></div>
     </div>
@@ -17,7 +16,7 @@
             </div>
         </div>
     </div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center align-items-center">
         <div class="bg-secondary rounded me-2">
             <button class="btn btn-secondary">1</button>
             <button class="btn btn-secondary">2</button>
@@ -26,6 +25,9 @@
         </div>
         <div>
             <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="isAuthenticated">Open</button>
+        </div>
+        <div class="d-flex justify-content-center align-items-center ms-1">
+            <img src="/storage/radianite.png" class="currency-icon"/><span class="fs-5">{{ crateObj.price }}</span>
         </div>
     </div>
     <div>
@@ -81,6 +83,8 @@
             'id': crateObj.id
         });
 
+        $(".nav_balance").trigger("updateBalance", crateObj.price * -1);
+
         if(openedItem.data.data.drop == undefined || openedItem.data.data.drop == null) {
             isSpinning.value = false;
             return;
@@ -88,10 +92,10 @@
 
         initCrate(openedItem.data.data.drop);
 
-        setTimeout(doOpenCrate, 400);
+        setTimeout(doOpenCrate, 400, openedItem.data.data.drop.price);
     }
 
-    function doOpenCrate() {
+    function doOpenCrate(wonAmount) {
         let card_width = 150;
         let $wheel = $('.spin-wrapper .spin-wheel');
         let position = getRandomInt(0, 15);
@@ -112,16 +116,17 @@
             'transform':'translate3d(-4758px, 0px, 0px)'
         });
 
-        setTimeout(postOpenCrate, 6 * 1000);
+        setTimeout(postOpenCrate, 6 * 1000, wonAmount);
     }
 
-    function postOpenCrate() {
+    function postOpenCrate(wonAmount) {
         isSpinning.value = false;
         let $wheel = $('.spin-wrapper .spin-wheel');
         $wheel.css({
             'transition-timing-function':'',
             'transition-duration':'',
         });
+        $(".nav_balance").trigger("updateBalance", wonAmount);
     }
 
     function getRandomInt(min, max) {
