@@ -15,4 +15,8 @@ class Skin extends Model
     public function tier() {
         return $this->belongsTo(Tier::class);
     }
+
+    public function category() {
+        return $this->belongsTo(Category::class);
+    }
 }

@@ -116,8 +116,8 @@
     },
     "Prelude to Chaos": {
         "image": "https://media.valorant-api.com/bundles/526f7d0c-414b-24bb-bcd0-10aed1f3e824/displayicon.png",
-        "hype": 8,
-        "appeal": 8
+        "hype": 9,
+        "appeal": 9
     },
     "Doodle Buds": {
         "image": "https://media.valorant-api.com/bundles/2ed936df-4959-acc7-9aca-358d34a50619/displayicon.png",
@@ -242,7 +242,7 @@
     "Magepunk": {
         "image": "https://media.valorant-api.com/bundles/a981af4a-4d81-9668-8923-9c84c43da3d3/displayicon.png",
         "hype": 5,
-        "appeal": 7
+        "appeal": 8
     },
     "Spline": {
         "image": "https://media.valorant-api.com/bundles/c1b255e2-411d-b159-6da3-5ab6c011a8cf/displayicon.png",
@@ -791,8 +791,8 @@
         "appeal": 5
     },
     "Blade of Chaos": {
-        "hype": 8,
-        "appeal": 8
+        "hype": 9,
+        "appeal": 9
     },
     "Equilibrium": {
         "hype": 4,

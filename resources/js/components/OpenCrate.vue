@@ -27,7 +27,7 @@
             <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="isAuthenticated">Open</button>
         </div>
         <div class="d-flex justify-content-center align-items-center ms-1">
-            <img src="/storage/radianite.png" class="currency-icon"/><span class="fs-5">{{ crateObj.price }}</span>
+            <img src="/storage/radianite.png" class="currency-icon"/><span class="fs-5">{{ crateObj.price.toBalance(2) }}</span>
         </div>
     </div>
     <div>
@@ -96,7 +96,7 @@
 
         await initCrate(openedItem.data.data.drop);
 
-        setTimeout(doOpenCrate, 400, openedItem.data.data.drop.price);
+        setTimeout(doOpenCrate, 400, openedItem.data.data.drop.price.toBalance(2));
     }
 
     function doOpenCrate(wonAmount) {

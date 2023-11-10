@@ -56,7 +56,6 @@ class CrateController extends Controller
             }
 
             $User->balance -= $Crate->price;
-            $User->save();
 
             $chances = array_map(function($item){ return $item['chance']; }, $Crate->contents->toArray());
             $items = array_map(function($item){ return $item['skin_id']; }, $Crate->contents->toArray());

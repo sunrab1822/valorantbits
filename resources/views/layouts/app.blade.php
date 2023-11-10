@@ -42,7 +42,7 @@
                 <div class="mx-auto order-0 nav-balance">
                     <div class="d-flex bg-secondary align-items-center rounded-2 balance-box mx-auto">
                         <img src="{{ asset('storage/radianite.png') }}" class="currency-icon">
-                        <div class="balance-text nav_balance">{{ number_format(Auth::user()->balance) }}</div>
+                        <div class="balance-text nav_balance">{{ number_format(Auth::user()->balance / 100, 2) }}</div>
                     </div>
                 </div>
                 @endauth

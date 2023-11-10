@@ -10,6 +10,10 @@ import $ from "jquery";
 
 window.$ = $;
 
+Number.prototype.toBalance = function(dp) {
+    return Number(Math.round(parseFloat((this / 100) + 'e' + dp)) + 'e-' + dp);
+}
+
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
  * registering components with the application instance so they are ready
@@ -41,16 +45,12 @@ app.mount('#app');
 
 $(function(){
     $(".nav_balance").on("updateBalance", function(event, amount){
-        let updateAmount = Number(amount);
+        let updateAmount = Number(amount).toBalance(2);
         let $balancePopup = $(".balance-popup");
 
         $balancePopup.find(".balance-text").text(updateAmount.toLocaleString());
 
-        if(updateAmount < 0) {
-            showBalancePopup(updateAmount * -1, false);
-        } else {
-            showBalancePopup(updateAmount, true);
-        }
+        showBalancePopup(updateAmount, updateAmount > 0);
 
         let updatedBalance = Number($(this).text().replace(",", "")) + updateAmount;
         $(this).text(updatedBalance.toLocaleString());
@@ -72,7 +72,7 @@ function showBalancePopup(amount, positive) {
     }
 
     $popupDiv.append($("<img>", {"src": "/storage/radianite.png", "class": "currency-icon"}));
-    $popupDiv.append($("<div>", {"class": "balance-text", "text": amount.toLocaleString()}));
+    $popupDiv.append($("<div>", {"class": "balance-text", "text": (!positive ? "-" : "") + amount.toLocaleString()}));
 
     $(".nav-balance").append($popupDiv);
 
