@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CoinflipController;
 use App\Http\Controllers\CrateController;
 use App\Http\Controllers\UserController;
 use App\Models\Crate;
@@ -20,7 +21,8 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/crates', [CrateController::class, 'index'])->name('crates');
-Route::get('/profile', [UserController::class, 'index'])->name('profile');
+Route::get('/profile', [UserController::class, 'index'])->name('profile')->middleware("auth");
+Route::get('/coinflip', [CoinflipController::class, 'index'])->name('coinflip');
 Route::get('/crate/{id}', [CrateController::class, 'view']);
 
 Route::get('/api/crate-list', [CrateController::class, 'getCrateList']);

@@ -11,12 +11,12 @@
             </a>
         </div>
         <div class="game-choice-card">
-            <a class="styleless-link" href="/crates">
+            <a class="styleless-link" href="/coinflip">
                 <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
                     <img class="card-img" src="/storage/crate.png">
                 </div>
                 <h4 class="text-center">
-                    Open Crates
+                    Coinflip
                 </h4>
             </a>
         </div>

@@ -7,10 +7,9 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    function index() {
+    public function index() {
 
-        $user = Auth::user();
 
-        return view('user.profile', ["user" => $user]);
+        return view('user.profile', ["user" => Auth::user()]);
     }
 }
