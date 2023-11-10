@@ -56,8 +56,6 @@
             chances[chance_num] = value["skin_id"];
         });
 
-        console.log("item reset");
-
         spinItems.value = [];
         for(let i = 0; i < 100; i++) {
             let randomNum = getRandomInt(0, 10001);
