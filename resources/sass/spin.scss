@@ -37,48 +37,56 @@
 }
 
 .crate-item{
-    height:200px;
-    width:220px;
-    margin:3px;
-    border-radius:8px;
-    border:3px solid rgba(0,0,0,0.2);
-    display:flex;
-    align-items: center;
-    justify-content: center;
+    height:150px;
     color: white;
     background-color: rgba(0,0,0,0);
+    border-top: 2px solid !important;
+    border-bottom: none !important;
+    border-left: none !important;
+    border-right: none !important;
+
+    .crate-item-img {
+        max-width: 100px;
+        min-width: 100px;
+    }
 
     img {
-
         max-width: 100%;
         max-height: 2.5rem;
         width: auto !important;
         align-items: start;
     }
-
-    p {
-
-        font-size: 1rem;
-        text-align: center;
-    }
 }
 
 .select-background{
-    background: linear-gradient(rgb(0 0 0 / 0%), #5a9fe2) no-repeat;
+    background: linear-gradient(rgb(0 0 0 / 0%), #5a9fe299) no-repeat;
+    border-color: #5a9fe2 !important;
 }
 
 .deluxe-background{
-    background: linear-gradient(rgb(0 0 0 / 0%), #009587) no-repeat;
+    background: linear-gradient(rgb(0 0 0 / 0%), #00958799) no-repeat;
+    border-color: #009587 !important;
 }
 
 .premium-background{
-    background: linear-gradient(rgb(0 0 0 / 0%), #d1548d) no-repeat;
+    background: linear-gradient(rgb(0 0 0 / 0%), #d1548d99) no-repeat;
+    border-color: #d1548d !important;
 }
 
 .exclusive-background{
-    background: linear-gradient(rgb(0 0 0 / 0%), #f5955b) no-repeat;
+    background: linear-gradient(rgb(0 0 0 / 0%), #f5955b99) no-repeat;
+    border-color: #f5955b !important;
 }
 
 .ultra-background{
-    background: linear-gradient(rgb(0 0 0 / 0%), #fad663) no-repeat;
+    background: linear-gradient(rgb(0 0 0 / 0%), #fad66399) no-repeat;
+    border-color: #fad663 !important;
+}
+
+.fs-6-1 {
+    font-size: 1rem;
+}
+
+.fs-7 {
+    font-size: .75rem;
 }

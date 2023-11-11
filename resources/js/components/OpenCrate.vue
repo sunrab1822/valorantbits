@@ -11,18 +11,12 @@
     <div class="spin-wrapper mb-3">
         <div class="spin-selector"></div>
         <div class="spin-wheel d-flex" style="transform: translate3d(7098px, 0px, 0px)">
-            <div v-for="(skin, key) in spinItems" class="spin-element" :class="`element-`+key">
+            <div v-for="(skin, key) in spinItems" class="spin-element flex-column">
                 <img :src="skin.image" alt="">
             </div>
         </div>
     </div>
     <div class="d-flex justify-content-center align-items-center">
-        <div class="bg-secondary rounded me-2">
-            <button class="btn btn-secondary">1</button>
-            <button class="btn btn-secondary">2</button>
-            <button class="btn btn-secondary">3</button>
-            <button class="btn btn-secondary">4</button>
-        </div>
         <div>
             <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="isAuthenticated">Open</button>
         </div>
@@ -32,7 +26,7 @@
     </div>
     <div>
         <h3>Crate items</h3>
-        <div class="row">
+        <div class="row row-cols-5" style="--bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem;">
             <CrateItem v-for="skin in crateObj.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
         </div>
     </div>
@@ -47,6 +41,10 @@
 
     let isSpinning = ref(false);
     let spinItems = ref([]);
+
+    crateObj.contents.sort(function(a,b) {
+        return a.tier.rank > b.tier.rank ? -1 : 1;
+    });
 
     async function initCrate(winning_item = null) {
         let chances = {};
@@ -69,6 +67,9 @@
 
         let $wheel = $('.spin-wrapper .spin-wheel');
         $wheel.css({'transform': 'translate3d(7098px, 0px, 0px)'});
+        $wheel.find(".won_item_text_container").remove();
+        $wheel.find(":nth-child(81)").removeClass("border-success");
+        $(".spin-wrapper .spin-selector").removeClass("d-none");
         await nextTick();
 
         if(winning_item) {
@@ -94,18 +95,15 @@
 
         await initCrate(openedItem.data.data.drop);
 
-        setTimeout(doOpenCrate, 400, openedItem.data.data.drop.price);
+        setTimeout(doOpenCrate, 400, openedItem.data.data.drop);
     }
 
-    function doOpenCrate(wonAmount) {
+    function doOpenCrate(wonItem) {
         let card_width = 150;
         let $wheel = $('.spin-wrapper .spin-wheel');
-        let position = getRandomInt(0, 15);
-        let card = card_width + 3 * 2;
-        let landingPosition = (15 * card) + (position * card);
-        let randomize = Math.floor(Math.random() * card_width) - (card_width/2);
 
-        landingPosition = landingPosition + randomize;
+        let randomize = Math.floor(Math.random() * card_width) - (card_width/2);
+        let landingPosition = 4758 + randomize;
 
         let object = {
             x: Math.floor(Math.random() * 50) / 100,
@@ -115,20 +113,43 @@
         $wheel.css({
             'transition-timing-function':'cubic-bezier(0,'+ object.x +','+ object.y + ',1)',
             'transition-duration':'6s',
-            'transform':'translate3d(-4758px, 0px, 0px)'
+            'transform':'translate3d(-'+ landingPosition +'px, 0px, 0px)'
         });
 
-        setTimeout(postOpenCrate, 6 * 1000, wonAmount);
+        setTimeout((wonItem) => {
+            $('.spin-wrapper .spin-wheel').css({
+                'transition-timing-function':'linear',
+                'transition-duration':'0.2s',
+                'transform':'translate3d(-4758px, 0px, 0px)'
+            });
+            setTimeout(postOpenCrate, 400, wonItem);
+        }, 6100, wonItem);
     }
 
-    function postOpenCrate(wonAmount) {
-        isSpinning.value = false;
+    function postOpenCrate(wonItem) {
         let $wheel = $('.spin-wrapper .spin-wheel');
+
+        let $winItemTextContainer = $("<div>", {
+            class: "won_item_text_container fs-7 text-center mt-4"
+        });
+
+        $winItemTextContainer.append($("<div>", {
+            text: wonItem.name
+        }));
+        $winItemTextContainer.append($("<div>", {
+            text: wonItem.price.toBalance(2)
+        }).prepend($("<img>", {"src": "/storage/radianite.png", "class": "currency-icon"})));
+
+        $(".spin-wrapper .spin-selector").addClass("d-none");
+        $wheel.find(":nth-child(81)").append($winItemTextContainer);
+        $wheel.find(":nth-child(81)").addClass("border-success");
+
         $wheel.css({
             'transition-timing-function':'',
             'transition-duration':'',
         });
-        $(".nav_balance").trigger("updateBalance", wonAmount);
+        $(".nav_balance").trigger("updateBalance", wonItem.price);
+        isSpinning.value = false;
     }
 
     function getRandomInt(min, max) {

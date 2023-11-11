@@ -46,7 +46,6 @@ app.mount('#app');
 $(function(){
     $(".nav_balance").on("updateBalance", function(event, amount){
         let updateAmount = Number(amount).toBalance(2);
-        console.log(amount, updateAmount);
         let $balancePopup = $(".balance-popup");
 
         $balancePopup.find(".balance-text").text(updateAmount.toLocaleString());

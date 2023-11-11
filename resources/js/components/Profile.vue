@@ -4,14 +4,14 @@
             <div class="d-flex justify-content-center">
                 <img class="profp border border-success rounded-circle" src="{{ profileImage }}" alt="">
             </div>
-            <div class="m-5">
+            <div class="mb-5 mt-2">
                 <h4 class="text-center">{{ username }}</h4>
             </div>
         </div>
         <div class="col col-12 d-flex ">
             <div class="row w-100 d-flex justify-content-around">
                 <div class="col col-3 rounded border border-1 border-success ">
-                    <h5 class="text-center m-2">Top Wim</h5>
+                    <h5 class="text-center m-2">Top Win</h5>
                     <p class="text-center fs-4"><img src="/storage/radianite.png" class="currency-icon">10312212313123</p>
                 </div>
                 <div class="col col-4 rounded border border-1 border-success ">
