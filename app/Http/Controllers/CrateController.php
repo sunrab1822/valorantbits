@@ -19,6 +19,9 @@ class CrateController extends Controller
     public function view($id) {
         $crate = Crate::find($id);
         $crate->contents;
+        foreach ($crate->contents as $content){
+            $content->tier;
+        }
         return view('crates/view')->with(['crate' => $crate]);
     }
 
@@ -28,6 +31,10 @@ class CrateController extends Controller
         return response(json_encode(["status" => 200, "data" => $crates]));
     }
 
+
+    /**
+     * @deprecated
+     */
     public function getCrateContents($crate_id) {
         $Crate = Crate::find($crate_id);
         $Crate->contents;

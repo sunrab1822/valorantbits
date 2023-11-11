@@ -33,7 +33,7 @@
     <div>
         <h3>Crate items</h3>
         <div class="row">
-            <CrateItem v-for="skin in crateObj.contents" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
+            <CrateItem v-for="skin in crateObj.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
         </div>
     </div>
 </template>
@@ -94,7 +94,7 @@
 
         await initCrate(openedItem.data.data.drop);
 
-        setTimeout(doOpenCrate, 400, openedItem.data.data.drop.price.toBalance(2));
+        setTimeout(doOpenCrate, 400, openedItem.data.data.drop.price);
     }
 
     function doOpenCrate(wonAmount) {

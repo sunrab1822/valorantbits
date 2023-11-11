@@ -41,72 +41,72 @@ class SetPrice extends Command
 
             if(!isset($key)) continue;
 
-            $min_max = $this->getMinMax($Skin->tier->rank);
+            $min_max = $this->getMinMax($Skin->category_id);
             $min = $min_max['min'];
             $max = $min_max['max'];
 
-            $Skin->price = $this->calculatePrice($min, $max, $json_data[$key]['hype'], $json_data[$key]['appeal'], $this->getWeaponTypeMultiplier($Skin->category_id), $Skin->name);
+            $Skin->price = $this->calculatePrice($min, $max, $json_data[$key]['hype'], $json_data[$key]['appeal'], $this->getMultiplier($Skin->tier->rank), $Skin->name);
             $Skin->save();
 
             echo $Skin->name . ": " . $Skin->price . "\r\n";
         }
     }
 
-    public function getWeaponTypeMultiplier($weapon_type) {
+    public function getMinMax($weapon_type) {
         switch($weapon_type) {
-            case 1:
-                return 0.9;
-            case 2:
-                return 0.7;
-            case 3:
-                return 1.3;
-            case 4:
-                return 1;
-            case 5:
-                return 1.3;
-            case 6:
-                return 0.8;
-            case 7:
-                return 0.7;
-            case 8:
-                return 0.9;
-            case 9:
-                return 1;
-            case 10:
-                return 1;
-            case 11:
-                return 1.2;
-            case 12:
-                return 0.9;
-            case 13:
-                return 1.3;
-            case 14:
-                return 1.1;
-            case 15:
-                return 1;
-            case 16:
-                return 1;
-            case 17:
-                return 0.9;
-            case 18:
-                return 1.6;
-            case 19:
-                return 1;
+            case 1: //odin
+                return ['min' => 2300, 'max' => 3500];
+            case 2: //ares
+                return ['min' => 300, 'max' => 1000];
+            case 3: //vandal
+                return ['min' => 3900, 'max' => 5800];
+            case 4: //bulldog
+                return ['min' => 980, 'max' => 2400];
+            case 5: //phantom
+                return ['min' => 3900, 'max' => 5800];
+            case 6: //judge
+                return ['min' => 500, 'max' => 1200];
+            case 7: //bucky
+                return ['min' => 50, 'max' => 800];
+            case 8: //frenzy
+                return ['min' => 15, 'max' => 100];
+            case 9: //classic
+                return ['min' => 0.1, 'max' => 80];
+            case 10: //ghost
+                return ['min' => 400, 'max' => 1400];
+            case 11: //sherif
+                return ['min' => 3000, 'max' => 4700];
+            case 12: //shorty
+                return ['min' => 70, 'max' => 500];
+            case 13: //OP
+                return ['min' => 5090, 'max' => 7300];
+            case 14: //guardian
+                return ['min' => 2300, 'max' => 3500];
+            case 15: //marshal
+                return ['min' => 1700, 'max' => 2800];
+            case 16: //spectre
+                return ['min' => 1500, 'max' => 2600];
+            case 17: //stinger
+                return ['min' => 100, 'max' => 990];
+            case 18: //melee
+                return ['min' => 6500, 'max' => 8000];
+            case 19: //spray
+                return ['min' => 0.1, 'max' => 10];
         }
     }
 
-    public function getMinMax($tier) {
+    public function getMultiplier($tier) {
         switch ($tier) {
             case 0:
-                return ['min' => 1, 'max' => 50];
+                return 0.1;
             case 1:
-                return ['min' => 51, 'max' => 200];
+                return 0.7;
             case 2:
-                return ['min' => 201, 'max' => 750];
+                return 1;
             case 3:
-                return ['min' => 751, 'max' => 3000];
+                return 1.3;
             case 4:
-                return ['min' => 3001, 'max' => 7000];
+                return 1.8;
         }
     }
 

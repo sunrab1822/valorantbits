@@ -26,6 +26,6 @@ Route::get('/coinflip', [CoinflipController::class, 'index'])->name('coinflip');
 Route::get('/crate/{id}', [CrateController::class, 'view']);
 
 Route::get('/api/crate-list', [CrateController::class, 'getCrateList']);
-Route::get('/api/crate-contents/{crate_id}', [CrateController::class, 'getCrateContents']);
+//Route::get('/api/crate-contents/{crate_id}', [CrateController::class, 'getCrateContents']);
 Route::get('/api/server_hash', [CrateController::class, 'getServerHash']);
 Route::post('/api/crate/open', [CrateController::class, 'openCrate']);

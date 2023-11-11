@@ -1,5 +1,5 @@
 <template>
-    <div class="card col-md-4 crate-item pt-0">
+    <div class="card col-md-4 crate-item pt-0" :class="[tier.toLowerCase()+'-background']">
         <div class="card-img-overlay d-flex align-items-start justify-content-center" style="z-index: 2;">
             <p>{{ name }}</p>
         </div>
@@ -14,5 +14,5 @@
 </template>
 
 <script setup>
-    defineProps(['name', 'image', 'chance', 'price'])
+    defineProps(['name', 'image', 'chance', 'price', 'tier'])
 </script>

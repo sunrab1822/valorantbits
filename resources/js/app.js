@@ -46,6 +46,7 @@ app.mount('#app');
 $(function(){
     $(".nav_balance").on("updateBalance", function(event, amount){
         let updateAmount = Number(amount).toBalance(2);
+        console.log(amount, updateAmount);
         let $balancePopup = $(".balance-popup");
 
         $balancePopup.find(".balance-text").text(updateAmount.toLocaleString());
@@ -72,7 +73,7 @@ function showBalancePopup(amount, positive) {
     }
 
     $popupDiv.append($("<img>", {"src": "/storage/radianite.png", "class": "currency-icon"}));
-    $popupDiv.append($("<div>", {"class": "balance-text", "text": (!positive ? "-" : "") + amount.toLocaleString()}));
+    $popupDiv.append($("<div>", {"class": "balance-text", "text": amount.toLocaleString()}));
 
     $(".nav-balance").append($popupDiv);
 
