@@ -2,6 +2,6 @@
 
 @section('content')
     <div class="container">
-        <profile username="{{ $user->username }}" profileImage="{{ $user->profileImage }}"></profile>
+        <profile user="{{ $user }}"></profile>
     </div>
 @endsection

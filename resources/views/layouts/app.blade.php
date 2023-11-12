@@ -16,7 +16,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body class="bg-dark text-white">
+<body class="background text-white">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-nav-dark shadow-sm">
             <div class="container-fluid mx-3 fixed-navbar-height">
