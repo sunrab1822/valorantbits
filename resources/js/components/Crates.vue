@@ -1,6 +1,6 @@
 <template>
-    <div class="row row-cols-md-4 row-cols-sm-3 g-2">
-        <crate v-if="crates.length > 0" v-for="crate in crates" :name="crate.name" :id="crate.id" />
+    <div class="row row-cols-md-5 row-cols-sm-3 g-2">
+        <crate v-if="crates.length > 0" v-for="crate in crates" :name="crate.name" :id="crate.id" :image="crate.image" :price="crate.price"/>
     </div>
 </template>
 

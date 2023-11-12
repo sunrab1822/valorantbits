@@ -18,7 +18,7 @@
 </head>
 <body class="bg-dark text-white">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-nav-dark shadow-sm">
             <div class="container-fluid mx-3 fixed-navbar-height">
                 <a class="navbar-brand brand-small bg-secondary p-25 rounded-2" href="{{ url('/') }}">
                     <svg class="d-block" stroke="#fff" fill="#fff" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M208 448V320h96v128h97.6V256H464L256 64 48 256h62.4v192z"></path></svg>
@@ -68,7 +68,7 @@
                                     <div class="pe-1" style="width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                         <div>
                                             <span class="user-level me-1">21</span>
-                                            <span class="username-text">{{ Auth::user()->username }}</span>
+                                            <span class="no-wrap">{{ Auth::user()->username }}</span>
                                         </div>
                                         <div class="progress" role="progressbar">
                                             <div class="progress-bar user-level-progress" style="width: 95%"></div>
@@ -91,15 +91,6 @@
                                         @csrf
                                     </form>
                                 </div>
-                                {{-- <div class="d-flex flex-column w-100 px-2">
-                                    <div id="navbarDropdown" class="nav-link dropdown-toggle user-profile-nav" role="button" v-pre>
-                                        <span class="user-level">{{ 1 }}</span>
-                                        <span class="username-text">{{ Auth::user()->username }}</span>
-                                    </div>
-                                    <div class="progress w-100" role="progressbar">
-                                        <div class="progress-bar user-level-progress" style="width: 95%"></div>
-                                    </div>
-                                </div> --}}
 
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <div class="dropdown-item">

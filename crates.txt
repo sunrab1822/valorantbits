@@ -36,3 +36,7 @@ Sakura Classic,1.7
 VALORANT GO! Vol. 1 Phantom,1.5
 Elderflame Vandal,0.5
 Spectrum Classic,98.0
+
+*5% ChronoVoid*
+ChronoVoid Vandal,5.0
+Aerosol Bucky,95.0

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\GameType;
 use App\Models\Crate;
 use App\Models\Skin;
 use App\Models\User;
@@ -73,6 +74,8 @@ class CrateController extends Controller
 
             $User->balance += $wonItem->price;
             $User->save();
+
+            $User->wager($Crate->price, $wonItem->price, GameType::Crates);
 
             return response(["status" => 200, "data" => ["drop" => $wonItem]]);
         }

@@ -15,6 +15,10 @@ body {
     font-family: 'Albert Sans', sans-serif !important;
 }
 
+.bg-nav-dark {
+    background-color: rgb(47 50 53);
+}
+
 .p-25 {
     padding: 0.75rem;
 }
@@ -137,12 +141,6 @@ body {
     background: linear-gradient(to right, #237912, #38c20e);
 }
 
-.username-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 .balance-popup {
     z-index: 999;
     position: fixed;
@@ -168,4 +166,25 @@ body {
 .profp{
     height: 9rem;
     width: 9rem;
+}
+
+a.no-style {
+    text-decoration: inherit;
+    color: inherit;
+}
+
+.no-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bg-dark-linear {
+    background: linear-gradient(to bottom, transparent, #36393b) no-repeat;
+    border: 2px solid rgb(31 34 37 / 1) !important;
+
+    :hover {
+        background-color: #36393b;
+        border-radius: 4px;
+    }
 }

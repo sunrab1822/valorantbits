@@ -26,7 +26,7 @@
                     <img class="card-img" src="/storage/crate.png">
                 </div>
                 <h4 class="text-center">
-                    Open Crates
+                    Blackjack
                 </h4>
             </a>
         </div>
