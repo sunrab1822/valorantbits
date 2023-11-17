@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-between mb-4">
         <div class="d-flex">
-            <img class="profile-picture border border-success rounded-circle" :src="userObj.profileImage" alt="">
+            <img class="profile-picture border border-success rounded-circle" :src="userObj.profile_image" alt="">
             <div class="mt-1 ms-3">
                 <div class="d-flex">
                     <h4>{{ userObj.username }}</h4>
@@ -24,28 +24,40 @@
         </div>
     </div>
     <div class="divider"></div>
-    <div class="d-flex">
-        <div class="row w-100 d-flex justify-content-around">
-            <div class="col col-3 rounded border border-1 border-success">
-                <h5 class="text-center m-2">Top Win</h5>
-                <p class="text-center fs-4"><img src="/storage/radianite.png" class="currency-icon">10312212313123</p>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="card vb-card mb-2 fs-5 p-2 text-white partial_selector" data-partial="details" :class="{'selected': openPartial == 'details'}">
+                Profile
             </div>
-            <div class="col col-4 rounded border border-1 border-success">
-                <h5 class="text-center m-2">Wager</h5>
-                <p class="text-center fs-4">{{ wager }}</p>
+            <div class="card vb-card mb-2 fs-5 p-2 text-white partial_selector" data-partial="history" :class="{'selected': openPartial == 'history'}">
+                History
             </div>
-            <div class="col col-3 rounded border border-1 border-success">
-                <h5 class="text-center m-2">Crates Opened</h5>
-                <p class="text-center fs-4">12</p>
+            <div class="card vb-card fs-5 p-2 text-white partial_selector" data-partial="settings" :class="{'selected': openPartial == 'settings'}">
+                Settings
             </div>
         </div>
+
+        <div class="col-md-10">
+            <profile-details v-if="openPartial == 'details'"></profile-details>
+            <profile-history v-else-if="openPartial == 'history'"></profile-history>
+            <profile-settings v-else-if="openPartial == 'settings'"></profile-settings>
+        </div>
     </div>
+
 </template>
 
 <script setup>
+    import { ref } from 'vue';
     const props = defineProps(["user"]);
 
     let userObj = JSON.parse(props.user);
+    let openPartial = ref("details");
 
     let joined_date = new Date(userObj.created_at).toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric'});
+
+    $(function(){
+        $(".partial_selector").on('click', function(){
+            openPartial.value = $(this).data("partial");
+        });
+    });
 </script>

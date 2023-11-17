@@ -32,7 +32,7 @@
                         <svg class="d-block" stroke="#fff" fill="#fff" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M208 448V320h96v128h97.6V256H464L256 64 48 256h62.4v192z"></path></svg>
                     </a>
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item bg-secondary rounded-2">
+                        <li class="nav-item btn-gray rounded-2">
                             <a class="nav-link" href="{{ route('crates') }}">{{ __('Crates') }}</a>
                         </li>
                     </ul>
@@ -63,7 +63,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown user-profile-dropdown bg-secondary rounded-2" data-bs-theme="dark">
+                            <li class="nav-item dropdown user-profile-dropdown btn-gray rounded-2" data-bs-theme="dark">
                                 <div id="navbarDropdown" class="nav-link d-flex" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <div class="pe-1" style="width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                         <div>

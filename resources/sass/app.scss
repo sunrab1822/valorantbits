@@ -16,11 +16,15 @@ body {
 }
 
 .bg-nav-dark {
-    background-color: #17191f;
+    background-color: rgb(43, 45, 48);
 }
 
 .background {
-    background-color: #121319;
+    background-color: rgb(31, 34, 37);
+}
+
+.btn-gray {
+    background-color: rgb(68, 69, 70);
 }
 
 .p-25 {
@@ -187,15 +191,32 @@ a.no-style {
     background: linear-gradient(to bottom, transparent, #36393b) no-repeat;
     border: 2px solid rgb(31 34 37 / 1) !important;
 
-    :hover {
+    &:hover {
         background-color: #36393b;
         border-radius: 4px;
     }
 }
 
+.bg-dark-linear-horizontal {
+    background: linear-gradient(to left, transparent, #36393b) no-repeat;
+    border: 2px solid rgb(31 34 37 / 1) !important;
+
+    &:hover {
+        background-color: #36393b;
+        border-radius: 4px;
+    }
+}
+
+.profile-card {
+    background-color: rgb(68, 69, 70);
+    border: 2px solid rgb(94, 95, 97) !important;
+    box-shadow: 0 4px 4px #0000;
+}
+
 .divider {
     border-bottom: 1px solid #198754;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .progress-bar {
@@ -210,4 +231,32 @@ a.no-style {
     0% {
         background-position-x: -1rem;
     }
+}
+
+.vb-card {
+    border-bottom: 2px solid #3e4347;
+    border-left: none;
+    border-top: none;
+    border-right: none;
+    border-radius: 0.75rem;
+    background-color: #17191f;
+    cursor: pointer;
+
+    &.selected {
+        background-color: rgb(90, 89, 89);
+    }
+
+    &:hover {
+        background-color: #2d3235;
+    }
+}
+
+.account-heading {
+    margin-bottom: 0.5rem;
+    font-size: larger;
+    font-weight: 600;
+}
+
+.profile-heading {
+    margin-bottom: 0.5rem;
 }

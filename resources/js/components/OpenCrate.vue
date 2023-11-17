@@ -26,7 +26,7 @@
     </div>
     <div>
         <h3>Crate items</h3>
-        <div class="row row-cols-5" style="--bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem;">
+        <div class="row row-cols-5 g-2">
             <CrateItem v-for="skin in crateObj.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
         </div>
     </div>
