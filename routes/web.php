@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CoinflipController;
+use App\Http\Controllers\CrateBattleController;
 use App\Http\Controllers\CrateController;
 use App\Http\Controllers\UserController;
 use App\Models\Crate;
@@ -24,8 +25,12 @@ Route::get('/crates', [CrateController::class, 'index'])->name('crates');
 Route::get('/profile', [UserController::class, 'index'])->name('profile')->middleware("auth");
 Route::get('/coinflip', [CoinflipController::class, 'index'])->name('coinflip');
 Route::get('/crate/{id}', [CrateController::class, 'view']);
+Route::get('/crate-battles', [CrateBattleController::class, 'index']);
+Route::get('/crate-battles/{id}', [CrateBattleController::class, 'view']);
 
 Route::get('/api/crate-list', [CrateController::class, 'getCrateList']);
 //Route::get('/api/crate-contents/{crate_id}', [CrateController::class, 'getCrateContents']);
 Route::get('/api/server_hash', [CrateController::class, 'getServerHash']);
-Route::post('/api/crate/open', [CrateController::class, 'openCrate']);
+Route::post('/api/crate/open', [CrateController::class, 'openCrate'])->middleware("auth");
+Route::get('/api/user/profile', [UserController::class, 'getUserProfile'])->middleware("auth");
+Route::post('/api/user/profile/profit-chart', [UserController::class, 'getProfitChartData'])->middleware("auth");

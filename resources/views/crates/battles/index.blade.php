@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="container">
-    <crates></crates>
+    <crate-battles></crate-battles>
 </div>
 @endsection
