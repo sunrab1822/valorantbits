@@ -26,11 +26,7 @@
     </div>
     <div>
         <h3>Crate items</h3>
-<<<<<<< HEAD:resources/js/components/OpenCrate.vue
         <div class="row row-cols-xl-5 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style="--bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem;">
-=======
-        <div class="row row-cols-5 g-2">
->>>>>>> a6bb32d0737d6f3ac1fcbff7b5f65123705c9b5e:resources/js/components/crates/OpenCrate.vue
             <CrateItem v-for="skin in crateObj.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
         </div>
     </div>
