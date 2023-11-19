@@ -7,6 +7,8 @@
 import './bootstrap';
 import { createApp } from 'vue';
 import $ from "jquery";
+import { createRouter, createWebHistory } from 'vue-router';
+
 
 window.$ = $;
 
@@ -40,7 +42,41 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
+import App from './components/App.vue'
+
+console.log(app._context.components);
+
+const router = new createRouter({
+    history: createWebHistory(),
+    routes: [
+        {
+            path: '/',
+            name: 'home',
+            component: App
+        },
+        {
+            path: '/crates',
+            name: 'crates',
+            component: app._context.components.Crates
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: app._context.components.Login
+        },
+        {
+            path: '/register',
+            name: 'register',
+            component: app._context.components.Register
+        },
+    ],
+});
+
+app.use(router);
+
 app.mount('#app');
+
+
 
 
 $(function(){
@@ -91,3 +127,5 @@ function showBalancePopup(amount, positive) {
 function resetBalancePopup() {
     $(".nav-balance .balance-popup").remove();
 }
+
+

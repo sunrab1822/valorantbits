@@ -1,14 +1,9 @@
 <template>
     <GameChoiceCards/>
 
-
-
+    <RouterView/>
 </template>
 
-<script >
+<script setup>
 
 </script>
-
-<style>
-
-</style>
