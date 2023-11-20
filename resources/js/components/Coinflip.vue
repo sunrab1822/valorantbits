@@ -25,7 +25,7 @@
                 <div>
                     <img class="flip-profile-picture" src="/storage/crate_images/crate_yellow.png" alt="">
                 </div>
-                <button class="btn btn-danger d-flex mx-auto">Heads</button>
+                <button class="btn btn-danger d-flex mx-auto" @click="Join()">Heads</button>
             </div>
             <div id="coin">
                 <div class="side-a">
@@ -37,7 +37,7 @@
             </div>
             <div class="h-100">
                 <img class="flip-profile-picture" src="/storage/crate_images/crate_green.png">
-                <button class="btn btn-danger d-flex mx-auto">Tails</button>
+                <button class="btn btn-danger d-flex mx-auto" @click="Join()">Tails</button>
             </div>
         </div>
     </div>
@@ -46,6 +46,10 @@
 </template>
 
 <script setup>
+
+function Join() {
+
+}
 
 $(function(){
 

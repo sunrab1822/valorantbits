@@ -50,6 +50,7 @@ class FiletoCrate extends Command
                     $crate = new Crate();
                     $crate->name = substr($line, 1, strlen($line)-2);
                     $crate->price = 0;
+                    $crate->image = "/storage/crate_images/crate_red.png";
                     $crate->save();
                     $crateId = $crate->id;
                     continue;
