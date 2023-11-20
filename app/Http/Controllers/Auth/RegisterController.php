@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -78,11 +80,16 @@ class RegisterController extends Controller
     }
 
     public function register(Request $request) {
-        $this->validate($request, [
-            'username' => 'required|max:32',
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        try {
+            $this->validate($request, [
+                'username' => 'required|max:32|unique:users',
+                'email' => 'required|email|unique:users',
+                'password' => 'required',
+                'password_confirmation' => 'required'
+            ]);
+        } catch(ValidationException $ex) {
+            return json_encode(["error" => true, "error_type" => "validation", "data" => $ex->errors()]);
+        }
 
         $images = Storage::disk("public")->allFiles("profile_images");
         $image_key = array_rand($images);

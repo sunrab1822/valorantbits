@@ -15,9 +15,10 @@
     const props = defineProps(['user', 'isAuth']);
 
     let isAuth = ref(props.isAuth);
-    let user = JSON.parse(props.user || "{}");
+    let user = ref(JSON.parse(props.user || "{}"));
 
-    function updateLoggedIn(isLoggedIn) {
-        isAuth.value = isLoggedIn;
+    function updateLoggedIn(data) {
+        isAuth.value = data != false;
+        user.value = data == false ? {} : data;
     }
 </script>

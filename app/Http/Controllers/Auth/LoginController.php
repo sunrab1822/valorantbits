@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 use function Symfony\Component\String\b;
 
@@ -47,13 +48,18 @@ class LoginController extends Controller
     }
 
     public function login(Request $request) {
-        $this->validate($request, [
-            'username' => 'required',
-            'password' => 'required'
-        ]);
+        try {
+            $this->validate($request, [
+                'username' => 'required|exists:users',
+                'password' => 'required'
+            ]);
+        } catch (ValidationException $ex) {
+            return json_encode(["error" => true, "error_type" => "validation", "data" => $ex->errors()]);
+        }
+
 
         if(Auth::attempt(["username" => $request->get("username"), "password" => $request->get("password")], $request->get("remember"))) {
-            return json_encode(["error" => false, "data" => true]);
+            return json_encode(["error" => false, "data" => Auth::user()]);
         }
 
         return json_encode(["error" => true, "data" => false]);
