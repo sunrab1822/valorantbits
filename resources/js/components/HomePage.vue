@@ -1,14 +1,14 @@
 <template>
     <div class="row row-cols-4 g-2 main-page-cards mx-auto">
         <div class="game-choice-card">
-            <a class="styleless-link" href="/crates">
+            <router-link class="styleless-link" :to="{ name: 'crates' }">
                 <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
                     <img class="card-img" src="/storage/crate.png">
                 </div>
                 <h4 class="text-center">
                     Open Crates
                 </h4>
-            </a>
+            </router-link>
         </div>
         <div class="game-choice-card">
             <a class="styleless-link" href="/crate-battles">
@@ -43,6 +43,10 @@
     </div>
 </template>
 
-<script setup>
- console.log('itt Ott')
+<script >
+
 </script>
+
+<style>
+
+</style>

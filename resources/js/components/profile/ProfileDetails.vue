@@ -97,7 +97,7 @@
 
     async function getUserProfileDetails() {
         let profile_details = await axios.get("/api/user/profile");
-        if(profile_details.data.status == 200) {
+        if(!profile_details.data.error) {
             wager.value = Number(profile_details.data.data.wagered);
             highest_win.value = Number(profile_details.data.data.top_win);
             most_won_game.value = profile_details.data.data.most_won_game;

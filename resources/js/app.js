@@ -42,17 +42,13 @@ Object.entries(import.meta.glob('./**/*.vue', { eager: true })).forEach(([path, 
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-import App from './components/App.vue'
-
-console.log(app._context.components);
-
 const router = new createRouter({
     history: createWebHistory(),
     routes: [
         {
             path: '/',
             name: 'home',
-            component: App
+            component: app._context.components.HomePage
         },
         {
             path: '/crates',
@@ -60,16 +56,32 @@ const router = new createRouter({
             component: app._context.components.Crates
         },
         {
-            path: '/login',
-            name: 'login',
-            component: app._context.components.Login
+            path: '/crate/:id',
+            name: 'open_crate',
+            component: app._context.components.OpenCrate,
         },
         {
-            path: '/register',
-            name: 'register',
-            component: app._context.components.Register
+            path: '/profile',
+            name: 'profile',
+            component: app._context.components.Profile,
+            props: true,
+            meta: {
+                requiresAuth: true
+            }
         },
     ],
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record =>  record.meta.requiresAuth)) {
+        if (!localStorage.getItem("isLoggedIn")) {
+            next({ name: 'home' });
+        } else {
+            next();
+        }
+    } else {
+      next();
+    }
 });
 
 app.use(router);

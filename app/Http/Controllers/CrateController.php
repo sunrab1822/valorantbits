@@ -29,18 +29,21 @@ class CrateController extends Controller
     public function getCrateList() {
         $crates = Crate::all();
 
-        return response(json_encode(["status" => 200, "data" => $crates]));
+        return response(json_encode(["error" => false, "data" => $crates]));
     }
 
 
     /**
      * @deprecated
      */
-    public function getCrateContents($crate_id) {
+    public function getCrate($crate_id) {
         $Crate = Crate::find($crate_id);
         $Crate->contents;
+        foreach ($Crate->contents as $content){
+            $content->tier;
+        }
 
-        return response(json_encode(["status" => 200, "data" => $Crate]));
+        return response(json_encode(["error" => false, "data" => $Crate]));
     }
 
     function getServerHash() {
@@ -49,7 +52,7 @@ class CrateController extends Controller
 
     public function openCrate(Request $request) {
         if(!Auth::check()) {
-            return response(json_encode(["status" => 403, "data" => "Unauthorized"]));
+            return response(json_encode(["error" => true, "data" => "Unauthorized"]));
         }
 
         $clientSeed = $request->get("clientSeed");
@@ -60,7 +63,7 @@ class CrateController extends Controller
 
         if($Crate) {
             if($User->balance < $Crate->price) {
-                return ["status" => "500", "data" => "Not enough balance"];
+                return ["error" => true, "data" => "Not enough balance"];
             }
 
             $User->balance -= $Crate->price;
@@ -77,10 +80,10 @@ class CrateController extends Controller
 
             $User->wager($Crate->price, $wonItem->price, GameType::Crates);
 
-            return response(["status" => 200, "data" => ["drop" => $wonItem]]);
+            return response(["error" => false, "data" => ["drop" => $wonItem]]);
         }
 
-        return response(["status" => 404, "data" => "An error has occured."]);
+        return response(["error" => true, "data" => "An error has occured."]);
     }
 
     function determineItemOutcome($chances, $items) {

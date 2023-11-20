@@ -1,10 +1,10 @@
 <template>
     <div class="row">
         <div class="col">
-            <button class="btn btn-success" @click="back" >&lsaquo;  Back</button>
+            <button class="btn btn-success" @click="back" >&lsaquo;&nbsp;Back</button>
         </div>
         <div class="col text-center">
-            <h1 class="">{{ crateObj.name }}</h1>
+            <h1 v-if="crate != null">{{ crate.name }}</h1>
         </div>
         <div class="col"></div>
     </div>
@@ -18,38 +18,54 @@
     </div>
     <div class="d-flex justify-content-center align-items-center">
         <div>
-            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="isAuthenticated">Open</button>
+            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="isAuth">Open</button>
         </div>
-        <div class="d-flex justify-content-center align-items-center ms-1">
-            <img src="/storage/radianite.png" class="currency-icon"/><span class="fs-5">{{ crateObj.price.toBalance(2) }}</span>
+        <div class="d-flex justify-content-center align-items-center ms-1" v-if="crate != null">
+            <img src="/storage/radianite.png" class="currency-icon"/><span class="fs-5">{{ crate.price.toBalance(2) }}</span>
         </div>
     </div>
     <div>
         <h3>Crate items</h3>
         <div class="row row-cols-xl-5 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style="--bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem;">
-            <CrateItem v-for="skin in crateObj.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
+            <CrateItem v-if="crate != null" v-for="skin in crate.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
         </div>
     </div>
 </template>
 
 <script setup>
+    import { useRouter, useRoute } from 'vue-router'
     import { ref, nextTick } from 'vue';
     import axios from 'axios';
 
-    const prop = defineProps(['crate', 'isAuthenticated']);
-    let crateObj = JSON.parse(prop.crate);
+    defineProps(["isAuth"]);
+
+    const route = useRoute()
+    let crate = null;
 
     let isSpinning = ref(false);
     let spinItems = ref([]);
 
-    crateObj.contents.sort(function(a,b) {
-        return a.tier.rank > b.tier.rank ? -1 : 1;
-    });
+    async function getCrate() {
+        let request = await axios("/api/crate/" + route.params.id);
+
+        console.log(request);
+
+        if(!request.data.error) {
+            crate = request.data.data;
+            crate.contents.sort(function(a,b) {
+                return a.tier.rank > b.tier.rank ? -1 : 1;
+            });
+
+            initCrate();
+        }
+    }
+
+    getCrate();
 
     async function initCrate(winning_item = null) {
         let chances = {};
         let chance_num = 0;
-        Object.values(crateObj.contents).forEach((value) => {
+        Object.values(crate.contents).forEach((value) => {
             chance_num += Math.round(10000*(value.chance/100));
             chances[chance_num] = value["skin_id"];
         });
@@ -59,7 +75,7 @@
             let randomNum = getRandomInt(0, 10001);
             for(const [chanceLimit, skin_id] of Object.entries(chances)) {
                 if(randomNum <= chanceLimit) {
-                    spinItems.value.push(crateObj.contents[Object.keys(crateObj.contents).find(key => crateObj.contents[key]["skin_id"] === skin_id)]);
+                    spinItems.value.push(crate.contents[Object.keys(crate.contents).find(key => crate.contents[key]["skin_id"] === skin_id)]);
                     break;
                 }
             }
@@ -77,16 +93,14 @@
         }
     }
 
-    initCrate();
-
     async function openCrate() {
         isSpinning.value = true;
         let openedItem = await axios.post("/api/crate/open", {
             'clientSeed': '123456789',
-            'id': crateObj.id
+            'id': crate.id
         });
 
-        $(".nav_balance").trigger("updateBalance", crateObj.price * -1);
+        $(".nav_balance").trigger("updateBalance", crate.price * -1);
 
         if(openedItem.data.data.drop == undefined || openedItem.data.data.drop == null) {
             isSpinning.value = false;

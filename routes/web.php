@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CoinflipController;
 use App\Http\Controllers\CrateBattleController;
 use App\Http\Controllers\CrateController;
@@ -30,12 +32,16 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/crate-battles/{id}', [CrateBattleController::class, 'view']);
 
 
-
+// Auth
+Route::post('/api/login', [LoginController::class, 'login']);
+Route::post('/api/logout', [LoginController::class, 'logout']);
+Route::post('/api/register', [RegisterController::class, 'register']);
 
 Route::get('/api/crate-list', [CrateController::class, 'getCrateList']);
-//Route::get('/api/crate-contents/{crate_id}', [CrateController::class, 'getCrateContents']);
+Route::get('/api/crate/{crate_id}', [CrateController::class, 'getCrate']);
 Route::get('/api/server_hash', [CrateController::class, 'getServerHash']);
 Route::post('/api/crate/open', [CrateController::class, 'openCrate'])->middleware("auth");
+Route::get('/api/user', [UserController::class, 'getUser'])->middleware("auth");
 Route::get('/api/user/profile', [UserController::class, 'getUserProfile'])->middleware("auth");
 Route::post('/api/user/profile/profit-chart', [UserController::class, 'getProfitChartData'])->middleware("auth");
 

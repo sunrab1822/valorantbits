@@ -1,26 +1,26 @@
 <template>
-    <div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-between mb-4" v-if="user">
         <div class="d-flex">
-            <img class="profile-picture border border-success rounded-circle" :src="userObj.profile_image" alt="">
+            <img class="profile-picture border border-success rounded-circle" :src="user.profile_image" alt="">
             <div class="mt-1 ms-3">
                 <div class="d-flex">
-                    <h4>{{ userObj.username }}</h4>
+                    <h4>{{ user.username }}</h4>
                 </div>
                 <div class="text-secondary">Joined {{ joined_date }}</div>
             </div>
         </div>
         <div class="mt-1">
-            <h5 class="text-secondary">UID: {{ userObj.id }}</h5>
+            <h5 class="text-secondary">UID: {{ user.id }}</h5>
         </div>
     </div>
-    <div class="mb-4">
-        <div class="progress bg-dark" style="height: 0.75rem;">
-            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: 75%"></div>
+    <div class="mb-4" v-if="user">
+        <div class="progress bg-nav-dark" style="height: 0.75rem;">
+            <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" :style="{ 'width': progressbar_width + '%' }"></div>
         </div>
         <div class="d-flex justify-content-between mt-1">
-            <div>Level 1</div>
-            <div class="text-secondary">750/1000 XP</div>
-            <div>Level 2</div>
+            <div>Level {{ current_level }}</div>
+            <div class="text-secondary">{{ user.experience }}/{{ required_xp }} XP</div>
+            <div>Level {{ current_level + 1 }}</div>
         </div>
     </div>
     <div class="divider"></div>
@@ -48,12 +48,27 @@
 
 <script setup>
     import { ref } from 'vue';
-    const props = defineProps(["user"]);
+    const props = defineProps(["id"]);
 
-    let userObj = JSON.parse(props.user);
+    let user = ref(null);
+    let joined_date = ref();
     let openPartial = ref("details");
+    let required_xp = ref(1000);
+    let progressbar_width = ref(0);
+    let current_level = ref(0);
 
-    let joined_date = new Date(userObj.created_at).toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric'});
+    (async function() {
+        let request = await axios.get("/api/user");
+        if(!request.data.error) {
+            user.value = request.data.data;
+            joined_date.value = new Date(user.value.created_at).toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric'})
+            current_level.value = (user.value.experience - 1000 < 0) ? 0 : Math.ceil((user.value.experience - 1000) / 250);
+            required_xp.value = 1000 + ((current_level.value) * 250);
+            progressbar_width.value = (user.value.experience / required_xp.value) * 100;
+
+            console.log((user.value.experience / required_xp.value) * 100, required_xp.value);
+        }
+    })();
 
     $(function(){
         $(".partial_selector").on('click', function(){

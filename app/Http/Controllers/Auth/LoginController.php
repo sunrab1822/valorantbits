@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 use function Symfony\Component\String\b;
 
@@ -42,5 +44,27 @@ class LoginController extends Controller
 
     public function username() {
         return "username";
+    }
+
+    public function login(Request $request) {
+        $this->validate($request, [
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        if(Auth::attempt(["username" => $request->get("username"), "password" => $request->get("password")], $request->get("remember"))) {
+            return json_encode(["error" => false, "data" => true]);
+        }
+
+        return json_encode(["error" => true, "data" => false]);
+    }
+
+    public function logout() {
+        if(Auth::check()) {
+            Auth::logout();
+            return json_encode(["error" => false, "data" => false]);
+        }
+
+        return json_encode(["error" => true, "data" => "You are not logged in"]);
     }
 }
