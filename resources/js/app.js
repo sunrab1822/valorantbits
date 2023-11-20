@@ -69,6 +69,16 @@ const router = new createRouter({
                 requiresAuth: true
             }
         },
+        {
+            path: '/crate-battles',
+            name: 'crate_battles',
+            component: app._context.components.CreateBattles,
+        },
+        {
+            path: '/coinflip',
+            name: 'coinflip',
+            component: app._context.components.Coinflip,
+        },
     ],
 });
 

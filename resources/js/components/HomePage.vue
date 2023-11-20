@@ -1,45 +1,9 @@
 <template>
     <div class="row row-cols-4 g-2 main-page-cards mx-auto">
-        <div class="game-choice-card">
-            <router-link class="styleless-link" :to="{ name: 'crates' }">
-                <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
-                    <img class="card-img" src="/storage/crate.png">
-                </div>
-                <h4 class="text-center">
-                    Open Crates
-                </h4>
-            </router-link>
-        </div>
-        <div class="game-choice-card">
-            <a class="styleless-link" href="/crate-battles">
-                <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
-                    <img class="card-img" src="/storage/crate.png">
-                </div>
-                <h4 class="text-center">
-                    Crate Battles
-                </h4>
-            </a>
-        </div>
-        <div class="game-choice-card">
-            <a class="styleless-link" href="/coinflip">
-                <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
-                    <img class="card-img" src="/storage/crate.png">
-                </div>
-                <h4 class="text-center">
-                    Coinflip
-                </h4>
-            </a>
-        </div>
-        <div class="game-choice-card">
-            <a class="styleless-link" href="/crates">
-                <div class="m-2 game-choice-inner-card d-flex justify-content-center" @click="">
-                    <img class="card-img" src="/storage/crate.png">
-                </div>
-                <h4 class="text-center">
-                    Blackjack
-                </h4>
-            </a>
-        </div>
+        <home-card route-name="crates" image="/storage/crate.png">Open Crates</home-card>
+        <home-card route-name="crate_battles" image="/storage/crate.png">Crate Battles</home-card>
+        <home-card route-name="coinflip" image="/storage/crate.png">Coinflip</home-card>
+        <home-card route-name="crates" image="/storage/crate.png">Blackjack</home-card>
     </div>
 </template>
 
