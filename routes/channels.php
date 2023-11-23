@@ -1,5 +1,6 @@
 <?php
 
+use App\Broadcasting\CoinflipChannel;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
-});
+Broadcast::channel('App.Models.Coinflip.{id}', CoinflipChannel::class);
+Broadcast::channel('test', function (){ return true; });
+
+

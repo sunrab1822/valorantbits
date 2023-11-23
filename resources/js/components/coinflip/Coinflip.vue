@@ -37,7 +37,7 @@
             </div>
             <div class="h-100">
                 <img class="flip-profile-picture" src="/storage/crate_images/crate_green.png">
-                <button class="btn btn-danger d-flex mx-auto" @click="Join()">Tails</button>
+                <button class="btn btn-danger d-flex mx-auto" @click="valami()">Tails</button>
             </div>
         </div>
     </div>
@@ -47,9 +47,22 @@
 
 <script setup>
 
-function Join() {
 
+let channel
+
+
+function Join() {
+    channel = window.Echo.private('test')
+    channel.subscribed(() =>{
+        console.log(channel)
+    })
 }
+
+function valami(){
+    channel = window.Echo.private('test')
+    channel.listen(() => {console.log(channel);});
+}
+
 
 $(function(){
 
