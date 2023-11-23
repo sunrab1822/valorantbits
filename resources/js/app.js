@@ -9,7 +9,6 @@ import { createApp } from 'vue';
 import $ from "jquery";
 import { createRouter, createWebHistory } from 'vue-router';
 
-
 window.$ = $;
 
 Number.prototype.toBalance = function(dp) {
@@ -72,12 +71,12 @@ const router = new createRouter({
         {
             path: '/crate-battles',
             name: 'crate_battles',
-            component: app._context.components.CreateBattles,
+            component: app._context.components.CrateBattles,
         },
         {
             path: '/coinflip',
             name: 'coinflip',
-            component: app._context.components.Coinflip,
+            component: app._context.components.CoinflipList,
         },
     ],
 });
