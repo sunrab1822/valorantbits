@@ -78,6 +78,11 @@ const router = new createRouter({
             name: 'coinflip',
             component: app._context.components.CoinflipList,
         },
+        {
+            path: '/coinflip/:id',
+            name: 'coinflip_play',
+            component: app._context.components.Coinflip,
+        },
     ],
 });
 

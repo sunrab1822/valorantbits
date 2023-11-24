@@ -1,5 +1,5 @@
 <template>
-    <a class="no-style" :href="'/crate/1'">
+    <router-link class="no-style" :to="{ name: 'coinflip_play', params: { 'id': 1 }}">
         <div class="card col m-2 card-battle bg-dark">
             <div class="card-body text-white">
                 <div class="">
@@ -14,7 +14,7 @@
                 </div>
             </div>
         </div>
-    </a>
+    </router-link>
 </template>
 
 <script setup>
@@ -28,17 +28,16 @@ $(function(){
 $('#coin').on('click', function(){
   var flipResult = Math.random();
   $('#coin').removeClass();
-  setTimeout(function(){
-    if(flipResult <= 0.5){
-      $('#coin').addClass('heads');
-      console.log('it is head');
-    }
-    else{
-      $('#coin').addClass('tails');
-      console.log('it is tails');
-    }
-  }, 100);
-});
+    setTimeout(function(){
+      if(flipResult <= 0.5){
+        $('#coin').addClass('heads');
+        console.log('it is head');
+      } else {
+        $('#coin').addClass('tails');
+        console.log('it is tails');
+      }
+    }, 100);
+  });
 });
 
 
