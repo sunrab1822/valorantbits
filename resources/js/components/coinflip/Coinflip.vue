@@ -51,16 +51,17 @@
 let channel
 
 
-function Join() {
-    channel = window.Echo.private('test')
-    channel.subscribed(() =>{
-        console.log(channel)
-    })
-}
+// function Join() {
+//     channel = window.Echo.private('test')
+//     channel.subscribed(() =>{
+//         console.log(channel)
+//     })
+// }
 
 function valami(){
     channel = window.Echo.private('test')
-    channel.listen(() => {console.log(channel);});
+    channel.listen('conlog',() => {console.log(channel);});
+    channel
 }
 
 
