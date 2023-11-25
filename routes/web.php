@@ -45,6 +45,9 @@ Route::get('/api/user', [UserController::class, 'getUser'])->middleware("auth");
 Route::get('/api/user/profile', [UserController::class, 'getUserProfile'])->middleware("auth");
 Route::post('/api/user/profile/profit-chart', [UserController::class, 'getProfitChartData'])->middleware("auth");
 Route::post('/api/coinflip/join', [CoinflipController::class, 'joinGame'])->middleware("auth");
+Route::get('/api/coinflips', [CoinflipController::class, 'getCoinflips']);
+Route::post('/api/coinflip', [CoinflipController::class, 'createCoinflip']);
+Route::get('/api/coinflip/{id}', [CoinflipController::class, 'getCoinflip']);
 
 
 Route::get('/{any}', [HomeController::class, 'index'])->where('any', ".*");

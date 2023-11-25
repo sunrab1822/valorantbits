@@ -1,28 +1,34 @@
 <template>
     <div>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-primary create-button align-right">Create Game</button>
+            <button class="btn btn-primary create-button align-right" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal">Create Game</button>
+            <!-- <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button> -->
         </div>
-        <router-link class="no-style" :to="{name:'coinflip_play', params:{id:1}}">
-            <div class="card col my-2 card-battle bg-dark">
-                <div class="card-body text-white">
-                    <div class="">
-                        <h4 class="card-title text-center no-wrap">Coinflip 1</h4>
-                    </div>
-                    <div class="d-flex justify-content-center my-2">
-                        <img class="card-img" :src="image" style="max-width: 120px; max-height: 120px;">
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <img src="/storage/radianite.png" class="currency-icon" alt="">
-                        <div class="fs-5 fw-semibold">1500.00</div>
-                    </div>
-                </div>
-            </div>
-        </router-link>
+        <div>
+            <coinflip-card v-for="coinflip in coinflips" :coinflip="JSON.stringify(coinflip)"/>
+        </div>
     </div>
+    <coinflip-create />
 </template>
 
 <script setup>
+import {ref} from 'vue'
+import axios from 'axios';
+
+let coinflips = ref([]);
+
+window.Echo.private('CoinflipList').listen('.coinflip-created', coinflipCreated);
+getCoinflips();
+
+function coinflipCreated() {
+
+}
+
+async function getCoinflips(){
+    const response = await axios.get('/api/coinflips');
+    coinflips.value = response.data.data;
+
+}
 
 </script>
 
