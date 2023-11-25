@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger("tails_amount")->nullable();
             $table->float("chance_float")->nullable();
             $table->integer("game_state")->default(0);
+            $table->string("created_by");
             $table->timestamps();
         });
     }
