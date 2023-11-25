@@ -17,7 +17,7 @@
             </div>
             <div class="user_side_tails">
                 <img class="flip-profile-picture" src="/storage/crate_images/crate_green.png">
-                <button class="btn btn-success" v-if="created_by.id != 1">Join</button>
+                <button class="btn btn-success" v-if="created_by && created_by.id != 1">Join</button>
                 <!-- <button class="btn btn-danger d-flex mx-auto" @click="join('tails')">Tails</button> -->
             </div>
         </div>
@@ -28,9 +28,12 @@
 import axios from 'axios';
 import { useRoute } from 'vue-router';
 import { ref } from 'vue';
+import { useUserStore } from '@stores/user';
 
 
+const userStore = useUserStore();
 
+console.log(userStore)
 
 let bet_amount = ref(1);
 const route = useRoute();
@@ -46,6 +49,8 @@ async function getCoinflip(){
 
     created_by.value = coinflip["user_" + coinflip["created_by"]];
 }
+
+console.log( created_by.value.id)
 
 
 
