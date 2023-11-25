@@ -1,24 +1,22 @@
 <template>
-    <Navbar :username="user.username" :balance="user.balance" :isAuth="isAuth" @is-logged-in="updateLoggedIn"/>
+    <Navbar/>
     <main class="py-4">
         <div class="container">
-            <RouterView :is-auth="isAuth"/>
+            <RouterView/>
         </div>
     </main>
-    <Login @is-logged-in="updateLoggedIn"/>
+    <Login/>
     <Register />
 </template>
 
 <script setup>
-    import { ref } from 'vue';
+    import { useUserStore } from '@stores/user';
 
     const props = defineProps(['user', 'isAuth']);
 
-    let isAuth = ref(props.isAuth);
-    let user = ref(JSON.parse(props.user || "{}"));
+    const userStore = useUserStore();
 
-    function updateLoggedIn(data) {
-        isAuth.value = data != false;
-        user.value = data == false ? {} : data;
-    }
+    userStore.setUser(props.user ? JSON.parse(props.user) : null);
+    userStore.setLoggedIn(props.isAuth);
+
 </script>

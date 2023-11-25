@@ -8,6 +8,7 @@ import './bootstrap';
 import { createApp } from 'vue';
 import $ from "jquery";
 import { createRouter, createWebHistory } from 'vue-router';
+import { createPinia } from 'pinia'
 
 window.$ = $;
 
@@ -21,6 +22,7 @@ Number.prototype.toBalance = function(dp) {
  * to use in your application's views. An example is included for you.
  */
 
+const pinia = createPinia()
 const app = createApp({});
 
 /**
@@ -108,6 +110,7 @@ router.beforeEach((to, from, next) => {
     }
 });
 
+app.use(pinia);
 app.use(router);
 
 app.mount('#app');

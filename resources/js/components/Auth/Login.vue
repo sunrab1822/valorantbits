@@ -63,8 +63,10 @@
     import axios from 'axios';
     import * as bootstrap from 'bootstrap';
     import { ref } from 'vue';
+    import { useUserStore } from '@stores/user';
 
     const emit = defineEmits(['isLoggedIn']);
+    const userStore = useUserStore();
 
     let username = ref("");
     let password = ref("");
@@ -86,8 +88,8 @@
         });
 
         if(!request.data.error) {
-            emit('isLoggedIn', request.data.data);
-            localStorage.setItem("isLoggedIn", request.data.data);
+            userStore.setUser(request.data.data)
+            userStore.setLoggedIn(true);
             bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal')).hide();
             username.value = "";
             password.value = "";

@@ -22,10 +22,10 @@
                 </ul>
             </div>
 
-            <div class="mx-auto order-0 nav-balance" v-if="isAuth">
+            <div class="mx-auto order-0 nav-balance" v-if="userStore.isLoggedIn">
                 <div class="d-flex bg-secondary align-items-center rounded-2 balance-box mx-auto">
                     <img src="/storage/radianite.png" class="currency-icon">
-                    <div class="balance-text nav_balance">{{ balance.toBalance(2) }}</div>
+                    <div class="balance-text nav_balance">{{ userStore.user.balance.toBalance(2) }}</div>
                 </div>
             </div>
 
@@ -33,10 +33,10 @@
                 <ul class="navbar-nav ms-auto">
                     <!-- Authentication Links -->
 
-                    <li class="nav-item bg-primary rounded-2 me-1 px-1" v-if="!isAuth">
+                    <li class="nav-item bg-primary rounded-2 me-1 px-1" v-if="!userStore.isLoggedIn">
                         <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                     </li>
-                    <li class="nav-item bg-secondary rounded-2 px-1" v-if="!isAuth">
+                    <li class="nav-item bg-secondary rounded-2 px-1" v-if="!userStore.isLoggedIn">
                         <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button>
                     </li>
                     <li class="nav-item dropdown user-profile-dropdown btn-gray rounded-2" data-bs-theme="dark" v-else>
@@ -44,7 +44,7 @@
                             <div class="pe-1" style="width: 9rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                                 <div>
                                     <span class="user-level me-1">21</span>
-                                    <span class="no-wrap">{{ username }}</span>
+                                    <span class="no-wrap">{{ userStore.user.username }}</span>
                                 </div>
                                 <div class="progress" role="progressbar">
                                     <div class="progress-bar user-level-progress" style="width: 95%"></div>
@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <router-link class="dropdown-item" :to="{ name: 'profile', params: id }">Profile</router-link>
+                            <router-link class="dropdown-item" :to="{ name: 'profile', params: userStore.user.id }">Profile</router-link>
                             <button class="dropdown-item" @click="logout">Logout</button>
 
                         </div>
@@ -83,17 +83,16 @@
 
 <script setup>
     import axios from 'axios';
-    import { provide } from 'vue';
+    import { useUserStore } from '@stores/user';
 
-    defineProps(['id', 'balance', 'username', 'isAuth']);
-    const emit = defineEmits(['isLoggedIn']);
+    const userStore = useUserStore();
 
     async function logout() {
         let request = await axios.post("/api/logout");
 
         if(!request.data.error) {
-            emit('isLoggedIn', request.data.data);
-            localStorage.setItem("isLoggedIn", request.data.data);
+            userStore.setUser(null);
+            userStore.setLoggedIn(false);
         }
     }
 </script>

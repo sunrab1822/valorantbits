@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -100,6 +101,10 @@ class RegisterController extends Controller
             'password' => Hash::make($request->get('password')),
             'profile_image' => "/storage/" . $images[$image_key]
         ]);
+
+        if(Auth::attempt(["username" => $request->get("username"), "password" => $request->get("password")])) {
+            return json_encode(["error" => false, "data" => Auth::user()]);
+        }
 
         return json_encode(["error" => false, "data" => null]);
     }

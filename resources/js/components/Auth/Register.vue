@@ -64,7 +64,11 @@
 
 <script setup>
     import axios from 'axios';
+    import * as bootstrap from 'bootstrap';
     import { ref } from 'vue';
+    import { useUserStore } from '@stores/user';
+
+    const userStore = useUserStore();
 
     let username = ref("");
     let email = ref("");
@@ -87,6 +91,10 @@
         });
 
         if(!request.data.error) {
+            if(request.data.data != null) {
+                userStore.setUser(request.data.data);
+                userStore.setLoggedIn(true);
+            }
             bootstrap.Modal.getOrCreateInstance(document.getElementById('registerModal')).hide();
             username.value = "";
             email.value = "";
