@@ -44,6 +44,7 @@ Route::post('/api/crate/open', [CrateController::class, 'openCrate'])->middlewar
 Route::get('/api/user', [UserController::class, 'getUser'])->middleware("auth");
 Route::get('/api/user/profile', [UserController::class, 'getUserProfile'])->middleware("auth");
 Route::post('/api/user/profile/profit-chart', [UserController::class, 'getProfitChartData'])->middleware("auth");
+Route::post('/api/coinflip/join', [CoinflipController::class, 'joinGame'])->middleware("auth");
 
 
 Route::get('/{any}', [HomeController::class, 'index'])->where('any', ".*");

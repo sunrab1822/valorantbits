@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex p-1 justify-content-center">
         <div class="m-1">
-            <input type="text" class="form-control" placeholder="Price">
+            <input type="text" class="form-control" placeholder="Price" v-model="bet_amount">
         </div>
         <div class="m-1">
             <button class="btn btn-secondary">+1</button>
@@ -22,10 +22,10 @@
     <div class="bg-dark mx-auto rounded p-2 ">
         <div class="d-flex justify-content-evenly align-items-center">
             <div>
-                <div>
+                <div class="user_side_heads">
                     <img class="flip-profile-picture" src="/storage/crate_images/crate_yellow.png" alt="">
                 </div>
-                <button class="btn btn-danger d-flex mx-auto" @click="Join()">Heads</button>
+                <button class="btn btn-danger d-flex mx-auto" @click="join('heads')">Heads</button>
             </div>
             <div id="coin">
                 <div class="side-a">
@@ -35,9 +35,9 @@
                     <img class="w-100" src="/storage/crate_images/crate_red.png" alt="">
                 </div>
             </div>
-            <div class="h-100">
+            <div class="user_side_tails">
                 <img class="flip-profile-picture" src="/storage/crate_images/crate_green.png">
-                <button class="btn btn-danger d-flex mx-auto" @click="valami()">Tails</button>
+                <button class="btn btn-danger d-flex mx-auto" @click="join('tails')">Tails</button>
             </div>
         </div>
     </div>
@@ -46,45 +46,36 @@
 </template>
 
 <script setup>
+    import axios from 'axios';
+    import { useRoute } from 'vue-router';
+    import { ref } from 'vue';
 
+    let bet_amount = ref(1);
+    const route = useRoute();
+    window.Echo.private('App.Models.Coinflip.' + route.params.id).listen(".coinflip-join", playerJoined);
 
-let channel
-
-
-// function Join() {
-//     channel = window.Echo.private('test')
-//     channel.subscribed(() =>{
-//         console.log(channel)
-//     })
-// }
-
-function valami(){
-    channel = window.Echo.private('test')
-    channel.listen('conlog',() => {console.log(channel);});
-    channel
-}
-
-
-$(function(){
-
-$('#coin').on('click', function(){
-  var flipResult = Math.random();
-  $('#coin').removeClass();
-  setTimeout(function(){
-    if(flipResult <= 0.5){
-      $('#coin').addClass('heads');
-      console.log('it is head');
+    async function join(bet_side) {
+        await axios.post("/api/coinflip/join", {
+            game_id: route.params.id,
+            bet_side: bet_side,
+            bet_amount: bet_amount.value
+        });
     }
-    else{
-      $('#coin').addClass('tails');
-      console.log('it is tails');
+
+    function playerJoined(data) {
+        $('.user_side_' + data.side).find("img").attr("src", data.user_profile);
+        var flipResult = Math.random();
+        $('#coin').removeClass();
+        setTimeout(function(){
+            if(flipResult <= 0.5){
+                $('#coin').addClass('heads');
+                console.log('it is head');
+            } else {
+                $('#coin').addClass('tails');
+                console.log('it is tails');
+            }
+        }, 1500);
     }
-  }, 100);
-});
-});
-
-
-
 </script>
 
 <style scoped>
