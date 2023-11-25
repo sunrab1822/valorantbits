@@ -1,5 +1,5 @@
 <template>
-<div class="modal fade" id="registerModal" tabindex="-1" data-bs-theme="dark">
+    <div class="modal fade" id="registerModal" tabindex="-1" data-bs-theme="dark">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">Register</div>

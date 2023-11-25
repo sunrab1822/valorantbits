@@ -43,6 +43,7 @@ Route::get('/api/server_hash', [CrateController::class, 'getServerHash']);
 Route::post('/api/crate/open', [CrateController::class, 'openCrate'])->middleware("auth");
 Route::get('/api/user', [UserController::class, 'getUser'])->middleware("auth");
 Route::get('/api/user/profile', [UserController::class, 'getUserProfile'])->middleware("auth");
+Route::get('/api/crate-battle/list', [CrateBattleController::class, 'getCrateBattles']);
 Route::post('/api/user/profile/profit-chart', [UserController::class, 'getProfitChartData'])->middleware("auth");
 Route::post('/api/coinflip/join', [CoinflipController::class, 'joinGame'])->middleware("auth");
 

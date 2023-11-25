@@ -74,6 +74,16 @@ const router = new createRouter({
             component: app._context.components.CrateBattles,
         },
         {
+            path: '/crate-battles/create',
+            name: 'create_crate_battles',
+            component: app._context.components.CreateCrateBattle,
+        },
+        {
+            path: '/crate-battles/:id',
+            name: 'crate_battles_game',
+            component: app._context.components.CrateBattles,
+        },
+        {
             path: '/coinflip',
             name: 'coinflip',
             component: app._context.components.CoinflipList,
@@ -101,9 +111,6 @@ router.beforeEach((to, from, next) => {
 app.use(router);
 
 app.mount('#app');
-
-
-
 
 $(function(){
     $(".nav_balance").on("updateBalance", function(event, amount){

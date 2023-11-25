@@ -13,6 +13,15 @@ return new class extends Migration
     {
         Schema::create('crate_battles', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger("price");
+            $table->integer("battle_type")->default(1);
+            $table->boolean("is_normal")->default(true);
+            $table->boolean("is_crazy")->default(false);
+            $table->boolean("is_terminal")->default(false);
+            $table->boolean("is_group")->default(false);
+            $table->boolean("game_state")->default(0);
+            $table->json("crates");
+            $table->json("players");
             $table->timestamps();
         });
     }

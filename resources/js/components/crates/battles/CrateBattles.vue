@@ -1,22 +1,47 @@
 <template>
-    <router-link class="no-style" :to="{ name: 'crate_battle', params: { id: '1' }}">
-        <div class="card col m-2 card-battle">
-            <div class="card-body text-white">
-                <div class="">
-                    <h4 class="card-title text-center no-wrap">Battle 1</h4>
-                </div>
-                <div class="d-flex justify-content-center my-2">
-                    <img class="card-img" :src="image" style="max-width: 120px; max-height: 120px;">
-                </div>
-                <div class="d-flex justify-content-center">
-                    <img src="/storage/radianite.png" class="currency-icon" alt="">
-                    <div class="fs-5 fw-semibold">1500.00</div>
-                </div>
-            </div>
+    <div>
+        <CreateBattleModal></CreateBattleModal>
+        <div class="d-flex justify-content-end mb-3">
+            <router-link class="btn btn-primary create-button" :to="{name: 'create_crate_battles'}">Create Battle</router-link>
         </div>
-    </router-link>
+        <div class="w-100">
+            <router-link class="no-style" :to="{name: 'crate_battles_game', params:{id:1}}" v-for="crate_battle in crate_battles">
+                <div class="card-battle row">
+                    <div class="col-md-6 d-flex align-items-center battle-crate-list overflow-hidden">
+                        <img class="" :src="crate.image" style="max-width: 120px; max-height: 120px;" v-for="crate in crate_battle.crate_list">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-center">
+                        <img src="/storage/radianite.png" class="currency-icon" alt="">
+                        <div class="fs-5 fw-semibold">{{ crate_battle.price.toBalance(2) }}</div>
+                    </div>
+                    <div class="col-md-2 d-flex flex-column justify-content-center">
+                        <div class="battle_player d-flex" :class="{'mb-2': key != crate_battle.player_list.length - 1}" v-for="(player, key) in crate_battle.player_list">
+                            <img class="me-1" style="width: 1.5rem; height: 1.5rem;" :src="player.profile_image" />
+                            <div>{{ player.username }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-center">
+                        <button class="btn btn-warning">View</button>
+                    </div>
+                </div>
+            </router-link>
+        </div>
+    </div>
 </template>
 
 <script setup>
+    import axios from 'axios';
+    import { ref } from 'vue';
 
+    let crate_battles = ref([]);
+
+    getCrateBattles();
+
+    async function getCrateBattles() {
+        let response = await axios.get("/api/crate-battle/list");
+
+        if(!response.data.error) {
+            crate_battles.value = response.data.data;
+        }
+    }
 </script>
