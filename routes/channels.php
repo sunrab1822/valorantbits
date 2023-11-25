@@ -1,6 +1,7 @@
 <?php
 
 use App\Broadcasting\CoinflipChannel;
+use App\Models\User;
 use Illuminate\Support\Facades\Broadcast;
 
 /*
@@ -18,6 +19,8 @@ Broadcast::channel('App.Models.CrateBattle.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 Broadcast::channel('App.Models.Coinflip.{id}', CoinflipChannel::class);
-Broadcast::channel('test', function (){ return true; });
+Broadcast::channel('test', function (User $user) {
+    return true;
+});
 
 

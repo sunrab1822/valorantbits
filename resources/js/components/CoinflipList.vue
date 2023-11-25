@@ -1,46 +1,28 @@
 <template>
-    <router-link class="no-style" :to="{name:'coinflip_play', params:{id:1}}">
-        <div class="card col m-2 card-battle bg-dark">
-            <div class="card-body text-white">
-                <div class="">
-                    <h4 class="card-title text-center no-wrap">Coinflip 1</h4>
-                </div>
-                <div class="d-flex justify-content-center my-2">
-                    <img class="card-img" :src="image" style="max-width: 120px; max-height: 120px;">
-                </div>
-                <div class="d-flex justify-content-center">
-                    <img src="/storage/radianite.png" class="currency-icon" alt="">
-                    <div class="fs-5 fw-semibold">1500.00</div>
+    <div>
+        <div class="d-flex justify-content-end">
+            <button class="btn btn-primary create-button align-right">Create Game</button>
+        </div>
+        <router-link class="no-style" :to="{name:'coinflip_play', params:{id:1}}">
+            <div class="card col my-2 card-battle bg-dark">
+                <div class="card-body text-white">
+                    <div class="">
+                        <h4 class="card-title text-center no-wrap">Coinflip 1</h4>
+                    </div>
+                    <div class="d-flex justify-content-center my-2">
+                        <img class="card-img" :src="image" style="max-width: 120px; max-height: 120px;">
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <img src="/storage/radianite.png" class="currency-icon" alt="">
+                        <div class="fs-5 fw-semibold">1500.00</div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </router-link>
+        </router-link>
+    </div>
 </template>
 
 <script setup>
-
-function Join() {
-
-}
-
-$(function(){
-
-$('#coin').on('click', function(){
-  var flipResult = Math.random();
-  $('#coin').removeClass();
-    setTimeout(function(){
-      if(flipResult <= 0.5){
-        $('#coin').addClass('heads');
-        console.log('it is head');
-      } else {
-        $('#coin').addClass('tails');
-        console.log('it is tails');
-      }
-    }, 100);
-  });
-});
-
-
 
 </script>
 

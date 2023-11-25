@@ -58,4 +58,8 @@ class User extends Authenticatable
             "updated_at" => $date_time
         ]);
     }
+
+    public function hasBalance($amount) {
+        return $this->balance >= $amount;
+    }
 }
