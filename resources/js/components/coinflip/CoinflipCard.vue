@@ -14,8 +14,8 @@
                 </div>
             </div>
             <div class="align-self-center">
-                <router-link v-if="coinflip.game_state == 0" class="no-style" :to="{name:'coinflip_game', params:{id:1}}"><button class="btn btn-primary">Join</button></router-link>
-                <router-link class="no-style ms-1" :to="{name:'coinflip_game', params:{id:1}}"><button class="btn btn-primary">View</button></router-link>
+                <router-link v-if="coinflip.game_state == 0" class="no-style" :to="{name:'coinflip_game', params:{id:coinflip.id}}"><button class="btn btn-primary">Join</button></router-link>
+                <router-link class="no-style ms-1" :to="{name:'coinflip_game', params:{id:coinflip.id}}"><button class="btn btn-primary">View</button></router-link>
             </div>
         </div>
     </div>

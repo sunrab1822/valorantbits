@@ -8,8 +8,8 @@
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="d-flex justify-content-center">
-                            <input type="text" class="form-control w-50 text-center" name="bet_amount"
-                                v-model="masik" required autofocus>
+                            <input type="number" class="form-control w-50 text-center" name="bet_amount"
+                                v-model="bet_amount"  required autofocus>
                             <span class="invalid-feedback" role="alert" v-if="validation.bet_amount">
                                 <strong>{{ validation.bet_amount }}</strong>
                             </span>
@@ -18,10 +18,10 @@
 
                     <div class="row mb-3">
                         <div class="d-flex justify-content-center">
-                            <button class="btn btn-secondary" @click="bet_amount+= 100">+1</button>
-                            <button class="btn btn-secondary ms-1" @click="bet_amount+= 1000">+10</button>
-                            <button class="btn btn-secondary ms-1" @click="bet_amount = 1">Min</button>
-                            <button class="btn btn-secondary ms-1" @click="bet_amount+= 300000">Max</button>
+                            <button class="btn btn-secondary" @click="setBetAmount(1)">1/2</button>
+                            <button class="btn btn-secondary ms-1" @click="setBetAmount(2)">x2</button>
+                            <button class="btn btn-secondary ms-1" @click="setBetAmount(3)">Min</button>
+                            <button class="btn btn-secondary ms-1" @click="setBetAmount(4)">Max</button>
                         </div>
                     </div>
 
@@ -56,6 +56,10 @@ import axios from 'axios';
 import * as bootstrap from 'bootstrap';
 import { ref,computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useUserStore } from '@stores/user';
+
+const userStore = useUserStore();
+
 
 
 const props = defineProps(["isCreate"])
@@ -63,18 +67,27 @@ const props = defineProps(["isCreate"])
 const router = useRouter();
 const route = useRoute();
 
-let bet_amount = ref(1);
+let bet_amount = ref(0.01);
 let validation = ref({
         bet_amount: null,
         bet_side: null,
     });
 let bet_side = ref("heads");
 
-
-let masik = computed(() => {
-    if (bet_amount.value > 300000) bet_amount.value = 300000
-    return bet_amount.value.toBalance(2)
-});
+function setBetAmount(type){
+    console.log(Math.round((bet_amount.value + Number.EPSILON) * 100), userStore.user.balance)
+    switch (type){
+        case 1: bet_amount.value = bet_amount.value >= 0.01 ? (Math.round(((bet_amount.value / 2) + Number.EPSILON) * 100)).toBalance(2,true) :  0.01;
+                break;
+        case 2:  bet_amount.value = Math.round((bet_amount.value + Number.EPSILON) * 100) < userStore.user.balance ?  (Math.round(((bet_amount.value * 2) + Number.EPSILON) * 100)).toBalance(2,true) : userStore.user.balance.toBalance(2, true);
+                break;
+        case 3: bet_amount.value = 0.01;
+                break;
+        case 4: bet_amount.value = userStore.user.balance.toBalance(2,true);
+                break;
+    }
+    console.log(bet_amount.value)
+}
 
 async function create() {
     for(const key of Object.keys(validation.value)) {
