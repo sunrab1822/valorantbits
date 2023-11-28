@@ -16,12 +16,16 @@
                 </div>
             </div>
             <div class="user_side_tails">
-                <img class="flip-profile-picture" src="/storage/crate_images/crate_green.png">
-                <button class="btn btn-success" v-if="created_by && created_by.id != 1">Join</button>
+                <!-- <img class="flip-profile-picture" src="/storage/crate_images/crate_green.png"> -->
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-if="created_by && created_by.id != 0">Join</button>
+                <!-- userStore.user.id -->
                 <!-- <button class="btn btn-danger d-flex mx-auto" @click="join('tails')">Tails</button> -->
             </div>
         </div>
     </div>
+
+    <coinflip-create :isCreate="false"/>
+
 </template>
 
 <script setup>
@@ -33,30 +37,32 @@ import { useUserStore } from '@stores/user';
 
 const userStore = useUserStore();
 
-console.log(userStore)
+//console.log(userStore.user.id)
 
 let bet_amount = ref(1);
 const route = useRoute();
 window.Echo.private('Coinflip.' + route.params.id).listen(".coinflip-join", playerJoined);
-getCoinflip()
 
 let coinflip;
 let created_by = ref();
 
+getCoinflip()
+
+
+
 async function getCoinflip(){
     let request = await axios.get('/api/coinflip/' + route.params.id);
     coinflip = request.data.data;
-
     created_by.value = coinflip["user_" + coinflip["created_by"]];
 }
-
-console.log( created_by.value.id)
 
 
 
 
 
 async function join(bet_side) {
+
+
     await axios.post("/api/coinflip/join", {
         game_id: route.params.id,
         bet_side: bet_side,

@@ -18,7 +18,7 @@
     </div>
     <div class="d-flex justify-content-center align-items-center">
         <div>
-            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="isAuth">Open</button>
+            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" >Open</button>
         </div>
         <div class="d-flex justify-content-center align-items-center ms-1" v-if="crate != null">
             <img src="/storage/radianite.png" class="currency-icon"/><span class="fs-5">{{ crate.price.toBalance(2) }}</span>

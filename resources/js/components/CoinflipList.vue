@@ -8,7 +8,7 @@
             <coinflip-card v-for="coinflip in coinflips" :coinflip="JSON.stringify(coinflip)"/>
         </div>
     </div>
-    <coinflip-create />
+    <coinflip-create :isCreate="true"/>
 </template>
 
 <script setup>
