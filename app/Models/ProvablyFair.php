@@ -23,6 +23,19 @@ class ProvablyFair extends Model
     }
 
     public static function generateCoinflipSeed() {
-        return "";
+        $lowercase = "abcdefghijklmnopqrstuvwxyz";
+        $uppercase = strtoupper($lowercase);
+        $numbers = "0123456789";
+        $alphabet = $lowercase . $uppercase . $numbers;
+        $result = "";
+
+        for($i = 0; $i < 16; $i++) {
+            $result .= $alphabet[random_int(0, strlen($alphabet)-1)];
+            if($i % 2 == 0){
+                $result .= $lowercase[random_int(0, strlen($lowercase)-1)] . $numbers[random_int(0, strlen($numbers)-1)];
+            }
+        }
+
+        return $result;
     }
 }

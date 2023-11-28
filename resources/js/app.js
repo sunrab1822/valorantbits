@@ -14,8 +14,14 @@ import random from 'random-seedable';
 
 window.$ = $;
 
-Number.prototype.toBalance = function(dp) {
+Number.prototype.toBalance = function(dp, isNumber=false) {
+    if  (isNumber)
+    {
+        return parseFloat(Number(Math.round(parseFloat((this / 100) + 'e' + dp)) + 'e-' + dp).toFixed(2));
+    }
+
     return Number(Math.round(parseFloat((this / 100) + 'e' + dp)) + 'e-' + dp).toFixed(2).toLocaleString();
+
 }
 
 String.prototype.hexEncode = function() {

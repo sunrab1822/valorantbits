@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-    import { useRouter, useRoute } from 'vue-router'
+    import { useRoute } from 'vue-router'
     import { ref, nextTick } from 'vue';
     import { useUserStore } from '@stores/user';
     import axios from 'axios';
