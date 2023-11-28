@@ -26,17 +26,20 @@
 
                     <div class="row mb-3">
                         <div class="d-flex justify-content-center">
-                            <input type="radio" class="btn-check" name="bet_side" v-model="bet_side" value="heads" id="heads" checked>
+                            <input type="radio" class="btn-check" name="bet_side" v-model="bet_side" value="heads" id="heads" :checked="isCreate" :disabled="!isCreate">
                             <label class="btn btn-secondary" for="heads">Heads</label>
 
-                            <input type="radio" class="btn-check" name="bet_side" v-model="bet_side" value="tails" id="tails">
+                            <input type="radio" class="btn-check" name="bet_side" v-model="bet_side" value="tails" id="tails" :disabled="!isCreate">
                             <label class="btn btn-secondary ms-1" for="tails">Tails</label>
                         </div>
                     </div>
 
                     <div class="row mb-0">
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary" @click="create">
+                            <button type="submit" class="btn btn-primary" v-if="isCreate" @click="create">
+                                Create
+                            </button>
+                            <button type="submit" class="btn btn-primary" v-if="!isCreate" @click="join">
                                 Create
                             </button>
                         </div>
@@ -53,6 +56,8 @@ import * as bootstrap from 'bootstrap';
 import { ref,computed } from 'vue'
 import { useRouter } from 'vue-router'
 
+
+const props = defineProps(["isCreate"])
 
 const router = useRouter();
 
@@ -91,5 +96,10 @@ async function create() {
                 }
             }
         }
+}
+
+
+function join( ){
+
 }
 </script>
