@@ -20,7 +20,7 @@ class CoinflipController extends Controller
     }
 
     public function joinGame(Request $request) {
-        if(!$request->has("game_id") || !$request->has("bet_side") || !$request->has("bet_amount")) {
+        if(!$request->has("game_id") || !$request->has("bet_amount")) {
             return json_encode(["error" => true, "data" => "Missing Game Info"]);
         }
 
@@ -28,7 +28,7 @@ class CoinflipController extends Controller
         $User = User::find(Auth::id());
 
         $bet_amount = $request->get("bet_amount");
-        $bet_side = $request->get("bet_side");
+        $bet_side = $Coinflip->heads == null ? "heads" : "tails";
 
         if(!$User->hasBalance($bet_amount)) return json_encode(["error" => true, "data" => "Not enough balance"]);
 
@@ -42,12 +42,15 @@ class CoinflipController extends Controller
         $Coinflip->{$bet_side} = $User->id;
         $Coinflip->{$bet_side . "_amount"} = $bet_amount;
 
+
         if($Coinflip->heads != null && $Coinflip->tails != null) {
             $Coinflip->game_state = 1;
-            broadcast(new CoinflipJoin($Coinflip->id, $User, $bet_side));
+            $Coinflip->save();
+            broadcast(new CoinflipJoin($Coinflip, $User, $bet_side));
+            return json_encode(["error" => false, "data" => "joined"]);
         }
 
-        return json_encode(["error" => false, "data" => "joined"]);
+        return json_encode(["error" => true, "data" => "Unknown Error"]);
     }
 
     public function getCoinflips() {

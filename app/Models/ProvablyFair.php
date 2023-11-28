@@ -21,4 +21,8 @@ class ProvablyFair extends Model
 
         return $result;
     }
+
+    public static function generateCoinflipSeed() {
+        return "";
+    }
 }

@@ -14,16 +14,16 @@ class CoinflipJoin implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    protected $id = null;
-    protected $user = null;
+    protected $Coinflip = null;
+    protected $User = null;
     protected $joined_side = null;
     /**
      * Create a new event instance.
      */
-    public function __construct($id, $user, $joined_side)
+    public function __construct($Coinflip, $User, $joined_side)
     {
-        $this->id = $id;
-        $this->user = $user;
+        $this->Coinflip = $Coinflip;
+        $this->User = $User;
         $this->joined_side = $joined_side;
     }
 
@@ -35,7 +35,7 @@ class CoinflipJoin implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('App.Models.Coinflip.' . $this->id),
+            new Channel('Coinflip.' . $this->Coinflip->id),
         ];
     }
 
@@ -44,6 +44,6 @@ class CoinflipJoin implements ShouldBroadcast
     }
 
     public function broadcastWith() {
-        return ["joined_user" => $this->user->username, "side" => $this->joined_side, "user_profile" => $this->user->profile_image];
+        return ["opponent" => $this->User, "side" => $this->joined_side, "game_state" => $this->Coinflip->game_state];
     }
 }

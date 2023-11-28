@@ -1,9 +1,10 @@
 <template>
-    <div class="bg-dark mx-auto rounded p-2 ">
+    <div class="bg-dark mx-auto rounded p-2" v-if="coinflip">
         <div class="d-flex justify-content-evenly align-items-center">
             <div>
                 <div class="user_side_heads">
                     <img class="flip-profile-picture" v-if="created_by" :src="created_by.profile_image" alt="">
+                    <div>{{ created_by.username }}</div>
                 </div>
                 <!-- <button class="btn btn-danger d-flex mx-auto" @click="join('heads')">Heads</button> -->
             </div>
@@ -16,8 +17,17 @@
                 </div>
             </div>
             <div class="user_side_tails">
+                <div v-if="coinflip.game_state == 0">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-if="!userStore.user" disabled>Login</button>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-else-if="userStore.user && created_by && created_by.id == userStore.user.id">Call Bots</button>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-else>Join</button>
+                </div>
+                <div v-else>
+                    <img class="flip-profile-picture" :src="opponent.profile_image" alt="">
+                    <div>{{ opponent.username }}</div>
+                </div>
                 <!-- <img class="flip-profile-picture" src="/storage/crate_images/crate_green.png"> -->
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-if="created_by && created_by.id != 0">Join</button>
+
                 <!-- userStore.user.id -->
                 <!-- <button class="btn btn-danger d-flex mx-auto" @click="join('tails')">Tails</button> -->
             </div>
@@ -29,61 +39,50 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import { useRoute } from 'vue-router';
-import { ref } from 'vue';
-import { useUserStore } from '@stores/user';
+    import axios from 'axios';
+    import { useRoute } from 'vue-router';
+    import { ref } from 'vue';
+    import { useUserStore } from '@stores/user';
 
+    const userStore = useUserStore();
 
-const userStore = useUserStore();
+    const route = useRoute();
+    window.Echo.channel('Coinflip.' + route.params.id).listen(".coinflip-join", playerJoined);
 
-//console.log(userStore.user.id)
+    let coinflip = ref();
+    let created_by = ref();
+    let opponent = ref();
 
-let bet_amount = ref(1);
-const route = useRoute();
-window.Echo.private('Coinflip.' + route.params.id).listen(".coinflip-join", playerJoined);
+    getCoinflip();
 
-let coinflip;
-let created_by = ref();
+    async function getCoinflip(){
+        let request = await axios.get('/api/coinflip/' + route.params.id);
+        coinflip.value = request.data.data;
+        created_by.value = coinflip.value["user_" + coinflip.value["created_by"]];
+        opponent.value = coinflip.value["user_" + (coinflip.value["created_by"] == "heads" ? "tails" : "heads")];
+    }
 
-getCoinflip()
+    function playerJoined(data) {
+        coinflip.value.game_state = data.game_state;
+        coinflip.value["user_" + data.side] = data.opponent;
+        opponent.value = data.opponent;
 
+        flipCoin();
+    }
 
-
-async function getCoinflip(){
-    let request = await axios.get('/api/coinflip/' + route.params.id);
-    coinflip = request.data.data;
-    created_by.value = coinflip["user_" + coinflip["created_by"]];
-}
-
-
-
-
-
-async function join(bet_side) {
-
-
-    await axios.post("/api/coinflip/join", {
-        game_id: route.params.id,
-        bet_side: bet_side,
-        bet_amount: bet_amount.value
-    });
-}
-
-function playerJoined(data) {
-    $('.user_side_' + data.side).find("img").attr("src", data.user_profile);
-    var flipResult = Math.random();
-    $('#coin').removeClass();
-    setTimeout(function () {
-        if (flipResult <= 0.5) {
-            $('#coin').addClass('heads');
-            console.log('it is head');
-        } else {
-            $('#coin').addClass('tails');
-            console.log('it is tails');
-        }
-    }, 1500);
-}
+    function flipCoin() {
+        var flipResult = Math.random();
+        $('#coin').removeClass();
+        setTimeout(function () {
+            if (flipResult <= 0.5) {
+                $('#coin').addClass('heads');
+                console.log('it is head');
+            } else {
+                $('#coin').addClass('tails');
+                console.log('it is tails');
+            }
+        }, 1500);
+    }
 </script>
 
 <style scoped>
