@@ -21,7 +21,7 @@
             <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="userStore.isLoggedIn">Open</button>
         </div>
         <div class="d-flex justify-content-center align-items-center ms-1" v-if="crate != null">
-            <img src="/storage/radianite.png" class="currency-icon"/><span class="fs-5">{{ crate.price.toBalance(2) }}</span>
+            <currency /><span class="fs-5">{{ crate.price.toBalance(2) }}</span>
         </div>
     </div>
     <div>

@@ -9,7 +9,7 @@
             </div>
             <div class="align-self-center">
                 <div class="d-flex">
-                    <img src="/storage/radianite.png" class="currency-icon" alt="">
+                    <currency />
                     <div class="fs-5 fw-semibold">{{ coinflip[coinflip["created_by"] + "_amount"] }}</div>
                 </div>
             </div>

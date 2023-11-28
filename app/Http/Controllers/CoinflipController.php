@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\GameType;
 use App\Events\CoinflipJoin;
 use App\Models\Coinflip;
+use App\Models\ProvablyFair;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,6 +99,7 @@ class CoinflipController extends Controller
         $coinflip->{$bet_side} = $User->id;
         $coinflip->{$bet_side . "_amount"} = $bet_amount;
         $coinflip->created_by = $bet_side;
+        $coinflip->seed = ProvablyFair::generateCoinflipSeed();
         $coinflip->save();
 
         return json_encode(["error" => false, "data" => $coinflip->id]);

@@ -8,7 +8,7 @@
                 </div>
                 <div class="item-details d-flex justify-content-between px-3" style="width: 100%;">
                     <div class="fs-6-1">{{ chance }}%</div>
-                    <div class="fs-6-1"><img src="/storage/radianite.png" class="currency-icon">{{ price.toBalance(2) }}</div>
+                    <div class="fs-6-1"><currency />{{ price.toBalance(2) }}</div>
                 </div>
             </div>
         </div>

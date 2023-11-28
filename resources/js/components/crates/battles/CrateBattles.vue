@@ -10,7 +10,7 @@
                         <img class="" :src="crate.image" style="max-width: 120px; max-height: 120px;" v-for="crate in crate_battle.crate_list">
                     </div>
                     <div class="col-md-2 d-flex align-items-center">
-                        <img src="/storage/radianite.png" class="currency-icon" alt="">
+                        <currency />
                         <div class="fs-5 fw-semibold">{{ crate_battle.price.toBalance(2) }}</div>
                     </div>
                     <div class="col-md-2 d-flex flex-column justify-content-center">

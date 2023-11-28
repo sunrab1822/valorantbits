@@ -26,7 +26,7 @@
                         <button class="btn btn-success fs-5 px-3" style="height: 3rem;" @click="joinBattle(-1)" v-else>Call Bots</button>
                     </div>
                     <div class="battle-player-earnings" v-if="crate_battle.player_list[i-1]">
-                        <img src="/storage/radianite.png" class="currency-icon">
+                        <currency />
                         <div class="fs-5">{{ itemPrices[i-1].toBalance(2) }}</div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                         <div class="d-flex flex-column justify-content-center">
                             <div class="fs-5">{{ round[i-1].name }}</div>
                             <div class="d-flex">
-                                <img src="/storage/radianite.png" class="currency-icon">
+                                <currency />
                                 <div class="fs-6">{{ round[i-1].price.toBalance(2) }}</div>
                             </div>
                         </div>

@@ -27,7 +27,7 @@
 
             <div class="mx-auto order-0 nav-balance" v-if="userStore.isLoggedIn">
                 <div class="d-flex bg-secondary align-items-center rounded-2 balance-box mx-auto">
-                    <img src="/storage/radianite.png" class="currency-icon">
+                    <currency />
                     <div class="balance-text nav_balance">{{ userStore.user.balance.toBalance(2) }}</div>
                 </div>
             </div>

@@ -6,19 +6,19 @@
         <div class="col pe-3">
             <div class="rounded py-1 profile-card">
                 <h5 class="text-center m-2">Accumulated</h5>
-                <p class="text-center fs-4"><img src="/storage/radianite.png" class="currency-icon">10312212313123</p>
+                <p class="text-center fs-4"><currency />10312212313123</p>
             </div>
         </div>
         <div class="col px-3">
             <div class="rounded py-1 profile-card">
                 <h5 class="text-center m-2">Wagered</h5>
-                <p class="text-center fs-4"><img src="/storage/radianite.png" class="currency-icon">{{ wager.toBalance(2) }}</p>
+                <p class="text-center fs-4"><currency />{{ wager.toBalance(2) }}</p>
             </div>
         </div>
         <div class="col ps-3">
             <div class="rounded py-1 profile-card">
                 <h5 class="text-center m-2">Profit</h5>
-                <p class="text-center fs-4"><img src="/storage/radianite.png" class="currency-icon">{{ profit.toBalance(2) }}</p>
+                <p class="text-center fs-4"><currency />{{ profit.toBalance(2) }}</p>
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
         <div class="col ps-3">
             <div class="rounded py-1 profile-card">
                 <h5 class="text-center m-2">Highest Win</h5>
-                <p class="text-center fs-4"><img src="/storage/radianite.png" class="currency-icon">{{ highest_win.toBalance(2) }}</p>
+                <p class="text-center fs-4"><currency />{{ highest_win.toBalance(2) }}</p>
             </div>
         </div>
     </div>

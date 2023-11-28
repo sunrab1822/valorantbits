@@ -9,7 +9,7 @@
                     <img class="card-img" :src="image" style="max-width: 120px; max-height: 120px;">
                 </div>
                 <div class="d-flex justify-content-center">
-                    <img src="/storage/radianite.png" class="currency-icon" alt="">
+                    <currency />
                     <div class="fs-5 fw-semibold">{{ price.toBalance(2) }}</div>
                 </div>
             </div>

@@ -65,7 +65,6 @@
     import { ref } from 'vue';
     import { useUserStore } from '@stores/user';
 
-    const emit = defineEmits(['isLoggedIn']);
     const userStore = useUserStore();
 
     let username = ref("");
