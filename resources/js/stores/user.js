@@ -14,6 +14,11 @@ export const useUserStore = defineStore('user', {
         },
         setLoggedIn(state) {
             this.isLoggedIn = state;
+        },
+        updateUserBalance(amount) {
+            if(this.user) {
+                this.user.balance = amount;
+            }
         }
     }
 })

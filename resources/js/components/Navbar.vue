@@ -17,6 +17,9 @@
                         <router-link class="nav-link" :to="{ name: 'crates'}">Crates</router-link>
                     </li>
                     <li class="nav-item btn-gray rounded-2 ms-2">
+                        <router-link class="nav-link" :to="{ name: 'crate_battles'}">Crate Battles</router-link>
+                    </li>
+                    <li class="nav-item btn-gray rounded-2 ms-2">
                         <router-link class="nav-link" :to="{ name: 'coinflip'}">Coinflip</router-link>
                     </li>
                 </ul>

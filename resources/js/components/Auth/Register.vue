@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="registerModal" tabindex="-1" data-bs-theme="dark">
+    <div class="modal fade" id="registerModal" tabindex="-1" data-bs-theme="dark" @keydown.enter="register">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">Register</div>
@@ -51,7 +51,7 @@
 
                     <div class="row mb-0">
                         <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary" @click="register">
+                            <button type="button" class="btn btn-primary" @click="register">
                                 Register
                             </button>
                         </div>

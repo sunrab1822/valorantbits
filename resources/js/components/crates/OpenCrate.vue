@@ -6,7 +6,7 @@
         <div class="col text-center">
             <h1 v-if="crate != null">{{ crate.name }}</h1>
         </div>
-        <div class="col"></div>
+    <div class="col"></div>
     </div>
     <div class="spin-wrapper mb-3">
         <div class="spin-selector"></div>
@@ -18,7 +18,7 @@
     </div>
     <div class="d-flex justify-content-center align-items-center">
         <div>
-            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="isAuth">Open</button>
+            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="userStore.isLoggedIn">Open</button>
         </div>
         <div class="d-flex justify-content-center align-items-center ms-1" v-if="crate != null">
             <img src="/storage/radianite.png" class="currency-icon"/><span class="fs-5">{{ crate.price.toBalance(2) }}</span>
@@ -35,11 +35,12 @@
 <script setup>
     import { useRouter, useRoute } from 'vue-router'
     import { ref, nextTick } from 'vue';
+    import { useUserStore } from '@stores/user';
     import axios from 'axios';
+    import random from 'random-seedable';
 
-    defineProps(["isAuth"]);
-
-    const route = useRoute()
+    const route = useRoute();
+    const userStore = useUserStore();
     let crate = null;
 
     let isSpinning = ref(false);
@@ -100,7 +101,10 @@
             'id': crate.id
         });
 
-        $(".nav_balance").trigger("updateBalance", crate.price * -1);
+        if(!openedItem.data.error) {
+            $(".nav_balance").trigger("updateBalance", crate.price * -1);
+        }
+
 
         if(openedItem.data.data.drop == undefined || openedItem.data.data.drop == null) {
             isSpinning.value = false;
@@ -167,7 +171,7 @@
     }
 
     function getRandomInt(min, max) {
-        return Math.floor(Math.random() * (max - min)) + min;
+        return Math.floor(random.float53() * (max - min)) + min;
     }
 
     function back(){

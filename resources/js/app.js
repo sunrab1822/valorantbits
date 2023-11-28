@@ -9,11 +9,49 @@ import { createApp } from 'vue';
 import $ from "jquery";
 import { createRouter, createWebHistory } from 'vue-router';
 import { createPinia } from 'pinia'
+import { useUserStore } from '@stores/user';
+import random from 'random-seedable';
 
 window.$ = $;
 
 Number.prototype.toBalance = function(dp) {
-    return Number(Math.round(parseFloat((this / 100) + 'e' + dp)) + 'e-' + dp);
+    return Number(Math.round(parseFloat((this / 100) + 'e' + dp)) + 'e-' + dp).toFixed(2).toLocaleString();
+}
+
+String.prototype.hexEncode = function() {
+    let hex;
+
+    let result = "";
+    for (let i = 0; i < this.length; i++) {
+        hex = this.charCodeAt(i).toString(16);
+        result += ("000"+hex).slice(-4);
+    }
+
+    return result;
+}
+
+String.prototype.hexDecode = function() {
+    let hexes = this.match(/.{1,4}/g) || [];
+    let result = "";
+    for(let i = 0; i < hexes.length; i++) {
+        result += String.fromCharCode(parseInt(hexes[i], 16));
+    }
+
+    return result;
+}
+
+String.generateClientSeed = function() {
+    let lowercase = "abcdefghijklmnopqrstuvwxyz";
+    let uppercase = lowercase.toUpperCase();
+    let numbers = "0123456789";
+
+    let chars = lowercase + uppercase + numbers;
+    let result = "";
+    for(let i = 0; i < 8; i++) {
+        result += chars[random.randRange(0, chars.length - 1)];
+    }
+
+    return result;
 }
 
 /**
@@ -83,7 +121,7 @@ const router = new createRouter({
         {
             path: '/crate-battles/:id',
             name: 'crate_battles_game',
-            component: app._context.components.CrateBattles,
+            component: app._context.components.CrateBattlesView,
         },
         {
             path: '/coinflip',
@@ -115,17 +153,12 @@ app.use(router);
 
 app.mount('#app');
 
+const userStore = useUserStore();
+
 $(function(){
     $(".nav_balance").on("updateBalance", function(event, amount){
-        let updateAmount = Number(amount).toBalance(2);
-        let $balancePopup = $(".balance-popup");
-
-        $balancePopup.find(".balance-text").text(updateAmount.toLocaleString());
-
-        showBalancePopup(updateAmount, updateAmount > 0);
-
-        let updatedBalance = Number($(this).text().replace(",", "")) + updateAmount;
-        $(this).text(updatedBalance.toLocaleString());
+        showBalancePopup(amount, amount > 0);
+        userStore.updateUserBalance(userStore.user.balance + amount);
     });
 });
 
@@ -144,7 +177,7 @@ function showBalancePopup(amount, positive) {
     }
 
     $popupDiv.append($("<img>", {"src": "/storage/radianite.png", "class": "currency-icon"}));
-    $popupDiv.append($("<div>", {"class": "balance-text", "text": amount.toLocaleString()}));
+    $popupDiv.append($("<div>", {"class": "balance-text", "text": amount.toBalance(2)}));
 
     $(".nav-balance").append($popupDiv);
 

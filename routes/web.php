@@ -37,20 +37,28 @@ Route::post('/api/login', [LoginController::class, 'login']);
 Route::post('/api/logout', [LoginController::class, 'logout']);
 Route::post('/api/register', [RegisterController::class, 'register']);
 
+// Crates
 Route::get('/api/crate-list', [CrateController::class, 'getCrateList']);
 Route::get('/api/crate/{crate_id}', [CrateController::class, 'getCrate']);
-Route::get('/api/server_hash', [CrateController::class, 'getServerHash']);
 Route::post('/api/crate/open', [CrateController::class, 'openCrate'])->middleware("auth");
+
+// Profile
 Route::get('/api/user', [UserController::class, 'getUser'])->middleware("auth");
 Route::get('/api/user/profile', [UserController::class, 'getUserProfile'])->middleware("auth");
-Route::get('/api/crate-battle/list', [CrateBattleController::class, 'getCrateBattles']);
 Route::post('/api/user/profile/profit-chart', [UserController::class, 'getProfitChartData'])->middleware("auth");
+
+// Crate Battle
+Route::get('/api/crate-battle/list', [CrateBattleController::class, 'getCrateBattles']);
+Route::get('/api/crate-battle/{id}', [CrateBattleController::class, 'getCrateBattle']);
+Route::post('/api/crate-battle/join', [CrateBattleController::class, 'joinGame'])->middleware("auth");
+
+// Coinflip
 Route::post('/api/coinflip/join', [CoinflipController::class, 'joinGame'])->middleware("auth");
 Route::get('/api/coinflips', [CoinflipController::class, 'getCoinflips']);
 Route::post('/api/coinflip', [CoinflipController::class, 'createCoinflip']);
 Route::get('/api/coinflip/{id}', [CoinflipController::class, 'getCoinflip']);
 
-
+// Main Page
 Route::get('/{any}', [HomeController::class, 'index'])->where('any', ".*");
 
 

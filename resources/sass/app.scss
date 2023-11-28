@@ -177,6 +177,11 @@ body {
     width: 4rem;
 }
 
+.profile-picture-3 {
+    height: 3rem;
+    width: 3rem;
+}
+
 a.no-style {
     text-decoration: inherit;
     color: inherit;
@@ -270,4 +275,37 @@ a.no-style {
     background-color: #2d3235;
     border-radius: 0.25rem;
     padding: 1rem;
+}
+
+.battle-player-earnings {
+    display: flex;
+    align-items: center;
+    background-color: #202125;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.won-item-card {
+    background-color: #202125;
+    border-radius: 0.5rem;
+    width: 100%;
+    display: flex;
+    padding: 0.5rem;
+}
+
+.grayscale {
+    filter: grayscale(100%);
+}
+
+.provably-fair-text {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 0.25rem;
+    color: #6c757d;
+    font-weight: bold;
+    cursor: pointer;
+
+    :hover {
+        color: white;
+    }
 }

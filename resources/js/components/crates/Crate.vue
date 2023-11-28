@@ -1,5 +1,5 @@
 <template>
-    <router-link class="no-style" :to="{ name: 'open_crate', params: { id: id, isAuth: isAuth } }">
+    <router-link class="no-style" :to="{ name: 'open_crate', params: { id: id } }">
         <div class="card col m-2 bg-dark-linear">
             <div class="card-body text-white">
                 <div class="">

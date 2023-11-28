@@ -1,6 +1,5 @@
 <template>
     <div>
-        <CreateBattleModal></CreateBattleModal>
         <div class="d-flex justify-content-end mb-3">
             <router-link class="btn btn-primary create-button" :to="{name: 'create_crate_battles'}">Create Battle</router-link>
         </div>
