@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="col align-self-center d-flex justify-content-end">
-                <router-link v-if="coinflip.game_state == 0 && (!userStore.user || userStore.user.id != created_by.id)" class="no-style" :to="{name:'coinflip_game', params:{id:coinflip.id}}"><button class="btn btn-primary">Join</button></router-link>
+                <router-link v-if="coinflip.game_state == 0 && (userStore.user && userStore.user.id != created_by.id)" class="no-style" :to="{name:'coinflip_game', params:{id:coinflip.id}}"><button class="btn btn-primary">Join</button></router-link>
                 <router-link class="no-style ms-1" :to="{name:'coinflip_game', params:{id:coinflip.id}}"><button class="btn btn-primary">View</button></router-link>
             </div>
         </div>
