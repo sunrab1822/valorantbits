@@ -8,7 +8,7 @@
                 <div class="modal-body">
                     <div class="row mb-3">
                         <div class="d-flex justify-content-center">
-                            <input type="number" class="form-control w-50 text-center" name="bet_amount"
+                            <input type="number" class="form-control w-50 text-center" name="bet_amount" min="0.01" step="any"
                                 v-model="bet_amount"  required autofocus>
                             <span class="invalid-feedback" role="alert" v-if="validation.bet_amount">
                                 <strong>{{ validation.bet_amount }}</strong>
@@ -75,18 +75,16 @@ let validation = ref({
 let bet_side = ref("heads");
 
 function setBetAmount(type){
-    console.log(Math.round((bet_amount.value + Number.EPSILON) * 100), userStore.user.balance)
     switch (type){
-        case 1: bet_amount.value = bet_amount.value >= 0.01 ? (Math.round(((bet_amount.value / 2) + Number.EPSILON) * 100)).toBalance(2,true) :  0.01;
+        case 1: bet_amount.value = bet_amount.value >= 0.01 ? (Math.round(((bet_amount.value / 2) + Number.EPSILON) * 100)).toBalance(2, true) : 0.01;
                 break;
-        case 2:  bet_amount.value = Math.round((bet_amount.value + Number.EPSILON) * 100) < userStore.user.balance ?  (Math.round(((bet_amount.value * 2) + Number.EPSILON) * 100)).toBalance(2,true) : userStore.user.balance.toBalance(2, true);
+        case 2: bet_amount.value = Math.round((bet_amount.value * 2 + Number.EPSILON) * 100) < userStore.user.balance ? (Math.round(((bet_amount.value * 2) + Number.EPSILON) * 100)).toBalance(2, true) : userStore.user.balance.toBalance(2, true);
                 break;
         case 3: bet_amount.value = 0.01;
                 break;
-        case 4: bet_amount.value = userStore.user.balance.toBalance(2,true);
+        case 4: bet_amount.value = userStore.user.balance.toBalance(2, true);
                 break;
     }
-    console.log(bet_amount.value)
 }
 
 async function create() {
@@ -95,13 +93,13 @@ async function create() {
     }
 
     let request = await axios.post('/api/coinflip', {
-        bet_amount: bet_amount.value,
+        bet_amount: Math.round((bet_amount.value + Number.EPSILON) * 100),
         bet_side: bet_side.value
     })
 
     if(!request.data.error) {
         bootstrap.Modal.getOrCreateInstance(document.getElementById('coinflipCreateModal')).hide();
-        bet_amount.value = 1;
+        bet_amount.value = 0.01;
         bet_side.value = "heads";
         router.push({name:"coinflip_game", params:{id:request.data.data}})
     } else {
@@ -117,7 +115,7 @@ async function create() {
 async function join() {
     await axios.post("/api/coinflip/join", {
         game_id: route.params.id,
-        bet_amount: bet_amount.value
+        bet_amount: Math.round((bet_amount.value + Number.EPSILON) * 100)
     });
     bootstrap.Modal.getOrCreateInstance(document.getElementById('coinflipCreateModal')).hide();
 }

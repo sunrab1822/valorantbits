@@ -54,6 +54,35 @@ class CoinflipController extends Controller
         return json_encode(["error" => true, "data" => "Unknown Error"]);
     }
 
+    public function callBots(Request $request) {
+        if(!$request->has("game_id")) {
+            return json_encode(["error" => true, "data" => "Missing Game Info"]);
+        }
+
+        $Coinflip = Coinflip::find($request->get("game_id"));
+        $bet_side = $Coinflip->heads == null ? "heads" : "tails";
+        $player_bet_side = $Coinflip->heads == null ? "tails" : "heads";
+
+        if((in_array($bet_side, ["heads", "tails"])) && ($bet_side == "heads" && $Coinflip->heads != null) || ($bet_side == "tails" && $Coinflip->tails != null)) {
+            return json_encode(["error" => true, "data" => "Could not call bots"]);
+        }
+
+        $User = User::find(1);
+
+        $Coinflip->{$bet_side} = $User->id;
+        $Coinflip->{$bet_side . "_amount"} = $Coinflip->{$player_bet_side . "_amount"} * (1 + (mt_rand(5, 15) / 100));
+
+        if($Coinflip->heads != null && $Coinflip->tails != null) {
+            $Coinflip->chance_float = ProvablyFair::generateFloat("", $Coinflip->seed);
+            $Coinflip->game_state = 1;
+            $Coinflip->save();
+            broadcast(new CoinflipJoin($Coinflip, $User, $bet_side));
+            return json_encode(["error" => false, "data" => "joined"]);
+        }
+
+        return json_encode(["error" => true, "data" => "Unknown Error"]);
+    }
+
     public function getCoinflips() {
         $coinflips = Coinflip::whereIn('game_state', [0,1])->get();
 

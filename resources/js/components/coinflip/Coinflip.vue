@@ -3,10 +3,11 @@
         <div class="d-flex justify-content-evenly align-items-center">
             <div>
                 <div class="user_side_heads">
-                    <img class="flip-profile-picture" v-if="created_by" :src="created_by.profile_image" alt="">
-                    <div>{{ created_by.username }}</div>
+                    <img class="flip-profile-picture mb-2 border border-success" v-if="created_by" :src="created_by.profile_image" alt="">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div>{{ created_by.username }}</div>
+                    </div>
                 </div>
-                <!-- <button class="btn btn-danger d-flex mx-auto" @click="join('heads')">Heads</button> -->
             </div>
             <div id="coin">
                 <div class="side-a">
@@ -18,18 +19,17 @@
             </div>
             <div class="user_side_tails">
                 <div v-if="coinflip.game_state == 0">
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-if="!userStore.user" disabled>Login</button>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-else-if="userStore.user && created_by && created_by.id == userStore.user.id">Call Bots</button>
+                    <button class="btn btn-success" v-if="!userStore.user" disabled>Login</button>
+                    <button class="btn btn-success" v-else-if="userStore.user && created_by && created_by.id == userStore.user.id" @click="callBots">Call Bots</button>
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-else>Join</button>
                 </div>
                 <div v-else>
-                    <img class="flip-profile-picture" :src="opponent.profile_image" alt="">
-                    <div>{{ opponent.username }}</div>
+                    <img class="flip-profile-picture mb-2 border border-success" :src="opponent.profile_image" alt="">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <span>{{ opponent.username }}</span>
+                        <span class="bg-primary px-1 rounded fs-7 ms-2" v-if="opponent.is_bot">BOT</span>
+                    </div>
                 </div>
-                <!-- <img class="flip-profile-picture" src="/storage/crate_images/crate_green.png"> -->
-
-                <!-- userStore.user.id -->
-                <!-- <button class="btn btn-danger d-flex mx-auto" @click="join('tails')">Tails</button> -->
             </div>
         </div>
     </div>
@@ -68,6 +68,12 @@
         opponent.value = data.opponent;
 
         flipCoin();
+    }
+
+    async function callBots() {
+        await axios.post("/api/coinflip/call-bots", {
+            game_id: route.params.id
+        });
     }
 
     function flipCoin() {

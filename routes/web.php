@@ -53,6 +53,7 @@ Route::get('/api/crate-battle/{id}', [CrateBattleController::class, 'getCrateBat
 Route::post('/api/crate-battle/join', [CrateBattleController::class, 'joinGame'])->middleware("auth");
 
 // Coinflip
+Route::post('/api/coinflip/call-bots', [CoinflipController::class, 'callBots'])->middleware("auth");
 Route::post('/api/coinflip/join', [CoinflipController::class, 'joinGame'])->middleware("auth");
 Route::get('/api/coinflips', [CoinflipController::class, 'getCoinflips']);
 Route::post('/api/coinflip', [CoinflipController::class, 'createCoinflip']);
