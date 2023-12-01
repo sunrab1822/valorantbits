@@ -45,31 +45,14 @@
     import { useUserStore } from '@stores/user';
 
     const userStore = useUserStore();
-
     const route = useRoute();
     window.Echo.channel('Coinflip.' + route.params.id).listen(".coinflip-join", playerJoined);
-
-    let clientSeed = ref("")
 
     let coinflip = ref();
     let created_by = ref();
     let opponent = ref();
 
     getCoinflip();
-    generateClientSeed();
-
-    console.log(clientSeed.value)
-
-    function generateClientSeed() {
-        const numbers = "0123456789";
-        const lowcase = "abcdefghijklmnopqrstuvwxyz";
-        const uppercase = lowcase.toUpperCase();
-        const alphabet = numbers + uppercase + lowcase;
-
-        for (let i = 0; i <= 8; i++) {
-            clientSeed.value += alphabet[Math.floor(Math.random() * (alphabet.length))];
-        }
-    }
 
     async function getCoinflip(){
         let request = await axios.get('/api/coinflip/' + route.params.id);

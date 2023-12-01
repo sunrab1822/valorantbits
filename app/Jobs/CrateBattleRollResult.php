@@ -34,7 +34,7 @@ class CrateBattleRollResult implements ShouldQueue
     public function handle(): void
     {
         $result_set = [];
-        foreach($this->result[$this->crate_number + 1] as $result) {
+        foreach($this->result[$this->crate_number] as $result) {
             $result_set[] = Skin::find($result);
         }
         broadcast(new CrateBattleRoll($this->CrateBattle->id, $result_set, $this->crate_number));

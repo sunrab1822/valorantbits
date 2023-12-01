@@ -5,19 +5,29 @@
     </div>
     <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
-            <select name="battleType" class="me-1">
+            <select name="battleType" v-model="battle_type" class="me-1 form-select battle-mode-select">
                 <option value="1">1v1</option>
                 <option value="2">1v1v1</option>
                 <option value="3">1v1v1v1</option>
                 <option value="4">2v2</option>
             </select>
-            <button class="btn btn-secondary me-1">Normal</button>
-            <button class="btn btn-secondary me-1">Group</button>
-            <button class="btn btn-secondary">Terminal</button>
+            <div class="me-1">
+                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="normal" autocomplete="off" checked>
+                <label class="btn btn-secondary" for="normal">Normal</label>
+            </div>
+            <div class="me-1">
+                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="group" autocomplete="off">
+                <label class="btn btn-secondary" for="group">Group</label>
+            </div>
+            <div>
+                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="terminal" autocomplete="off">
+                <label class="btn btn-secondary" for="terminal">Terminal</label>
+            </div>
         </div>
-        <div>
-            <button class="btn btn-secondary">Crazy</button>
-        </div>
+        <!-- <div class="bg-secondary form-check form-switch rounded">
+            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked">
+            <label class="form-check-label" for="flexSwitchCheckChecked">Crazy</label>
+        </div> -->
     </div>
     <div class="row gx-3">
         <div class="col-md-3">
@@ -33,7 +43,7 @@
                     <div>{{ crate.name }}</div>
                     <div class="d-flex">
                         <currency />
-                        <div>{{ crate.price }}</div>
+                        <div>{{ crate.price.toBalance(2) }}</div>
                     </div>
                 </div>
             </div>
@@ -45,15 +55,27 @@
 <script setup>
     import { ref } from 'vue';
     import * as bootstrap from 'bootstrap';
+    import { useRouter } from 'vue-router';
 
+    const router = useRouter();
     let crates = ref([]);
+    let battle_options = ref("normal");
+    let battle_type = ref(1);
 
     function back() {
         history.back();
     }
 
-    function createBattle() {
+    async function createBattle() {
+        let response = await axios.post("/api/crate-battle", {
+            crates: crates.value.map(obj => obj.id),
+            type: battle_type.value,
+            options: battle_options.value
+        });
 
+        if(!response.data.error) {
+            router.push({name:"crate_battles_game", params: {id: response.data.data}});
+        }
     }
 
     function addCrate() {

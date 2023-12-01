@@ -12,23 +12,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
+    import { ref } from 'vue';
+    import axios from 'axios';
 
-let coinflips = ref([]);
+    let coinflips = ref([]);
 
-window.Echo.channel('CoinflipList').listen('.coinflip-created', coinflipCreated);
-getCoinflips();
+    window.Echo.channel('CoinflipList').listen('.coinflip-created', coinflipCreated);
+    getCoinflips();
 
-function coinflipCreated(data) {
-    coinflips.value.push(data);
-}
+    function coinflipCreated(data) {
+        coinflips.value.push(data);
+    }
 
-async function getCoinflips(){
-    const response = await axios.get('/api/coinflips');
-    coinflips.value = response.data.data;
-}
-
+    async function getCoinflips() {
+        const response = await axios.get('/api/coinflips');
+        coinflips.value = response.data.data;
+    }
 </script>
 
 <style scoped>

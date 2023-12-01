@@ -1,6 +1,5 @@
 <template>
     <div class="container-fluid">
-        <div class="provably-fair-text"><u>Provably fair</u></div>
         <div class="row mb-3 bg-nav-dark">
             <div class="col d-flex justify-content-center">
                 <div class="w-100" style="max-width: 28rem;">
@@ -17,13 +16,13 @@
                         <img :src="crate_battle.player_list[i-1].profile_image" class="profile-picture-3 me-3 border border-success">
                         <div v-if="crate_battle.player_list[i-1] != undefined">
                             <div class="fs-5">{{ crate_battle.player_list[i-1].username }}</div>
-                            <div class="bg-primary px-2 rounded fs-7" v-if="crate_battle.player_list[i-1].is_bot">BOT</div>
+                            <div class="bg-primary px-2 rounded fs-7 bot-icon" v-if="crate_battle.player_list[i-1].is_bot">BOT</div>
                         </div>
                     </div>
                     <div v-else>
                         <button class="btn btn-success fs-5 px-3" v-if="!userStore.user" disabled>Login</button>
                         <button class="btn btn-success fs-5 px-3" style="height: 3rem;" @click="joinBattle(i-1)" v-else-if="userStore.user && userStore.user.id != crate_battle.created_by">Join</button>
-                        <button class="btn btn-success fs-5 px-3" style="height: 3rem;" @click="joinBattle(-1)" v-else>Call Bots</button>
+                        <button class="btn btn-success fs-5 px-3" style="height: 3rem;" @click="callBots()" v-else>Call Bots</button>
                     </div>
                     <div class="battle-player-earnings" v-if="crate_battle.player_list[i-1]">
                         <currency />
@@ -73,7 +72,7 @@
     let wonItems = ref([]);
     let itemPrices = ref([0, 0, 0, 0]);
 
-    let random = new XORShift(crate_battle.seed);
+    let random = null;
     const route = useRoute();
     const userStore = useUserStore();
 
@@ -81,10 +80,17 @@
 
     window.Echo.channel("CrateBattle." + route.params.id)
         .listen(".battle-join", battleJoin)
+        .listen(".call-bots", botsJoin)
         .listen(".battle-roll", battleRoll);
 
     function battleJoin(data) {
         crate_battle.value.player_list[data.spot] = data.joined_user;
+    }
+
+    function botsJoin(data) {
+        Object.keys(data.bots).forEach(key => {
+            crate_battle.value.player_list[key] = data.bots[key];
+        });
     }
 
     function battleRoll(data) {
@@ -200,6 +206,9 @@
 
             spinItems.value[x] = [];
             for(let y = 0; y < numberOfPlayers; y++) {
+                let hex = (crate_battle.value.seed + ":" + (x+1) + ":" + (y+1)).hexEncode();
+                if(hex.length % 2) { hex = '0' + hex; }
+                random = new XORShift(BigInt('0x' + hex));
                 spinItems.value[x][y] = [];
                 for(let i = 0; i < 100; i++) {
                     let randomNum = getRandomInt(0, 10000);
@@ -228,6 +237,9 @@
         if(!response.data.error) {
             crate_battle.value = response.data.data;
             random = new XORShift(crate_battle.seed);
+            if(crate_battle.value.result != null) {
+                wonItems.value = crate_battle.value.wonItems;
+            }
             initCrate();
         }
     }
@@ -235,6 +247,12 @@
     async function joinBattle(spot) {
         await axios.post("/api/crate-battle/join", {
             spot: spot,
+            battleId: route.params.id
+        });
+    }
+
+    async function callBots() {
+        await axios.post("/api/crate-battle/call-bots", {
             battleId: route.params.id
         });
     }

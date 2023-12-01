@@ -319,3 +319,16 @@ a.no-style {
 .crate-select-card {
     cursor: pointer;
 }
+
+.battle-mode-select {
+    --bs-body-bg: #6c757d;
+    --bs-border-width: 1px;
+    --bs-border-radius: 0.375rem;
+    --bs-body-color: #dee2e6;
+    --bs-border-color: #495057;
+    --bs-form-select-bg-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e")
+}
+
+.bot-icon {
+    width: fit-content;
+}

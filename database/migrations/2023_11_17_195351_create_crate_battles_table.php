@@ -21,9 +21,10 @@ return new class extends Migration
             $table->boolean("is_terminal")->default(false);
             $table->boolean("is_group")->default(false);
             $table->boolean("game_state")->default(0);
-            $table->string("seed");
+            $table->string("seed")->nullable();
             $table->json("crates");
             $table->json("players");
+            $table->json("result")->nullable();
             $table->timestamps();
         });
     }

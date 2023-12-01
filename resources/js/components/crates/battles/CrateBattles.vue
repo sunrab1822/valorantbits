@@ -4,7 +4,7 @@
             <router-link class="btn btn-primary create-button" :to="{name: 'create_crate_battles'}">Create Battle</router-link>
         </div>
         <div class="w-100">
-            <router-link class="no-style" :to="{name: 'crate_battles_game', params:{id:1}}" v-for="crate_battle in crate_battles">
+            <router-link class="no-style" :to="{name: 'crate_battles_game', params:{id:crate_battle.id}}" v-for="crate_battle in crate_battles">
                 <div class="card-battle row">
                     <div class="col-md-6 d-flex align-items-center battle-crate-list overflow-hidden">
                         <img class="" :src="crate.image" style="max-width: 120px; max-height: 120px;" v-for="crate in crate_battle.crate_list">

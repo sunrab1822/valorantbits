@@ -50,7 +50,9 @@ Route::post('/api/user/profile/profit-chart', [UserController::class, 'getProfit
 // Crate Battle
 Route::get('/api/crate-battle/list', [CrateBattleController::class, 'getCrateBattles']);
 Route::get('/api/crate-battle/{id}', [CrateBattleController::class, 'getCrateBattle']);
+Route::post('/api/crate-battle', [CrateBattleController::class, 'createCrateBattle'])->middleware("auth");
 Route::post('/api/crate-battle/join', [CrateBattleController::class, 'joinGame'])->middleware("auth");
+Route::post('/api/crate-battle/call-bots', [CrateBattleController::class, 'callBots'])->middleware("auth");
 
 // Coinflip
 Route::post('/api/coinflip/call-bots', [CoinflipController::class, 'callBots'])->middleware("auth");

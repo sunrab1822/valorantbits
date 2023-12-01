@@ -40,7 +40,7 @@ class ProvablyFair extends Model
         return $result;
     }
 
-    public static function generateFloat($client_seed, $server_seed) {
+    public static function generateCoinflipFloat($client_seed, $server_seed) {
         //$hash = hash('sha256', $server_seed . ":" . $client_seed);
 
         $random = new Xoshiro256StarStar($server_seed);

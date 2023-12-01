@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\CrateBattleCallBots;
 use App\Events\CrateBattleJoined;
 use App\Events\CrateBattleStart;
 use App\Jobs\CrateBattleRollResult;
@@ -54,6 +55,12 @@ class CrateBattleController extends Controller
         $CrateBattle->player_list = User::select(["username", "profile_image", "is_bot"])->whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
             return array_search($item->id, $player_list);
         })->values();
+        if($CrateBattle->result != null) {
+
+        }
+        $CrateBattle->wonItems = User::select(["username", "profile_image", "is_bot"])->whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
+            return array_search($item->id, $player_list);
+        })->values();
 
         foreach($CrateBattle->crate_list as $crate) {
             $crate->contents;
@@ -64,30 +71,50 @@ class CrateBattleController extends Controller
 
     public function joinGame(Request $request) {
         if(!Auth::check()) return json_encode(["error" => true, "data" => "Unauthorized"]);
-
         if(!$request->has("spot") || !$request->has("battleId")) return json_encode(["error" => true, "data" => "Invalid request"]);
 
         $CrateBattle = CrateBattle::find($request->get("battleId"));
         $player_list = json_decode($CrateBattle->players, true);
 
-        if($request->get("spot") == -1) {
-            $botId = 1;
-            foreach($player_list as $spot => $player) {
-                if($player == null) {
-                    $player_list[$spot] = $botId;
-                    broadcast(new CrateBattleJoined($CrateBattle->id, User::find($botId), $spot));
-                    $botId++;
-                }
-            }
-        } else {
-            if($player_list[$request->get("spot")] == null) {
-                $player_list[$request->get("spot")] = Auth::user()->id;
-                broadcast(new CrateBattleJoined($CrateBattle->id, Auth::user(), $request->get("spot")));
+        if($player_list[$request->get("spot")] == null) {
+            $player_list[$request->get("spot")] = Auth::user()->id;
+            broadcast(new CrateBattleJoined($CrateBattle->id, Auth::user(), $request->get("spot")));
+        }
+
+        $CrateBattle->players = json_encode($player_list);
+        $CrateBattle->save();
+
+        $this->startGame($CrateBattle, $player_list);
+
+        return json_encode(["error" => false, "data" => "Joined"]);
+    }
+
+    public function callBots(Request $request) {
+        if(!Auth::check()) return json_encode(["error" => true, "data" => "Unauthorized"]);
+        if(!$request->has("battleId")) return json_encode(["error" => true, "data" => "Invalid request"]);
+
+        $CrateBattle = CrateBattle::find($request->get("battleId"));
+        $player_list = json_decode($CrateBattle->players, true);
+
+        $bots = [];
+        $botId = 1;
+        foreach($player_list as $spot => $player) {
+            if($player == null) {
+                $player_list[$spot] = $botId;
+                $bots[$spot] = User::find($botId);
+                $botId++;
             }
         }
 
         $CrateBattle->players = json_encode($player_list);
+        $CrateBattle->save();
+        broadcast(new CrateBattleCallBots($CrateBattle->id, $bots));
+        $this->startGame($CrateBattle, $player_list);
 
+        return json_encode(["error" => false, "data" => "call bots"]);
+    }
+
+    public function startGame($CrateBattle, $player_list) {
         $result = [];
 
         if(count(array_filter($player_list)) == $this->getMaxPlayers($CrateBattle->battle_type)) {
@@ -104,13 +131,51 @@ class CrateBattleController extends Controller
             }
 
             $CrateBattle->result = json_encode($result);
+            $CrateBattle->game_state = 1;
+            $CrateBattle->save();
 
             CrateBattleRollResult::dispatch($CrateBattle, $result, 0)->delay(now()->addSeconds(2))->onQueue("battle");
         }
+    }
 
-        //$CrateBattle->save();
+    public function createCrateBattle(Request $request) {
+        if(!Auth::check()) return json_encode(["error" => true, "data" => "Unauthorized"]);
+        if(!$request->has("crates") || !$request->has("type") || !$request->has("options")) return json_encode(["error" => true, "data" => "Invalid request"]);
 
-        return json_encode(["error" => false, "data" => "Joined"]);
+        $option = $request->get("options");
+        $crates = $request->get("crates");
+        $type = $request->get("type");
+        $User = User::find(Auth::id());
+
+        $total_price = 0;
+        foreach($crates as $crate) {
+            $Crate = Crate::find($crate);
+            $total_price += $Crate->price;
+        }
+
+        if(!$User->hasBalance($total_price)) return json_encode(["error" => true, "data" => "Not enough balance"]);
+
+        $User->balance -= $total_price;
+        $CrateBattle = new CrateBattle();
+        $CrateBattle->created_by = $User->id;
+        $CrateBattle->game_state = 0;
+        $CrateBattle->battle_type = $type;
+        $CrateBattle->price = $total_price;
+        $CrateBattle->crates = json_encode($crates);
+        $CrateBattle->seed = ProvablyFair::generateBattleSeed();
+
+        if(in_array($option, ["normal", "group", "terminal"])) {
+            $CrateBattle->{"is_" . $option} = true;
+        }
+
+        $players = array_fill(0, CrateBattle::getNumberOfSpots($type), null);
+        $players[0] = $User->id;
+        $CrateBattle->players = json_encode($players);
+
+        $CrateBattle->save();
+        $User->save();
+
+        return json_encode(["error" => false, "data" => $CrateBattle->id]);
     }
 
     private function getMaxPlayers($battle_type) {
