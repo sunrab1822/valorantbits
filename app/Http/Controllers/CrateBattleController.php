@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Events\CrateBattleCallBots;
 use App\Events\CrateBattleJoined;
-use App\Events\CrateBattleStart;
 use App\Jobs\CrateBattleRollResult;
 use App\Models\Crate;
 use App\Models\CrateBattle;
 use App\Models\ProvablyFair;
+use App\Models\Skin;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use function Symfony\Component\String\b;
 
 class CrateBattleController extends Controller
 {
@@ -52,15 +54,29 @@ class CrateBattleController extends Controller
         $CrateBattle->crate_list = Crate::find(array_values($crate_list))->sortBy(function($item) use ($crate_list) {
             return array_search($item->id, $crate_list);
         })->values();
-        $CrateBattle->player_list = User::select(["username", "profile_image", "is_bot"])->whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
+        $CrateBattle->player_list = User::select(["id", "username", "profile_image", "is_bot"])->whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
             return array_search($item->id, $player_list);
         })->values();
-        if($CrateBattle->result != null) {
 
+        $wonItems = [];
+        $totalEarnings = [];
+        if($CrateBattle->result != null) {
+            $result = json_decode($CrateBattle->result, true);
+            for($i = 0; $i < count($result); $i++) {
+                $wonItems[$i] = [];
+                for($x = 0; $x < count($result[$i]); $x++) {
+                    $skin = Skin::find($result[$i][$x]);
+                    $wonItems[$i][$x] = $skin;
+                    if(isset($totalEarnings[$x])) {
+                        $totalEarnings[$x] += $skin->price;
+                    } else {
+                        $totalEarnings[$x] = $skin->price;
+                    }
+                }
+            }
         }
-        $CrateBattle->wonItems = User::select(["username", "profile_image", "is_bot"])->whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
-            return array_search($item->id, $player_list);
-        })->values();
+        $CrateBattle->wonItems = $wonItems;
+        $CrateBattle->totalEarnings = $totalEarnings;
 
         foreach($CrateBattle->crate_list as $crate) {
             $crate->contents;

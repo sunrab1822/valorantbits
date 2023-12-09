@@ -1,0 +1,32 @@
+.navbar {
+    background: transparent !important;
+}
+
+.nav-item {
+    &:hover:not(.no-active) {
+        border-bottom: 2px solid transparent;
+        border-image: linear-gradient(130deg, rgb(165, 0, 37), rgb(178, 27, 0));
+        border-image-slice: 1;
+    }
+
+    .nav-link {
+        color: var(--bs-white);
+    }
+}
+
+.dropdown-item {
+    &:hover:not(.no-active) {
+        background-image: linear-gradient(130deg, rgb(165, 0, 37), rgb(178, 27, 0));
+    }
+}
+
+.py-half {
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+}
+
+.router-link-active:not(.no-active) {
+    border-bottom: 2px solid transparent;
+    border-image: linear-gradient(130deg, rgb(165, 0, 37), rgb(178, 27, 0));
+    border-image-slice: 1;
+}

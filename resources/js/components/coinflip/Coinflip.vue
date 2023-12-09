@@ -19,7 +19,7 @@
             </div>
             <div class="user_side_tails">
                 <div v-if="coinflip.game_state == 0">
-                    <button class="btn btn-success" v-if="!userStore.user" disabled>Login</button>
+                    <button class="btn btn-success" v-if="!userStore.user" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
                     <button class="btn btn-success" v-else-if="userStore.user && created_by && created_by.id == userStore.user.id" @click="callBots">Call Bots</button>
                     <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-else>Join</button>
                 </div>

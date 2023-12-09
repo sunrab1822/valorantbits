@@ -1,33 +1,37 @@
 <template>
-    <div class="row">
-        <div class="col">
-            <button class="btn btn-success" @click="back" >&lsaquo;&nbsp;Back</button>
+    <div>
+        <div class="row">
+            <div class="col">
+                <button class="btn btn-success" @click="back" >&lsaquo;&nbsp;Back</button>
+            </div>
+            <div class="col text-center">
+                <h1 v-if="crate != null">{{ crate.name }}</h1>
+            </div>
+            <div class="col"></div>
         </div>
-        <div class="col text-center">
-            <h1 v-if="crate != null">{{ crate.name }}</h1>
-        </div>
-    <div class="col"></div>
-    </div>
-    <div class="spin-wrapper mb-3">
-        <div class="spin-selector"></div>
-        <div class="spin-wheel d-flex" style="transform: translate3d(7098px, 0px, 0px)">
-            <div v-for="(skin, key) in spinItems" class="spin-element flex-column">
-                <img :src="skin.image" alt="">
+        <div style="">
+            <div class="spin-wrapper mb-3">
+                <div class="spin-selector"></div>
+                <div class="spin-wheel d-flex" style="transform: translate3d(7098px, 0px, 0px)">
+                    <div v-for="(skin, key) in spinItems" class="spin-element flex-column">
+                        <img :src="skin.image" alt="">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex justify-content-center align-items-center">
+            <div>
+                <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="userStore.isLoggedIn">Open</button>
+            </div>
+            <div class="d-flex justify-content-center align-items-center ms-1" v-if="crate != null">
+                <currency /><span class="fs-5">{{ crate.price.toBalance(2) }}</span>
+            </div>
+        </div>
         <div>
-            <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="userStore.isLoggedIn">Open</button>
-        </div>
-        <div class="d-flex justify-content-center align-items-center ms-1" v-if="crate != null">
-            <currency /><span class="fs-5">{{ crate.price.toBalance(2) }}</span>
-        </div>
-    </div>
-    <div>
-        <h3>Crate items</h3>
-        <div class="row row-cols-xl-5 row-cols-xs-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" style="--bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem;">
-            <CrateItem v-if="crate != null" v-for="skin in crate.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
+            <h3>Crate items</h3>
+            <div class="row row-cols-xl-4 row-cols-xxl-4 row-cols-xs-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3" style="--bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem;">
+                <CrateItem v-if="crate != null" v-for="skin in crate.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
+            </div>
         </div>
     </div>
 </template>

@@ -1,10 +1,15 @@
 <template>
-    <Navbar/>
-    <main class="py-4">
-        <div class="container">
-            <RouterView/>
+    <div class="" style="min-height: 100vh;">
+        <div class="container-fluid">
+            <Navbar />
         </div>
-    </main>
+        <main class="px-2">
+            <div class="container py-4">
+                <RouterView/>
+            </div>
+        </main>
+    </div>
+
     <Login/>
     <Register />
 </template>

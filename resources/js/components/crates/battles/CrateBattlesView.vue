@@ -1,54 +1,57 @@
 <template>
     <div class="container-fluid">
-        <div class="row mb-3 bg-nav-dark">
+        <div class="row mb-3 gx-0 bg-nav-dark rounded">
             <div class="col d-flex justify-content-center">
-                <div class="w-100" style="max-width: 28rem;">
+                <div class="w-100 crate-list-image-container">
                     <div class="d-flex crate-list-image" style="transform: translate3d(calc(50% - 24px), 0, 0);">
                         <img :src="crate.image" alt="" v-for="(crate, key) in crate_battle.crate_list" style="width: 48px; height: 48px;" :class="{'me-1': key+1 != crate_battle.crate_list.length, 'grayscale': key != currentCrateIndex}">
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row gx-4" :class="{'row-cols-4': numberOfPlayers == 4, 'row-cols-3': numberOfPlayers == 3, 'row-cols-2': numberOfPlayers == 2}">
-            <div class="col bg-nav-dark" v-for="i in numberOfPlayers">
-                <div class="d-flex p-3 border-bottom border-success" :class="{'justify-content-between': crate_battle.player_list[i-1], 'justify-content-end': crate_battle.player_list[i-1] == undefined}">
-                    <div class="d-flex" v-if="crate_battle.player_list[i-1]">
-                        <img :src="crate_battle.player_list[i-1].profile_image" class="profile-picture-3 me-3 border border-success">
-                        <div v-if="crate_battle.player_list[i-1] != undefined">
-                            <div class="fs-5">{{ crate_battle.player_list[i-1].username }}</div>
-                            <div class="bg-primary px-2 rounded fs-7 bot-icon" v-if="crate_battle.player_list[i-1].is_bot">BOT</div>
+        <div class="row gx-2" :class="{'row-cols-4': numberOfPlayers == 4, 'row-cols-3': numberOfPlayers == 3, 'row-cols-2': numberOfPlayers == 2}">
+            <div class="col" v-for="i in numberOfPlayers">
+                <div class="bg-nav-dark rounded">
+                    <div class="d-flex p-3 border-bottom border-primary" :class="{'justify-content-between': crate_battle.player_list[i-1], 'justify-content-end': crate_battle.player_list[i-1] == undefined}">
+                        <div class="d-flex" v-if="crate_battle.player_list[i-1]">
+                            <img :src="crate_battle.player_list[i-1].profile_image" class="profile-picture-3 me-3 border border-primary">
+                            <div v-if="crate_battle.player_list[i-1] != undefined">
+                                <div class="fs-5">{{ crate_battle.player_list[i-1].username }}</div>
+                                <div class="bg-primary px-2 rounded fs-7 bot-icon" v-if="crate_battle.player_list[i-1].is_bot">BOT</div>
+                            </div>
+                        </div>
+                        <div v-else>
+                            <button class="btn btn-primary fs-5 px-3" v-if="!userStore.user" style="height: 3rem;" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                            <button class="btn btn-primary fs-5 px-3" style="height: 3rem;" @click="joinBattle(i-1)" v-else-if="userStore.user && userStore.user.id != crate_battle.created_by">Join</button>
+                            <button class="btn btn-primary fs-5 px-3" style="height: 3rem;" @click="callBots()" v-else>Call Bots</button>
+                        </div>
+                        <div class="battle-player-earnings" v-if="crate_battle.player_list[i-1]">
+                            <currency />
+                            <div class="fs-5">{{ itemPrices[i-1].toBalance(2) }}</div>
                         </div>
                     </div>
-                    <div v-else>
-                        <button class="btn btn-success fs-5 px-3" v-if="!userStore.user" disabled>Login</button>
-                        <button class="btn btn-success fs-5 px-3" style="height: 3rem;" @click="joinBattle(i-1)" v-else-if="userStore.user && userStore.user.id != crate_battle.created_by">Join</button>
-                        <button class="btn btn-success fs-5 px-3" style="height: 3rem;" @click="callBots()" v-else>Call Bots</button>
-                    </div>
-                    <div class="battle-player-earnings" v-if="crate_battle.player_list[i-1]">
-                        <currency />
-                        <div class="fs-5">{{ itemPrices[i-1].toBalance(2) }}</div>
-                    </div>
-                </div>
-                <div class="row my-2">
-                    <div class="spin-wrapper-horizontal">
-                        <div class="spin-selector"></div>
-                        <div class="spin-wheel d-flex" style="transform: translate3d(0px, -210px, 0px)">
-                            <div v-for="(skin, key) in spinItems[currentCrateIndex][i-1]" class="spin-element flex-column">
-                                <img :src="skin.image">
+                    <div class="row my-2">
+                        <div class="spin-wrapper-horizontal">
+                            <div class="result-screen"></div>
+                            <div class="spin-selector"></div>
+                            <div class="spin-wheel d-flex" style="transform: translate3d(0px, -210px, 0px)">
+                                <div v-for="(skin, key) in spinItems[currentCrateIndex][i-1]" class="spin-element flex-column">
+                                    <img :src="skin.image">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="won-items mb-3">
-                    <div class="won-item-card" v-for="(round, index) in wonItems" :class="{'mb-2': index + 1 < wonItems.length}">
-                        <div class="d-flex align-items-center justify-content-center me-3" style="width: 8rem; height: 4rem;">
-                            <img :src="round[i-1].image" style="max-width: 100%;max-height: 2rem;">
-                        </div>
-                        <div class="d-flex flex-column justify-content-center">
-                            <div class="fs-5">{{ round[i-1].name }}</div>
-                            <div class="d-flex">
-                                <currency />
-                                <div class="fs-6">{{ round[i-1].price.toBalance(2) }}</div>
+                    <div class="won-items px-2 pb-1">
+                        <div class="won-item-card align-items-center mb-2" v-for="(round, index) in wonItems">
+                            <div class="d-flex align-items-center justify-content-center me-2" style="width: 8rem; height: 4rem;">
+                                <img :src="round[i-1].image" style="max-width: 100%;max-height: 2rem;">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                                <div class="fs-6-1">{{ round[i-1].name }}</div>
+                                <div class="d-flex">
+                                    <currency />
+                                    <div class="fs-6">{{ round[i-1].price.toBalance(2) }}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -179,6 +182,13 @@
                 'transition-duration':'',
             });
         });
+
+        if(currentCrateIndex.value == crate_battle.value.crate_list.length - 1) {
+            $(".result-screen").each(function() {
+                //$(this).addClass("result-won");
+                //$(this).addClass("result-lost");
+            })
+        }
     }
 
     async function initCrate() {
@@ -220,7 +230,6 @@
                     }
                 }
             }
-
         }
 
         let $wheel = $('.spin-wrapper-horizontal .spin-wheel');
@@ -239,6 +248,7 @@
             random = new XORShift(crate_battle.seed);
             if(crate_battle.value.result != null) {
                 wonItems.value = crate_battle.value.wonItems;
+                itemPrices.value = crate_battle.value.totalEarnings;
             }
             initCrate();
         }

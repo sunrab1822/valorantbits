@@ -9,19 +9,31 @@
 
 @import "@fortawesome/fontawesome-free/scss/fontawesome";
 
+@import "navigation";
 @import "spin";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
     font-family: 'Albert Sans', sans-serif !important;
     min-height: 100vh;
+    max-height: 100vh;
 }
 
 .bg-nav-dark {
     background-color: rgb(43, 45, 48);
 }
 
+.btn-primary {
+    background-image: linear-gradient(130deg, rgb(165, 0, 37), rgb(178, 27, 0));
+}
+
 .background {
-    background-color: rgb(31, 34, 37);
+    background-color: #242424;
 }
 
 .btn-gray {
@@ -97,18 +109,15 @@ body {
 }
 
 .game-choice-card{
-    width:220px;
-    margin: 3px;
-    border-radius:8px;
-    border:3px solid rgba(0, 80, 0, 0.2);
-    background-color: rgba(0,90,0,0.1);
+    border-radius: 0.5rem;
+    border-radius: 0.25rem;
+    background-color: rgb(66, 66, 66);
 
     .game-choice-inner-card{
 
         //background-color: rgba(0,90,0,0.2);
         color: white;
         img {
-
             max-width: 100%;
             max-height: 8rem;
             width: auto !important;
@@ -140,14 +149,14 @@ body {
 }
 
 .user-level {
-    background-image: linear-gradient(to top right, #31a819, #38c20e);
+    background-image: linear-gradient(130deg, rgb(165, 0, 37), rgb(178, 27, 0));
     -webkit-background-clip: text;
     font-weight: 900;
     color: transparent;
 }
 
 .user-level-progress {
-    background: linear-gradient(to right, #237912, #38c20e);
+    background: linear-gradient(130deg, rgb(165, 0, 37), rgb(178, 27, 0));
 }
 
 .balance-popup {
@@ -180,6 +189,11 @@ body {
 .profile-picture-3 {
     height: 3rem;
     width: 3rem;
+}
+
+.profile-picture-2 {
+    height: 2rem;
+    width: 2rem;
 }
 
 a.no-style {
@@ -289,6 +303,7 @@ a.no-style {
     background-color: #202125;
     border-radius: 0.5rem;
     width: 100%;
+    height: 6rem;
     display: flex;
     padding: 0.5rem;
 }
@@ -331,4 +346,9 @@ a.no-style {
 
 .bot-icon {
     width: fit-content;
+}
+
+.crate-list-image-container {
+    max-width: 30rem;
+    overflow: hidden;
 }

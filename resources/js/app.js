@@ -143,8 +143,9 @@ const router = new createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    const userStore = useUserStore();
     if (to.matched.some(record =>  record.meta.requiresAuth)) {
-        if (!localStorage.getItem("isLoggedIn")) {
+        if (!userStore.isLoggedIn) {
             next({ name: 'home' });
         } else {
             next();
@@ -158,8 +159,6 @@ app.use(pinia);
 app.use(router);
 
 app.mount('#app');
-
-const userStore = useUserStore();
 
 $(function(){
     $(".nav_balance").on("updateBalance", function(event, amount){
