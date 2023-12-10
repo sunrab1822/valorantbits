@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger("tails")->nullable();
             $table->unsignedInteger("heads_amount")->nullable();
             $table->unsignedInteger("tails_amount")->nullable();
-            $table->float("chance_float")->nullable();
+            $table->float("chance_float", 8, 7)->nullable();
             $table->integer("game_state")->default(0);
             $table->string("seed");
             $table->string("created_by");

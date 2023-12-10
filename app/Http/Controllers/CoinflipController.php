@@ -73,12 +73,14 @@ class CoinflipController extends Controller
         $Coinflip->{$bet_side . "_amount"} = $Coinflip->{$player_bet_side . "_amount"} * (1 + (mt_rand(5, 15) / 100));
 
         if($Coinflip->heads != null && $Coinflip->tails != null) {
-            $Coinflip->chance_float = ProvablyFair::generateFloat("", $Coinflip->seed);
-            $Coinflip->game_state = 1;
+            $Coinflip->chance_float = ProvablyFair::generateCoinflipFloat("", $Coinflip->seed);
+            $Coinflip->game_state = 2;
             $Coinflip->save();
             broadcast(new CoinflipJoin($Coinflip, $User, $bet_side));
             return json_encode(["error" => false, "data" => "joined"]);
         }
+
+
 
         return json_encode(["error" => true, "data" => "Unknown Error"]);
     }

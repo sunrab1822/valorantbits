@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Random\Engine\Xoshiro256StarStar;
+use Random\Randomizer;
 
 class ProvablyFair extends Model
 {
@@ -42,12 +43,8 @@ class ProvablyFair extends Model
 
     public static function generateCoinflipFloat($client_seed, $server_seed) {
         //$hash = hash('sha256', $server_seed . ":" . $client_seed);
+        $random = new Randomizer(new Xoshiro256StarStar($server_seed));
 
-        $random = new Xoshiro256StarStar($server_seed);
-
-        print_r($random->generate());
-        die;
-
-        return mt_rand() / mt_getrandmax();
+        return $random->nextInt() / PHP_INT_MAX;
     }
 }

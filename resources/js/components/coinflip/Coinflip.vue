@@ -1,33 +1,45 @@
 <template>
     <div class="bg-dark mx-auto rounded p-2" v-if="coinflip">
-        <div class="d-flex justify-content-evenly align-items-center">
-            <div>
+        <div class="game-state d-flex justify-content-evenly">
+            <div class="bg-warning-dark rounded px-2 py-1" v-if="coinflip.game_state == 0">Waiting...</div>
+            <div class="bg-secondary rounded px-2 py-1" v-if="coinflip.game_state == 1">Ongoing</div>
+            <div class="bg-danger rounded px-2 py-1" v-if="coinflip.game_state == 2">Over</div>
+        </div>
+        <div class="row py-2">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
                 <div class="user_side_heads">
-                    <img class="flip-profile-picture mb-2 border border-success" v-if="created_by" :src="created_by.profile_image" alt="">
+                    <div class="d-flex align-items-center">
+                        <img class="flip-profile-picture mb-2" v-if="created_by" :src="created_by.profile_image" alt="">
+                            <img class="" src="/storage/crate_images/crate_red.png" style="width: 3rem; height: 3rem; margin-left: -1.5rem;">
+                    </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <div>{{ created_by.username }}</div>
                     </div>
                 </div>
             </div>
-            <div id="coin">
-                <div class="side-a">
-                    <img class="w-100" src="/storage/crate_images/crate_red.png" alt="">
-                </div>
-                <div class="side-b">
-                    <img class="w-100" src="/storage/crate_images/crate_red.png" alt="">
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <div id="coin">
+                    <div class="side-a">
+                        <img class="w-100" src="/storage/crate_images/crate_red.png" alt="">
+                    </div>
+                    <div class="side-b">
+                        <img class="w-100" src="/storage/crate_images/crate_red.png" alt="">
+                    </div>
                 </div>
             </div>
-            <div class="user_side_tails">
-                <div v-if="coinflip.game_state == 0">
-                    <button class="btn btn-success" v-if="!userStore.user" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-                    <button class="btn btn-success" v-else-if="userStore.user && created_by && created_by.id == userStore.user.id" @click="callBots">Call Bots</button>
-                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-else>Join</button>
-                </div>
-                <div v-else>
-                    <img class="flip-profile-picture mb-2 border border-success" :src="opponent.profile_image" alt="">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <span>{{ opponent.username }}</span>
-                        <span class="bg-primary px-1 rounded fs-7 ms-2" v-if="opponent.is_bot">BOT</span>
+            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <div class="user_side_tails">
+                    <div v-if="coinflip.game_state == 0">
+                        <button class="btn btn-primary" v-if="!userStore.user" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                        <button class="btn btn-primary" v-else-if="userStore.user && created_by && created_by.id == userStore.user.id" @click="callBots">Call Bots</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-else>Join</button>
+                    </div>
+                    <div v-else>
+                        <img class="flip-profile-picture mb-2" :src="opponent.profile_image" alt="">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <span>{{ opponent.username }}</span>
+                            <span class="bg-primary px-2 rounded fs-7 ms-2" v-if="opponent.is_bot">BOT</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,6 +63,7 @@
     let coinflip = ref();
     let created_by = ref();
     let opponent = ref();
+    let sideWon = ref(null);
 
     getCoinflip();
 
@@ -59,10 +72,13 @@
         coinflip.value = request.data.data;
         created_by.value = coinflip.value["user_" + coinflip.value["created_by"]];
         opponent.value = coinflip.value["user_" + (coinflip.value["created_by"] == "heads" ? "tails" : "heads")];
+        if(coinflip.value.game_state == 2) {
+            sideWon.value = coinflip.value.chance_float < 0.5 ? "heads" : "tails";
+        }
     }
 
     function playerJoined(data) {
-        coinflip.value.game_state = data.game_state;
+        coinflip.value.game_state = 1;
         coinflip.value["user_" + data.side] = data.opponent;
         opponent.value = data.opponent;
 
@@ -79,27 +95,38 @@
         var flipResult = Math.random();
         $('#coin').removeClass();
         setTimeout(function () {
-            if (flipResult <= 0.5) {
+            if (flipResult < 0.5) {
                 $('#coin').addClass('heads');
-
             } else {
                 $('#coin').addClass('tails');
-                console.log('it is tails');
             }
-        }, 1500);
+
+            setTimeout(postCoinFlip, 3500, flipResult);
+        }, 500);
+    }
+
+    function postCoinFlip(result) {
+        coinflip.value.game_state = 2;
+        if(result < 5) {
+            sideWon.value = "heads";
+        } else {
+            sideWon.value = "tails";
+        }
     }
 </script>
 
 <style scoped>
 .flip-profile-picture {
-    height: 10rem;
-    width: 10rem;
+    height: 6.5rem;
+    width: 6.5rem;
+    border: 0.125rem solid white;
+    border-radius: 50%;
 }
 
 #coin {
     position: relative;
-    width: 300px;
-    height: 300px;
+    width: 125px;
+    height: 125px;
     cursor: pointer;
 }
 
@@ -114,16 +141,17 @@
     box-shadow: inset 0 0 45px rgba(255, 255, 255, .3), 0 12px 20px -10px rgba(0, 0, 0, .4);
     position: absolute;
     -webkit-backface-visibility: hidden;
+    border: 0.125rem solid white;
 }
 
 .side-a {
     background-color: #bb000050;
-    padding: 50px;
+    padding: 1.5rem;
 }
 
 .side-b {
     background-color: #3e3e3e;
-    padding: 50px;
+    padding: 1.5rem;
 }
 
 #coin {
@@ -138,6 +166,13 @@
 .side-b {
     -webkit-transform: rotateY(-180deg);
 
+}
+
+.user_side_heads, .user_side_tails {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
 }
 
 #coin.heads {
