@@ -8,14 +8,14 @@
         <div class="row py-2">
             <div class="col-md-4 d-flex justify-content-center align-items-center">
                 <div class="user_side_heads">
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center ">
                         <img class="flip-profile-picture mb-2" v-if="created_by" :src="created_by.profile_image" alt="">
-                            <img class="" src="/storage/crate_images/crate_red.png" style="width: 3rem; height: 3rem; margin-left: -1.5rem;">
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <div>{{ created_by.username }}</div>
                     </div>
                 </div>
+                <img class="side-image to-right" src="/storage/crate_images/crate_red.png" >
             </div>
             <div class="col-md-4 d-flex justify-content-center align-items-center">
                 <div id="coin">
@@ -27,7 +27,9 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-md-4 d-flex justify-content-center align-items-center">
+                <img class="side-image to-left" src="/storage/crate_images/crate_red.png" >
                 <div class="user_side_tails">
                     <div v-if="coinflip.game_state == 0">
                         <button class="btn btn-primary" v-if="!userStore.user" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
@@ -115,12 +117,28 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .flip-profile-picture {
     height: 6.5rem;
     width: 6.5rem;
     border: 0.125rem solid white;
     border-radius: 50%;
+}
+
+.side-image{
+    z-index: 1;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1.25rem;
+}
+
+.to-right{
+    margin-left: -4rem;
+}
+
+.to-left{
+
+    margin-right: -4rem;
 }
 
 #coin {
@@ -215,4 +233,9 @@
         -moz-transform: rotateY(1980deg);
         transform: rotateY(1980deg);
     }
-}</style>
+}
+
+
+
+
+</style>
