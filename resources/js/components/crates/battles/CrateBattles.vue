@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="d-flex justify-content-end mb-3">
-            <router-link class="btn btn-primary create-button" :to="{name: 'create_crate_battles'}">Create Battle</router-link>
+            <router-link class="btn btn-primary create-button" :to="{name: 'create_crate_battles'}" v-if="userStore.isLoggedIn">Create Battle</router-link>
         </div>
         <div class="w-100">
             <router-link class="no-style" :to="{name: 'crate_battles_game', params:{id:crate_battle.id}}" v-for="crate_battle in crate_battles">
@@ -31,8 +31,10 @@
 <script setup>
     import axios from 'axios';
     import { ref } from 'vue';
+    import { useUserStore } from '@stores/user';
 
     let crate_battles = ref([]);
+    const userStore = useUserStore();
 
     getCrateBattles();
 

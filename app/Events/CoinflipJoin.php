@@ -44,6 +44,14 @@ class CoinflipJoin implements ShouldBroadcast
     }
 
     public function broadcastWith() {
-        return ["opponent" => $this->User, "side" => $this->joined_side, "game_state" => $this->Coinflip->game_state];
+        if($this->Coinflip->heads){
+            $this->Coinflip->userHeads;
+        }
+
+        if($this->Coinflip->tails){
+            $this->Coinflip->userTails;
+        }
+
+        return ["opponent" => $this->User, "side" => $this->joined_side, "coinflip" => $this->Coinflip->toArray()];
     }
 }

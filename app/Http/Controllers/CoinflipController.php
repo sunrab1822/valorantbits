@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\GameType;
 use App\Events\CoinflipJoin;
+use App\Jobs\CloseCoinflip;
 use App\Models\Coinflip;
 use App\Models\ProvablyFair;
 use App\Models\User;
@@ -38,7 +39,7 @@ class CoinflipController extends Controller
         }
 
         $User->balance -= $bet_amount;
-        //$User->save();
+        $User->save();
         //$User->wager($bet_amount, null, GameType::Coinflip);
         $Coinflip->{$bet_side} = $User->id;
         $Coinflip->{$bet_side . "_amount"} = $bet_amount;
@@ -74,13 +75,12 @@ class CoinflipController extends Controller
 
         if($Coinflip->heads != null && $Coinflip->tails != null) {
             $Coinflip->chance_float = ProvablyFair::generateCoinflipFloat("", $Coinflip->seed);
-            $Coinflip->game_state = 2;
+            $Coinflip->game_state = 1;
             $Coinflip->save();
             broadcast(new CoinflipJoin($Coinflip, $User, $bet_side));
+            CloseCoinflip::dispatch($Coinflip)->delay(now()->addSeconds(5));
             return json_encode(["error" => false, "data" => "joined"]);
         }
-
-
 
         return json_encode(["error" => true, "data" => "Unknown Error"]);
     }
@@ -151,9 +151,7 @@ class CoinflipController extends Controller
             $coinflip->userTails;
         }
 
-
         return json_encode(["error" => false, "data" => $coinflip]);
-
     }
 
 }

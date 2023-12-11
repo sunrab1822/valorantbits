@@ -1,11 +1,17 @@
 <template>
     <div class="row shadow background">
-        <div class="overflow-hidden col-xl-3 col-lg-3 d-xl-flex d-lg-flex d-block align-items-center">
+        <div class="overflow-hidden col-xl-5 col-lg-5 d-xl-flex d-lg-flex d-block align-items-center">
             <router-link class="navbar-brand no-active" :to="{ name: 'home' }">
                 VALORANTBETS
             </router-link>
         </div>
-        <div class="col-xl-9 col-lg-9">
+        <div class="col-xl-2 col-lg-2 d-xl-flex d-lg-flex d-block align-items-center">
+            <div class="d-flex bg-secondary rounded align-items-center rounded-2 balance-box mx-auto">
+                <currency></currency>
+                <div class="balance-text nav_balance">{{ userStore.user.balance.toBalance(2) }}</div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-lg-5">
             <nav class="navbar navbar-expand-md navbar-dark">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">

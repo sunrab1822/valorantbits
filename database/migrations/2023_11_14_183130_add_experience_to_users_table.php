@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger("experience")->after("balance")->default(0);
+            $table->unsignedBigInteger("level")->after("experience")->default(0);
         });
     }
 

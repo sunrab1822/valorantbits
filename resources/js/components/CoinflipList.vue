@@ -1,21 +1,23 @@
 <template>
     <div>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-primary create-button align-right" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal">Create Game</button>
+            <button class="btn btn-primary create-button align-right" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-if="userStore.isLoggedIn">Create Game</button>
             <!-- <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button> -->
         </div>
         <div>
             <coinflip-card v-for="coinflip in coinflips" :coinflip="JSON.stringify(coinflip)"/>
         </div>
     </div>
-    <coinflip-create :isCreate="true"/>
+    <coinflip-create :isCreate="true" v-if="userStore.isLoggedIn"/>
 </template>
 
 <script setup>
     import { ref } from 'vue';
     import axios from 'axios';
+    import { useUserStore } from '@stores/user';
 
     let coinflips = ref([]);
+    const userStore = useUserStore();
 
     window.Echo.channel('CoinflipList').listen('.coinflip-created', coinflipCreated);
     getCoinflips();
