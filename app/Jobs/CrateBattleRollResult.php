@@ -40,6 +40,8 @@ class CrateBattleRollResult implements ShouldQueue
         broadcast(new CrateBattleRoll($this->CrateBattle->id, $result_set, $this->crate_number));
         if($this->crate_number + 1 < count($this->result)) {
             $this->dispatch($this->CrateBattle, $this->result, $this->crate_number + 1)->delay(now()->addSeconds(10))->onQueue("battle");
+        } else {
+            CloseCrateBattle::dispatch($this->CrateBattle)->delay(now()->addSeconds(6))->onQueue("battle");
         }
     }
 }

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Broadcast;
 */
 
 Broadcast::channel('CrateBattle.{id}', CrateBattleChannel::class);
+Broadcast::channel('CrateBattles', CrateBattleChannel::class);
 Broadcast::channel('Coinflip.{id}', CoinflipChannel::class);
-
-Broadcast::channel('CoinflipList', function (User $user) {return true;});
+Broadcast::channel('Coinflips', CoinflipChannel::class);
 

@@ -1,27 +1,27 @@
 <template>
     <div class="d-flex justify-content-between mb-3">
-        <button class="btn btn-success" @click="back">Back</button>
+        <button class="btn btn-secondary" @click="back">Back</button>
         <button class="btn btn-primary" @click="createBattle">Create</button>
     </div>
     <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
-            <select name="battleType" v-model="battle_type" class="me-1 form-select battle-mode-select">
+            <select name="battleType" v-model="battle_type" class="me-1 form-select battle-mode-select bg-light-gray">
                 <option value="1">1v1</option>
                 <option value="2">1v1v1</option>
                 <option value="3">1v1v1v1</option>
                 <option value="4">2v2</option>
             </select>
             <div class="me-1">
-                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="normal" autocomplete="off" checked>
-                <label class="btn btn-secondary" for="normal">Normal</label>
+                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="normal" value="normal" autocomplete="off" checked>
+                <label class="btn btn-gray" for="normal">Normal</label>
             </div>
             <div class="me-1">
-                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="group" autocomplete="off">
-                <label class="btn btn-secondary" for="group">Group</label>
+                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="group" value="group" autocomplete="off">
+                <label class="btn btn-gray" for="group">Group</label>
             </div>
             <div>
-                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="terminal" autocomplete="off">
-                <label class="btn btn-secondary" for="terminal">Terminal</label>
+                <input type="radio" class="btn-check" name="battle_options" v-model="battle_options" id="terminal" value="terminal" autocomplete="off">
+                <label class="btn btn-gray" for="terminal">Terminal</label>
             </div>
         </div>
         <!-- <div class="bg-secondary form-check form-switch rounded">

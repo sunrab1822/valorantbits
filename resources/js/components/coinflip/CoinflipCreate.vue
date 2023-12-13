@@ -59,9 +59,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@stores/user';
 
 const userStore = useUserStore();
-
-
-
 const props = defineProps(["isCreate"])
 
 const router = useRouter();
@@ -99,9 +96,10 @@ async function create() {
 
     if(!request.data.error) {
         bootstrap.Modal.getOrCreateInstance(document.getElementById('coinflipCreateModal')).hide();
+        $(".nav_balance").trigger("updateBalance", Math.round((bet_amount.value + Number.EPSILON) * 100) * -1);
         bet_amount.value = 0.01;
         bet_side.value = "heads";
-        router.push({name:"coinflip_game", params:{id:request.data.data}})
+        router.push({name:"coinflip_game", params:{id:request.data.data}});
     } else {
         if(request.data.error_type == "validation") {
             for(const key of Object.keys(request.data.data)) {

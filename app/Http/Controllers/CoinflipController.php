@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\GameType;
+use App\Events\CoinflipCreated;
 use App\Events\CoinflipJoin;
 use App\Jobs\CloseCoinflip;
 use App\Models\Coinflip;
@@ -34,7 +35,9 @@ class CoinflipController extends Controller
 
         if(!$User->hasBalance($bet_amount)) return json_encode(["error" => true, "data" => "Not enough balance"]);
 
-        if((in_array($bet_side, ["heads", "tails"])) && ($bet_side == "heads" && $Coinflip->heads != null) || ($bet_side == "tails" && $Coinflip->tails != null)) {
+        if((!in_array($bet_side, ["heads", "tails"])) || ($bet_side == "heads" && $Coinflip->heads != null) ||
+            ($bet_side == "tails" && $Coinflip->tails != null) || $Coinflip->heads == Auth::user()->id || $Coinflip->tails == Auth::user()->id)
+        {
             return json_encode(["error" => true, "data" => "Could not join"]);
         }
 
@@ -44,11 +47,15 @@ class CoinflipController extends Controller
         $Coinflip->{$bet_side} = $User->id;
         $Coinflip->{$bet_side . "_amount"} = $bet_amount;
 
+        $total_amount = $Coinflip->{$bet_side . "_amount"} + $Coinflip->{$Coinflip->created_by . "_amount"};
+        $Coinflip->created_float = $Coinflip->{$Coinflip->created_by . "_amount"} / $total_amount;
 
         if($Coinflip->heads != null && $Coinflip->tails != null) {
+            $Coinflip->chance_float = ProvablyFair::generateCoinflipFloat("", $Coinflip->seed);
             $Coinflip->game_state = 1;
             $Coinflip->save();
             broadcast(new CoinflipJoin($Coinflip, $User, $bet_side));
+            CloseCoinflip::dispatch($Coinflip)->delay(now()->addSeconds(5));
             return json_encode(["error" => false, "data" => "joined"]);
         }
 
@@ -62,7 +69,6 @@ class CoinflipController extends Controller
 
         $Coinflip = Coinflip::find($request->get("game_id"));
         $bet_side = $Coinflip->heads == null ? "heads" : "tails";
-        $player_bet_side = $Coinflip->heads == null ? "tails" : "heads";
 
         if((in_array($bet_side, ["heads", "tails"])) && ($bet_side == "heads" && $Coinflip->heads != null) || ($bet_side == "tails" && $Coinflip->tails != null)) {
             return json_encode(["error" => true, "data" => "Could not call bots"]);
@@ -71,7 +77,10 @@ class CoinflipController extends Controller
         $User = User::find(1);
 
         $Coinflip->{$bet_side} = $User->id;
-        $Coinflip->{$bet_side . "_amount"} = $Coinflip->{$player_bet_side . "_amount"} * (1 + (mt_rand(5, 15) / 100));
+        $Coinflip->{$bet_side . "_amount"} = $Coinflip->{$Coinflip->created_by . "_amount"} * (1 + (mt_rand(5, 10) / 100));
+
+        $total_amount = $Coinflip->{$bet_side . "_amount"} + $Coinflip->{$Coinflip->created_by . "_amount"};
+        $Coinflip->created_float = $Coinflip->{$Coinflip->created_by . "_amount"} / $total_amount;
 
         if($Coinflip->heads != null && $Coinflip->tails != null) {
             $Coinflip->chance_float = ProvablyFair::generateCoinflipFloat("", $Coinflip->seed);
@@ -132,6 +141,8 @@ class CoinflipController extends Controller
         $coinflip->created_by = $bet_side;
         $coinflip->seed = ProvablyFair::generateCoinflipSeed();
         $coinflip->save();
+
+        broadcast(new CoinflipCreated($coinflip));
 
         return json_encode(["error" => false, "data" => $coinflip->id]);
     }

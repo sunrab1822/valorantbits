@@ -66,7 +66,7 @@ String.generateClientSeed = function() {
  * to use in your application's views. An example is included for you.
  */
 
-const pinia = createPinia()
+const pinia = createPinia();
 const app = createApp({});
 
 /**
@@ -143,7 +143,6 @@ const router = new createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const userStore = useUserStore();
     if (to.matched.some(record =>  record.meta.requiresAuth)) {
         if (!userStore.isLoggedIn) {
             next({ name: 'home' });
@@ -159,6 +158,8 @@ app.use(pinia);
 app.use(router);
 
 app.mount('#app');
+
+const userStore = useUserStore();
 
 $(function(){
     $(".nav_balance").on("updateBalance", function(event, amount){

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="d-flex justify-content-end">
-            <button class="btn btn-primary create-button align-right" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-if="userStore.isLoggedIn">Create Game</button>
+            <button class="btn btn-primary create-button align-right" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-if="userStore.isLoggedIn">Create Coinflip</button>
             <!-- <button class="nav-link" type="button" data-bs-toggle="modal" data-bs-target="#registerModal">Register</button> -->
         </div>
         <div>
@@ -19,11 +19,17 @@
     let coinflips = ref([]);
     const userStore = useUserStore();
 
-    window.Echo.channel('CoinflipList').listen('.coinflip-created', coinflipCreated);
+    window.Echo.channel('Coinflips')
+        .listen('.coinflip-created', coinflipCreated)
+        .listen('.coinflip-completed', coinflipCompleted);
     getCoinflips();
 
     function coinflipCreated(data) {
-        coinflips.value.push(data);
+        coinflips.value.push(data.coinflip);
+    }
+
+    function coinflipCompleted(data) {
+        coinflips.value = coinflips.value.filter(coinflip => data.id !== coinflip.id);
     }
 
     async function getCoinflips() {

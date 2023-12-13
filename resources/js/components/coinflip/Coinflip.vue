@@ -9,21 +9,21 @@
             <div class="col-md-4 d-flex justify-content-center align-items-center">
                 <div :class="{'user_side_tails': created_by.id == coinflip.tails, 'user_side_heads': created_by.id == coinflip.heads}">
                     <div class="d-flex align-items-center ">
-                        <img class="flip-profile-picture mb-2" v-if="created_by" :src="created_by.profile_image" alt="" :class="{'winner': sideWon == coinflip.created_by, 'loser': sideWon != coinflip.created_by}">
+                        <img class="flip-profile-picture mb-2" v-if="created_by" :src="created_by.profile_image" alt="" :class="{'winner': coinflip.game_state == 2 && sideWon == coinflip.created_by, 'loser': coinflip.game_state == 2 && sideWon != coinflip.created_by}">
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <span class="me-2">{{ created_by.level }}</span>
-                        <span>{{ created_by.username }}</span>
+                        <span>{{ created_by.username }} ({{ createByWinChance.toFixed(2) }}%)</span>
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <currency></currency>
                         <span>{{ coinflip[coinflip.created_by + '_amount'].toBalance(2) }}</span>
                     </div>
                 </div>
-                <img class="side-image to-right" :src="'/storage/chip_' + (created_by.id == coinflip.heads ? 'black' : 'white') + '.png'" :class="{'winner': sideWon == coinflip.created_by, 'loser': sideWon != coinflip.created_by}">
+                <img class="side-image to-right" :src="'/storage/chip_' + (created_by.id == coinflip.heads ? 'black' : 'white') + '.png'" :class="{'winner': coinflip.game_state == 2 && sideWon == coinflip.created_by, 'loser': coinflip.game_state == 2 && sideWon != coinflip.created_by}">
             </div>
             <div class="col-md-4 d-flex justify-content-center align-items-center">
-                <div id="coin" :class="{'heads-complete': sideWon == 'heads', 'tails-complete': sideWon == 'tails'}">
+                <div id="coin" :class="{'heads-complete': coinflip.game_state == 2 && sideWon == 'heads', 'tails-complete': coinflip.game_state == 2 && sideWon == 'tails'}">
                     <div class="side-a">
                         <img class="w-100" src="/storage/chip_black.png" alt="">
                     </div>
@@ -34,18 +34,18 @@
             </div>
 
             <div class="col-md-4 d-flex justify-content-center align-items-center">
-                <img class="side-image to-left" :src="'/storage/chip_' + (opponent && opponent.id == coinflip.heads ? 'black' : 'white') + '.png'" v-if="opponent" :class="{'winner': sideWon != coinflip.created_by, 'loser': sideWon == coinflip.created_by}">
+                <img class="side-image to-left" :src="'/storage/chip_' + (opponent && opponent.id == coinflip.heads ? 'black' : 'white') + '.png'" v-if="opponent" :class="{'winner': coinflip.game_state == 2 && sideWon != coinflip.created_by, 'loser': coinflip.game_state == 2 && sideWon == coinflip.created_by}">
                 <div :class="{'user_side_heads': created_by.id == coinflip.tails, 'user_side_tails': created_by.id == coinflip.heads}">
                     <div v-if="coinflip.game_state == 0">
                         <button class="btn btn-primary" v-if="!userStore.user" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-                        <button class="btn btn-primary" v-else-if="userStore.user && created_by && created_by.id == userStore.user.id" @click="callBots">Call Bots</button>
+                        <button class="btn btn-primary" v-else-if="userStore.user && created_by && created_by.id == userStore.user.id" @click="callBots" :disabled="actionButtonDisabled">Call Bots</button>
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#coinflipCreateModal" v-else>Join</button>
                     </div>
                     <div v-else>
-                        <img class="flip-profile-picture mb-2" :src="opponent.profile_image" alt="" :class="{'winner': sideWon != coinflip.created_by, 'loser': sideWon == coinflip.created_by}">
+                        <img class="flip-profile-picture mb-2" :src="opponent.profile_image" alt="" :class="{'winner': coinflip.game_state == 2 && sideWon != coinflip.created_by, 'loser': coinflip.game_state == 2 && sideWon == coinflip.created_by}">
                         <div class="d-flex justify-content-center align-items-center">
                             <span class="me-2" v-if="!opponent.is_bot">{{ opponent.level }}</span>
-                            <span>{{ opponent.username }}</span>
+                            <span>{{ opponent.username }} ({{ opponentWinChance.toFixed(2) }}%)</span>
                             <span class="border border-1 rounded-1 border-primary px-2 bg-dark-red fs-7-1 ms-2 ls-1" v-if="opponent.is_bot">BOT</span>
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
@@ -59,7 +59,6 @@
     </div>
 
     <coinflip-create :isCreate="false"/>
-
 </template>
 
 <script setup>
@@ -76,6 +75,10 @@
     let created_by = ref();
     let opponent = ref();
     let sideWon = ref(null);
+    let createByWinChance = ref(0);
+    let opponentWinChance = ref(0);
+
+    let actionButtonDisabled = ref(false);
 
     getCoinflip();
 
@@ -84,8 +87,16 @@
         coinflip.value = request.data.data;
         created_by.value = coinflip.value["user_" + coinflip.value["created_by"]];
         opponent.value = coinflip.value["user_" + (coinflip.value["created_by"] == "heads" ? "tails" : "heads")];
+
+        createByWinChance.value = coinflip.value.created_float * 100;
+        opponentWinChance.value = (1 - coinflip.value.created_float) * 100;
+
         if(coinflip.value.game_state == 2) {
-            sideWon.value = coinflip.value.chance_float < 0.5 ? "heads" : "tails";
+            if(coinflip.value.created_by == "heads") {
+                sideWon.value = coinflip.value.chance_float <= coinflip.value.created_float ? "heads" : "tails";
+            } else {
+                sideWon.value = coinflip.value.chance_float >= 1 - coinflip.value.created_float ? "tails" : "heads";
+            }
         }
     }
 
@@ -97,32 +108,61 @@
     }
 
     async function callBots() {
+        actionButtonDisabled = true;
         await axios.post("/api/coinflip/call-bots", {
             game_id: route.params.id
         });
     }
 
     function flipCoin() {
-        var flipResult = Math.random();
         $('#coin').removeClass();
         setTimeout(function () {
-            if (flipResult < 0.5) {
-                $('#coin').addClass('heads');
+            if(coinflip.value.created_by == "heads") {
+                if (coinflip.value.chance_float <= coinflip.value.created_float) {
+                    $('#coin').addClass('heads');
+                } else {
+                    $('#coin').addClass('tails');
+                }
             } else {
-                $('#coin').addClass('tails');
+                if (coinflip.value.chance_float >= 1 - coinflip.value.created_float) {
+                    $('#coin').addClass('tails');
+                } else {
+                    $('#coin').addClass('heads');
+                }
             }
 
-            setTimeout(postCoinFlip, 3500, flipResult);
+            setTimeout(postCoinFlip, 3500, coinflip.value.chance_float);
         }, 500);
     }
 
     function postCoinFlip(result) {
         coinflip.value.game_state = 2;
-        if(result < 0.5) {
-            sideWon.value = "heads";
+        if(coinflip.value.created_by == "heads") {
+            if(result <= coinflip.value.created_float) {
+                sideWon.value = "heads";
+                if(userStore.user.id == coinflip.value.heads) {
+                    $(".nav_balance").trigger("updateBalance", coinflip.value.heads_amount + coinflip.value.tails_amount);
+                }
+            } else {
+                sideWon.value = "tails";
+                if(userStore.user.id == coinflip.value.tails) {
+                    $(".nav_balance").trigger("updateBalance", coinflip.value.heads_amount + coinflip.value.tails_amount);
+                }
+            }
         } else {
-            sideWon.value = "tails";
+            if(result >= 1 - coinflip.value.created_float) {
+                sideWon.value = "tails";
+                if(userStore.user.id == coinflip.value.tails) {
+                    $(".nav_balance").trigger("updateBalance", coinflip.value.heads_amount + coinflip.value.tails_amount);
+                }
+            } else {
+                sideWon.value = "heads";
+                if(userStore.user.id == coinflip.value.heads) {
+                    $(".nav_balance").trigger("updateBalance", coinflip.value.heads_amount + coinflip.value.tails_amount);
+                }
+            }
         }
+
     }
 </script>
 

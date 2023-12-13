@@ -6,7 +6,7 @@
             </router-link>
         </div>
         <div class="col-xl-2 col-lg-2 d-xl-flex d-lg-flex d-block align-items-center">
-            <div class="d-flex bg-secondary rounded align-items-center rounded-2 balance-box mx-auto">
+            <div class="d-flex bg-grey rounded align-items-center rounded-2 balance-box mx-auto px-2-5" v-if="userStore.isLoggedIn">
                 <currency></currency>
                 <div class="balance-text nav_balance">{{ userStore.user.balance.toBalance(2) }}</div>
             </div>

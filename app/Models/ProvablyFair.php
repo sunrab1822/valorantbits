@@ -45,6 +45,6 @@ class ProvablyFair extends Model
         //$hash = hash('sha256', $server_seed . ":" . $client_seed);
         $random = new Randomizer(new Xoshiro256StarStar($server_seed));
 
-        return $random->nextInt() / PHP_INT_MAX;
+        return $random->getInt(0, 999999) / 999999;
     }
 }

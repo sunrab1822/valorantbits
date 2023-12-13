@@ -38,11 +38,23 @@
 
     getCrateBattles();
 
+    window.Echo.channel("CrateBattles")
+        .listen(".battle-created", battleCreated)
+        .listen(".battle-completed", battleCompleted);
+
     async function getCrateBattles() {
         let response = await axios.get("/api/crate-battle/list");
 
         if(!response.data.error) {
             crate_battles.value = response.data.data;
         }
+    }
+
+    function battleCreated(data) {
+        crate_battles.value.push(data.battle);
+    }
+
+    function battleCompleted(data) {
+        crate_battles.value = crate_battles.value.filter(battle => data.id !== battle.id);
     }
 </script>

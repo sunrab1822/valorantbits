@@ -25,6 +25,14 @@ class FiletoCrate extends Command
      */
     protected $description = 'Command description';
 
+    protected $caseTypes = [
+        'low' => 0,
+        'medium' => 0,
+        'high' => 0,
+        'fifty_fifty' => 0,
+        'one_percent' => 0
+    ];
+
     /**
      * Execute the console command.
      */
@@ -36,20 +44,26 @@ class FiletoCrate extends Command
         if (isset($arguments['file']))
         {
             $file = fopen($arguments['file'], 'r');
+            $crate = null;
+            $crate_price = 0;
 
             while (($line = fgets($file)) !== false){
                 $line = trim($line);
                 if ($line == "")
                 {
+                    if($crate != null) {
+                        $crate->price = $crate_price;
+                        $crate->save();
+                    }
                     continue;
-
                 }
 
-                print_r($line);
+                print_r($line . "\r\n");
                 if(str_starts_with($line, '*')){
+                    $crate_price = 0;
                     $crate = new Crate();
                     $crate->name = substr($line, 1, strlen($line)-2);
-                    $crate->price = 0;
+                    $crate->price = $crate_price;
                     $crate->image = "/storage/crate_images/crate_red.png";
                     $crate->save();
                     $crateId = $crate->id;
@@ -58,7 +72,7 @@ class FiletoCrate extends Command
 
                 if($crateId != null)
                 {
-                    $bits = explode(',' ,$line);
+                    $bits = explode(',', $line);
                     $skin = Skin::where("name", $bits[0])->first();
 
                     $crateItem = new CrateItems();
@@ -66,10 +80,13 @@ class FiletoCrate extends Command
                     $crateItem->skin_id = $skin->id;
                     $crateItem->chance = $bits[1];
                     $crateItem->save();
-                }
 
+                    $calculated_price = round((($skin->price / 100) * 0.07 + ($skin->price / 100)) * ($crateItem->chance / 100), 2) * 100 + 1;
+                    print_r($calculated_price . "\r\n");
+
+                    $crate_price += $calculated_price;
+                }
             }
         }
-
     }
 }

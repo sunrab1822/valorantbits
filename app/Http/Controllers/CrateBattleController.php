@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\CrateBattleCallBots;
+use App\Events\CrateBattleCreated;
 use App\Events\CrateBattleJoined;
 use App\Jobs\CrateBattleRollResult;
 use App\Models\Crate;
@@ -91,6 +92,8 @@ class CrateBattleController extends Controller
 
         $CrateBattle = CrateBattle::find($request->get("battleId"));
         $player_list = json_decode($CrateBattle->players, true);
+
+        if(in_array(Auth::user()->id, $player_list)) return json_encode(["error" => true, "data" => "Failed to join"]);
 
         if($player_list[$request->get("spot")] == null) {
             $player_list[$request->get("spot")] = Auth::user()->id;
@@ -190,6 +193,8 @@ class CrateBattleController extends Controller
 
         $CrateBattle->save();
         $User->save();
+
+        broadcast(new CrateBattleCreated($CrateBattle));
 
         return json_encode(["error" => false, "data" => $CrateBattle->id]);
     }

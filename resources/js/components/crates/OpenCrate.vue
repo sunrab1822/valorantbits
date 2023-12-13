@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col">
-                <button class="btn btn-success" @click="back" >&lsaquo;&nbsp;Back</button>
+                <button class="btn btn-secondary" @click="back" >&lsaquo;&nbsp;Back</button>
             </div>
             <div class="col text-center">
                 <h1 v-if="crate != null">{{ crate.name }}</h1>
@@ -21,9 +21,9 @@
         </div>
         <div class="d-flex justify-content-center align-items-center">
             <div>
-                <button class="btn btn-success" @click="openCrate()" :disabled="isSpinning" v-if="userStore.isLoggedIn">Open</button>
+                <button class="btn btn-primary" @click="openCrate()" :disabled="isSpinning" v-if="userStore.isLoggedIn">Open</button>
             </div>
-            <div class="d-flex justify-content-center align-items-center ms-1" v-if="crate != null">
+            <div class="d-flex justify-content-center align-items-center ms-2" v-if="crate != null">
                 <currency /><span class="fs-5">{{ crate.price.toBalance(2) }}</span>
             </div>
         </div>
@@ -108,7 +108,6 @@
         if(!openedItem.data.error) {
             $(".nav_balance").trigger("updateBalance", crate.price * -1);
         }
-
 
         if(openedItem.data.data.drop == undefined || openedItem.data.data.drop == null) {
             isSpinning.value = false;

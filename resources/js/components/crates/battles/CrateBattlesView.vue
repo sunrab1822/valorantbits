@@ -22,8 +22,8 @@
                         </div>
                         <div v-else>
                             <button class="btn btn-primary fs-5 px-3" v-if="!userStore.user" style="height: 3rem;" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-                            <button class="btn btn-primary fs-5 px-3" style="height: 3rem;" @click="joinBattle(i-1)" v-else-if="userStore.user && userStore.user.id != crate_battle.created_by">Join</button>
-                            <button class="btn btn-primary fs-5 px-3" style="height: 3rem;" @click="callBots()" v-else>Call Bots</button>
+                            <button class="btn btn-primary fs-5 px-3" style="height: 3rem;" @click="joinBattle(i-1)" v-else-if="userStore.user && userStore.user.id != crate_battle.created_by" :disabled="joinButtonDisabled">Join</button>
+                            <button class="btn btn-primary fs-5 px-3" style="height: 3rem;" @click="callBots()" v-else :disabled="callButtonDisabled">Call Bots</button>
                         </div>
                         <div class="battle-player-earnings" v-if="crate_battle.player_list[i-1]">
                             <currency />
@@ -74,6 +74,8 @@
     let numberOfPlayers = ref(0);
     let wonItems = ref([]);
     let itemPrices = ref([0, 0, 0, 0]);
+    let callButtonDisabled = ref(false);
+    let joinButtonDisabled = ref(false);
 
     let random = null;
     const route = useRoute();
@@ -245,6 +247,9 @@
 
         if(!response.data.error) {
             crate_battle.value = response.data.data;
+            if(crate_battle.value.player_list.some(player => player.id == userStore.user.id)) {
+                joinButtonDisabled.value = true;
+            }
             random = new XORShift(crate_battle.seed);
             if(crate_battle.value.result != null) {
                 wonItems.value = crate_battle.value.wonItems;
@@ -255,16 +260,23 @@
     }
 
     async function joinBattle(spot) {
-        await axios.post("/api/crate-battle/join", {
-            spot: spot,
-            battleId: route.params.id
-        });
+        if(!joinButtonDisabled.value) {
+            joinButtonDisabled.value = true;
+            await axios.post("/api/crate-battle/join", {
+                spot: spot,
+                battleId: route.params.id
+            });
+        }
+
     }
 
     async function callBots() {
-        await axios.post("/api/crate-battle/call-bots", {
-            battleId: route.params.id
-        });
+        if(!callButtonDisabled.value) {
+            callButtonDisabled.value = true;
+            await axios.post("/api/crate-battle/call-bots", {
+                battleId: route.params.id
+            });
+        }
     }
 
     function getRandomInt(min, max) {
