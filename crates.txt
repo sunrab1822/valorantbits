@@ -40,4 +40,36 @@ Spectrum Classic,98.0
 *5% ChronoVoid*
 ChronoVoid Vandal,5.0
 Aerosol Bucky,95.0
- 
+
+*name1*
+Red Alert Bucky,00.1
+Immortalized Stinger,99.9
+
+*name2*
+Cryostasis Operator,5
+Genesis Bucky,5
+Coalition: Cobra Frenzy,40
+Jigsaw Judge,10
+Convex Spectre,10
+VALORANT GO! Vol. 1 Phantom,10
+Sakura Vandal,10
+Blush Guardian,10
+
+*name3*
+Celestial Fan,3
+Ion Spectre,17
+Digihex Ares,20
+Serenity Ghost,20
+Snowfall Judge,20
+Moondash Guardian,20
+
+*name*
+Winterwunderland Candy Cane,1
+Black.Market Marshal,2
+Recon Spectre,2
+Prism Spectre,3
+Songsteel Marshal,3
+Kingdom Phantom,3
+Hue Shift Bulldog,3
+Cavalier Stinger,13
+Schema Odin,70
