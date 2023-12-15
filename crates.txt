@@ -1,38 +1,20 @@
-*Custom Crate 1*
-Altitude Odin,5.5
-Xenohunter Odin,7.2
-Glitchpop Odin,5.8
-Rush Ares,10.1
-Celestial Ares,4.3
-Hivemind Ares,6.2
-Reaver Odin,5.8
-Recon Phantom,8.6
-Undercity Phantom,6.9
-Depths Vandal,4.2
-Artisan Bucky,6.7
-Hivemind Vandal,4.6
-Radiant Entertainment System Bulldog,6.4
-Sentinels of Light Vandal,7.5
-Nitro Vandal,10.2
+*Prime Pursuit*
+Prime//2.0 Karambit,0.5
+Prime Vandal,0.5
+Wasteland Vandal,3.0
+Oni Bulldog,6.0
+Bound Bulldog,25.0
+Nitro Vandal,25.0
+Elderflame Frenzy,40.0
 
-*Luxury Collection Crate*
-Altitude Vandal,15.5
-Rush Phantom,12.3
-Sensation Vandal,10.5
-Prism II Vandal,9.8
-Celestial Ares,8.2
-Immortalized Vandal,7.6
-Elderflame Operator,6.4
-Luxe Vandal,6.1
-Divine Swine Marshal,5.2
-Topotek Odin,4.3
-Soulstrife Phantom,3.9
-Blade of Chaos,3.1
-Singularity Spectre,2.4
-Winterwunderland Phantom,3
-Sakura Classic,1.7
+*Radiant Arsenal*
+Galleria Marshal,5.0
+POLYfrog Spectre,10.0
+Hydrodip Judge,10.0
+Endeavour Ares,35.0
+Luxe Ghost,40.0
 
-*Risky Crate*
+*Glitchpop Gambit*
 VALORANT GO! Vol. 1 Phantom,1.5
 Elderflame Vandal,0.5
 Spectrum Classic,98.0
@@ -40,4 +22,3 @@ Spectrum Classic,98.0
 *5% ChronoVoid*
 ChronoVoid Vandal,5.0
 Aerosol Bucky,95.0
- 
