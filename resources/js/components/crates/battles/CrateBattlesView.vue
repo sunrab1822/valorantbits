@@ -30,13 +30,14 @@
                             <div class="fs-5">{{ itemPrices[i-1].toBalance(2) }}</div>
                         </div>
                     </div>
-                    <div class="row my-2">
-                        <div class="spin-wrapper-horizontal">
-                            <div class="result-screen"></div>
-                            <div class="spin-selector"></div>
-                            <div class="spin-wheel d-flex" style="transform: translate3d(0px, -210px, 0px)">
-                                <div v-for="(skin, key) in spinItems[currentCrateIndex][i-1]" class="spin-element flex-column">
-                                    <img :src="skin.image">
+                    <div class="player_spin_body" :class="{'bg-success': winnerPlayers[i-1]}">
+                        <div class="row py-2">
+                            <div class="spin-wrapper-horizontal">
+                                <div class="spin-selector"></div>
+                                <div class="spin-wheel d-flex" style="transform: translate3d(0px, -210px, 0px)">
+                                    <div v-for="(skin, key) in spinItems[currentCrateIndex][i-1]" class="spin-element flex-column">
+                                        <img :src="skin.image">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -76,6 +77,7 @@
     let itemPrices = ref([0, 0, 0, 0]);
     let callButtonDisabled = ref(false);
     let joinButtonDisabled = ref(false);
+    let winnerPlayers = ref([false, false, false, false]);
 
     let random = null;
     const route = useRoute();
@@ -186,10 +188,33 @@
         });
 
         if(currentCrateIndex.value == crate_battle.value.crate_list.length - 1) {
-            $(".result-screen").each(function() {
-                //$(this).addClass("result-won");
-                //$(this).addClass("result-lost");
-            })
+            calculateWinners();
+        }
+    }
+
+    function calculateWinners() {
+        if(crate_battle.value.battle_type == 4) {
+            let team_one = itemPrices.value[0] + itemPrices.value[1];
+            let team_two = itemPrices.value[2] + itemPrices.value[3];
+
+            if(team_one == team_two) {
+                return;
+            }
+
+            if(team_one > team_two) {
+                winnerPlayers.value = [true, true, false, false];
+            } else {
+                winnerPlayers.value = [false, false, true, true];
+            }
+        } else {
+            let highestAmount = Math.max(...itemPrices.value);
+            let playersWon = itemPrices.value.filter(amount => amount == highestAmount);
+            if(playersWon.length > 1) {
+                return;
+            } else {
+                let playerWonIndex = itemPrices.value.indexOf(playersWon[0]);
+                playersWon[playerWonIndex] = true;
+            }
         }
     }
 
@@ -247,7 +272,7 @@
 
         if(!response.data.error) {
             crate_battle.value = response.data.data;
-            if(crate_battle.value.player_list.some(player => player.id == userStore.user.id)) {
+            if(crate_battle.value.player_list.some(player => userStore.user && player.id == userStore.user.id)) {
                 joinButtonDisabled.value = true;
             }
             random = new XORShift(crate_battle.seed);

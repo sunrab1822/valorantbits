@@ -16,7 +16,7 @@ class FiletoCrate extends Command
      *
      * @var string
      */
-    protected $signature = 'valo:crates';
+    protected $signature = 'valo:crates {file}';
 
     /**
      * The console command description.
@@ -38,31 +38,8 @@ class FiletoCrate extends Command
      */
     public function handle()
     {
-        $crates = json_decode(file_get_contents("crates.json"), true);
+        $arguments = $this->arguments();
         $crateId = null;
-
-        // foreach($crates as $crate) {
-        //     switch($crate["type"]) {
-        //         case "1%":
-        //             $this->createLowRiskCrate();
-        //             break;
-        //         case "10%":
-        //             $this->createLowRiskCrate();
-        //             break;
-        //         case "50/50":
-        //             $this->createLowRiskCrate();
-        //             break;
-        //         case "high":
-        //             $this->createLowRiskCrate();
-        //             break;
-        //         case "medium":
-        //             $this->createLowRiskCrate();
-        //             break;
-        //         case "low":
-        //             $this->createLowRiskCrate();
-        //             break;
-        //     }
-        // }
 
         if (isset($arguments['file']))
         {
@@ -110,17 +87,6 @@ class FiletoCrate extends Command
                     $crate_price += $calculated_price;
                 }
             }
-        }
-    }
-
-    function createLowRiskCrate() {
-        $target_price = 30;
-        $random_num = mt_rand(4, 10);
-
-        $lowest_price = Skin::where("category_id", "!=", 19)->order_by("price", "ASC")->first();
-        $highest_price = Skin::where("category_id", "!=", 19)::where("price", "<=", $target_price*1.1)->order_by("price", "desc")->first();
-
-        for($i = 0; $i < $random_num; $i++) {
         }
     }
 }
