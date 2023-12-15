@@ -201,8 +201,12 @@
             wonAmount.value = (team_one + team_two) / 2;
 
             if(team_one == team_two) {
-                let player_index = Math.floor(crate_battle.value.tie_float * 2);
-                winnerPlayers.value[player_index] = true;
+                let side_win = Math.floor(crate_battle.value.tie_float * 2);
+                if(side_win == 0) {
+                    winnerPlayers.value = [true, true, false, false];
+                } else {
+                    winnerPlayers.value = [false, false, true, true];
+                }
             } else if(team_one > team_two) {
                 winnerPlayers.value = [true, true, false, false];
             } else {
@@ -290,7 +294,9 @@
                 itemPrices.value = crate_battle.value.totalEarnings;
             }
             initCrate();
-            calculateWinners();
+            if(crate_battle.value.game_state == 1 || crate_battle.value.game_state == 2) {
+                calculateWinners();
+            }
         }
     }
 
