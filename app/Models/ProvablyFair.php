@@ -47,4 +47,11 @@ class ProvablyFair extends Model
 
         return $random->getInt(0, 999999) / 999999;
     }
+
+    public static function generateCrateBattleFloat($server_seed) {
+        //$hash = hash('sha256', $server_seed . ":" . $client_seed);
+        $random = new Randomizer(new Xoshiro256StarStar($server_seed));
+
+        return $random->getInt(0, 999999) / 999999;
+    }
 }

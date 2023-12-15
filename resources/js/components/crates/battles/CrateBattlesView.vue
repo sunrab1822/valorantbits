@@ -33,8 +33,9 @@
                     <div class="player_spin_body" :class="{'bg-success': winnerPlayers[i-1]}">
                         <div class="row py-2">
                             <div class="spin-wrapper-horizontal">
-                                <div class="spin-selector"></div>
-                                <div class="spin-wheel d-flex" style="transform: translate3d(0px, -210px, 0px)">
+                                <div class="my-auto fs-4" :class="{'d-none': winnerPlayers.every(el => el == false)}"><currency />{{ winnerPlayers[i-1] ? wonAmount.toBalance(2) : "0.00" }}</div>
+                                <div class="spin-selector" :class="{'d-none': winnerPlayers.some(el => el == true)}"></div>
+                                <div class="spin-wheel d-flex" style="transform: translate3d(0px, -210px, 0px)" :class="{'d-none': winnerPlayers.some(el => el == true)}">
                                     <div v-for="(skin, key) in spinItems[currentCrateIndex][i-1]" class="spin-element flex-column">
                                         <img :src="skin.image">
                                     </div>
@@ -78,6 +79,7 @@
     let callButtonDisabled = ref(false);
     let joinButtonDisabled = ref(false);
     let winnerPlayers = ref([false, false, false, false]);
+    let wonAmount = ref(0);
 
     let random = null;
     const route = useRoute();
@@ -188,33 +190,40 @@
         });
 
         if(currentCrateIndex.value == crate_battle.value.crate_list.length - 1) {
-            calculateWinners();
+            calculateWinners(true);
         }
     }
 
-    function calculateWinners() {
+    function calculateWinners(showBalance = false) {
         if(crate_battle.value.battle_type == 4) {
             let team_one = itemPrices.value[0] + itemPrices.value[1];
             let team_two = itemPrices.value[2] + itemPrices.value[3];
+            wonAmount.value = (team_one + team_two) / 2;
 
             if(team_one == team_two) {
-                return;
-            }
-
-            if(team_one > team_two) {
+                let player_index = Math.floor(crate_battle.value.tie_float * 2);
+                winnerPlayers.value[player_index] = true;
+            } else if(team_one > team_two) {
                 winnerPlayers.value = [true, true, false, false];
             } else {
                 winnerPlayers.value = [false, false, true, true];
             }
         } else {
             let highestAmount = Math.max(...itemPrices.value);
-            let playersWon = itemPrices.value.filter(amount => amount == highestAmount);
+            wonAmount.value = itemPrices.value.reduce((partialSum, a) => partialSum + a, 0);
+            let playersWon = itemPrices.value.map((item, index) => ({ item, index })).filter(({amount}) => amount == highestAmount);
             if(playersWon.length > 1) {
-                return;
+                let player_indexes = Object.keys(playersWon);
+                let player_index = Math.floor(crate_battle.value.tie_float * playersWon.length);
+                winnerPlayers.value[player_indexes[player_index]] = true;
             } else {
-                let playerWonIndex = itemPrices.value.indexOf(playersWon[0]);
-                playersWon[playerWonIndex] = true;
+                let playerWonIndex = itemPrices.value.indexOf(highestAmount);
+                winnerPlayers.value[playerWonIndex] = true;
             }
+        }
+
+        if(showBalance) {
+            $(".nav_balance").trigger("updateBalance", wonAmount);
         }
     }
 
@@ -281,6 +290,7 @@
                 itemPrices.value = crate_battle.value.totalEarnings;
             }
             initCrate();
+            calculateWinners();
         }
     }
 
@@ -305,7 +315,6 @@
     }
 
     function getRandomInt(min, max) {
-        console.log(random.seed);
         return Math.floor(random.float53() * (max - min)) + min;
     }
 </script>

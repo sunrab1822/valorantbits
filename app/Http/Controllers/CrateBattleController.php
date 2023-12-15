@@ -182,6 +182,7 @@ class CrateBattleController extends Controller
         $CrateBattle->price = $total_price;
         $CrateBattle->crates = json_encode($crates);
         $CrateBattle->seed = ProvablyFair::generateBattleSeed();
+        $CrateBattle->tie_float = ProvablyFair::generateCrateBattleFloat($CrateBattle->seed);
 
         if(in_array($option, ["normal", "group", "terminal"])) {
             $CrateBattle->{"is_" . $option} = true;

@@ -56,13 +56,49 @@ class CloseCrateBattle implements ShouldQueue
         }
 
         if($this->CrateBattle->battle_type == 4) {
+            $team_one = $playerAmounts[0] + $playerAmounts[1];
+            $team_two = $playerAmounts[2] + $playerAmounts[3];
+            $amount_to_give = ($team_one + $team_two) / 2;
 
+            if($team_one == $team_two) {
+                if($this->CrateBattle->tie_float < 0.5) {
+                    $players[0]->balance += $amount_to_give;
+                    $players[0]->save();
+                    $players[1]->balance += $amount_to_give;
+                    $players[1]->save();
+                } else {
+                    $players[2]->balance += $amount_to_give;
+                    $players[2]->save();
+                    $players[3]->balance += $amount_to_give;
+                    $players[3]->save();
+                }
+            } else if($team_one > $team_two) {
+                $players[0]->balance += $amount_to_give;
+                $players[0]->save();
+                $players[1]->balance += $amount_to_give;
+                $players[1]->save();
+            } else {
+                $players[2]->balance += $amount_to_give;
+                $players[2]->save();
+                $players[3]->balance += $amount_to_give;
+                $players[3]->save();
+            }
         } else {
+            $highestAmount = max($playerAmounts);
+            $sameAmounts = array_filter($playerAmounts, function($item) use ($highestAmount) {
+                return $item == $highestAmount;
+            });
+            $player_index = array_search($highestAmount, $playerAmounts);
 
-        }
-
-        foreach($players as $player) {
-
+            if(count($sameAmounts) == 1) {
+                $players[$player_index]->balance = array_sum($playerAmounts);
+                $players[$player_index]->save();
+            } else {
+                $player_indexes = array_keys($sameAmounts);
+                $won_player_index = floor($this->CrateBattle->tie_float * count($player_indexes));
+                $players[$player_indexes[$won_player_index]]->balance = array_sum($playerAmounts);
+                $players[$player_indexes[$won_player_index]]->save();
+            }
         }
 
         broadcast(new CrateBattleCompleted($this->CrateBattle->id));

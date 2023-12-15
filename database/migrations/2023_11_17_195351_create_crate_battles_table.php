@@ -22,6 +22,7 @@ return new class extends Migration
             $table->boolean("is_group")->default(false);
             $table->boolean("game_state")->default(0);
             $table->string("seed")->nullable();
+            $table->float("tie_float", 8, 7)->nullable();
             $table->json("crates");
             $table->json("players");
             $table->json("result")->nullable();
