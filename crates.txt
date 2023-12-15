@@ -15,10 +15,46 @@ Endeavour Ares,35.0
 Luxe Ghost,40.0
 
 *Glitchpop Gambit*
-VALORANT GO! Vol. 1 Phantom,1.5
-Elderflame Vandal,0.5
-Spectrum Classic,98.0
+VALORANT GO! Vol. 1 Phantom,10
+Snowfall Phantom,15
+Doodle Buds Marshal,15
+Doodle Buds Shorty,20
+Spectrum Classic,20
+Hush Ghost,20
 
 *5% ChronoVoid*
 ChronoVoid Vandal,5.0
 Aerosol Bucky,95.0
+
+*Phoenix Protocol*
+Immortalized Stinger,30
+Red Alert Bucky,70
+
+*Gezellig*
+Cryostasis Operator,1
+Genesis Bucky,14
+Coalition: Cobra Frenzy,40
+Jigsaw Judge,13
+Convex Spectre,13
+VALORANT GO! Vol. 1 Phantom,2
+Sakura Vandal,5
+Blush Guardian,12
+
+*Killjoy's Contraption Collection*
+Celestial Fan,0.01
+Ion Spectre,1
+Digihex Ares,39
+Serenity Ghost,20
+Snowfall Judge,30
+Moondash Guardian,9.99
+
+*Radiant Riddle*
+Winterwunderland Candy Cane,0.01
+Black.Market Marshal,0.89
+Kingdom Phantom,0.05
+Recon Spectre,0.05
+Songsteel Marshal,5
+Prism Spectre,10
+Schema Odin,15
+Hue Shift Bulldog,20
+Cavalier Stinger,50
