@@ -70,6 +70,7 @@ class CrateBattleController extends Controller
 
         $wonItems = [];
         $totalEarnings = [];
+        $totalEarningsTerminal = [];
         if($CrateBattle->result != null) {
             $result = json_decode($CrateBattle->result, true);
             for($i = 0; $i < count($result); $i++) {
@@ -82,11 +83,16 @@ class CrateBattleController extends Controller
                     } else {
                         $totalEarnings[$x] = $skin->price;
                     }
+
+                    if($i == count($result) - 1) {
+                        $totalEarningsTerminal[$x] = $skin->price;
+                    }
                 }
             }
         }
         $CrateBattle->wonItems = $wonItems;
         $CrateBattle->totalEarnings = $totalEarnings;
+        $CrateBattle->totalEarningsTerminal = $totalEarningsTerminal;
 
         foreach($CrateBattle->crate_list as $crate) {
             $crate->contents;

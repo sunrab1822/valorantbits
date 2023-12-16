@@ -4,9 +4,9 @@
             <router-link class="btn btn-primary create-button" :to="{name: 'create_crate_battles'}" v-if="userStore.isLoggedIn">Create Battle</router-link>
         </div>
         <div class="w-100">
-            <router-link class="no-style" :to="{name: 'crate_battles_game', params:{id:crate_battle.id}}" v-for="crate_battle in crate_battles">
+            <router-link class="no-style" :to="{name: 'crate_battles_game', params:{id:crate_battle.id}}" v-for="(crate_battle, index) in crate_battles">
                 <div class="card-battle row mb-2">
-                    <div class="col-md-6 d-flex align-items-center battle-crate-list overflow-hidden">
+                    <div class="col-md-5 d-flex align-items-center battle-crate-list overflow-hidden">
                         <img class="" :src="crate.image" style="max-width: 120px; max-height: 120px;" v-for="crate in crate_battle.crate_list">
                     </div>
                     <div class="col-md-2 d-flex align-items-center">
@@ -19,7 +19,10 @@
                             <div>{{ player.username }}</div>
                         </div>
                     </div>
-                    <div class="col-md-2 d-flex align-items-center">
+                    <div class="col-md-1 d-flex justify-content-center align-items-center text-center">
+                        <div class="fs-6-1 text-uppercase mt-1 ls-0-5">{{ getBattleType(index) }}</div>
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-center align-items-center">
                         <button class="btn btn-primary">View</button>
                     </div>
                 </div>
@@ -41,6 +44,21 @@
     window.Echo.channel("CrateBattles")
         .listen(".battle-created", battleCreated)
         .listen(".battle-completed", battleCompleted);
+
+    function getBattleType(index) {
+        if(crate_battles.value[index].is_normal) {
+            if(crate_battles.value[index].is_crazy) {
+                return "crazy";
+            }
+            return "normal";
+        }
+        if(crate_battles.value[index].is_terminal) {
+            return (crate_battles.value[index].is_crazy ? "crazy " : "") + "terminal";
+        }
+        if(crate_battles.value[index].is_group) {
+            return "group";
+        }
+    }
 
     async function getCrateBattles() {
         let response = await axios.get("/api/crate-battle/list");

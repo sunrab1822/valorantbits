@@ -417,3 +417,15 @@ a.no-style {
         background-color: #393939;
     }
 }
+
+.bg-winner {
+    background-color: #085a34;
+}
+
+.vertical-shadow {
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    z-index: 10;
+    background: linear-gradient( 0deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.3) 100% );
+}

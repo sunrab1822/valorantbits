@@ -58,4 +58,21 @@ Prism Spectre,10
 Schema Odin,14
 Hue Shift Bulldog,20
 Cavalier Stinger,50
+
+*5% Poor Classic*
+Forsaken Classic,5
+Kingdom Classic,95
+
+*50/50 Smite*
+Smite Judge,50
+Smite Classic,50
+
+*Reaver Rundown*
+Reaver Ghost,2
+Ego Stinger,3
+RGX 11z Pro Frenzy,5
+Ion Frenzy,10
+Coalition: Cobra Judge,15
+Premiere Collision Ares,20
+Red Alert Classic,50
  
