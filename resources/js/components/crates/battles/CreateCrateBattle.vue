@@ -60,7 +60,7 @@
     const router = useRouter();
     let crates = ref([]);
     let battle_options = ref("normal");
-    let battle_type = ref(1);
+    let battle_type = ref(4);
 
     function back() {
         history.back();
@@ -74,7 +74,8 @@
         });
 
         if(!response.data.error) {
-            router.push({name:"crate_battles_game", params: {id: response.data.data}});
+            $(".nav_balance").trigger("updateBalance", response.data.data.price * -1);
+            router.push({name:"crate_battles_game", params: {id: response.data.data.id}});
         }
     }
 

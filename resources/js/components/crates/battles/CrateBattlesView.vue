@@ -65,7 +65,7 @@
 
 <script setup>
     import axios from 'axios';
-    import { ref, nextTick } from 'vue';
+    import { ref, nextTick, onUnmounted } from 'vue';
     import { useRoute } from 'vue-router';
     import { XORShift } from 'random-seedable';
     import { useUserStore } from '@stores/user';
@@ -80,12 +80,19 @@
     let joinButtonDisabled = ref(false);
     let winnerPlayers = ref([false, false, false, false]);
     let wonAmount = ref(0);
+    let timeoutID = ref(null);
 
     let random = null;
     const route = useRoute();
     const userStore = useUserStore();
 
     getCrateBattle();
+
+    onUnmounted(() => {
+        if(timeoutID.value) {
+            clearTimeout(timeoutID.value);
+        }
+    });
 
     window.Echo.channel("CrateBattle." + route.params.id)
         .listen(".battle-join", battleJoin)
@@ -107,7 +114,7 @@
             currentCrateIndex.value = data.crate_number;
             resetSpin();
         }
-        setTimeout(doBattle, 400, data.result);
+        timeoutID.value = setTimeout(doBattle, 400, data.result);
     }
 
     async function resetSpin() {
@@ -147,7 +154,7 @@
             });
         });
 
-        setTimeout((result) => {
+        timeoutID.value = setTimeout((result) => {
             $wheel.each(function(){
                 $(this).css({
                     'transition-timing-function':'linear',
@@ -155,7 +162,7 @@
                     'transform':'translate3d(0px, -12220px, 0px)'
                 });
             });
-            setTimeout(postBattle, 400, result);
+            timeoutID.value = setTimeout(postBattle, 400, result);
         }, 6100, result);
     }
 
@@ -215,7 +222,7 @@
         } else {
             let highestAmount = Math.max(...itemPrices.value);
             wonAmount.value = itemPrices.value.reduce((partialSum, a) => partialSum + a, 0);
-            let playersWon = itemPrices.value.map((item, index) => ({ item, index })).filter(({amount}) => amount == highestAmount);
+            let playersWon = itemPrices.value.map((amount, index) => ({ amount, index })).filter(({amount}) => amount == highestAmount);
             if(playersWon.length > 1) {
                 let player_indexes = Object.keys(playersWon);
                 let player_index = Math.floor(crate_battle.value.tie_float * playersWon.length);
@@ -227,7 +234,7 @@
         }
 
         if(showBalance) {
-            $(".nav_balance").trigger("updateBalance", wonAmount);
+            $(".nav_balance").trigger("updateBalance", wonAmount.value);
         }
     }
 

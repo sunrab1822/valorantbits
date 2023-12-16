@@ -38,7 +38,7 @@
 
 <script setup>
     import { useRoute } from 'vue-router'
-    import { ref, nextTick } from 'vue';
+    import { ref, nextTick, onUnmounted } from 'vue';
     import { useUserStore } from '@stores/user';
     import axios from 'axios';
     import random from 'random-seedable';
@@ -49,6 +49,13 @@
 
     let isSpinning = ref(false);
     let spinItems = ref([]);
+    let timeoutID = ref(null);
+
+    onUnmounted(() => {
+        if(timeoutID.value) {
+            clearTimeout(timeoutID.value);
+        }
+    });
 
     async function getCrate() {
         let request = await axios("/api/crate/" + route.params.id);
@@ -116,7 +123,7 @@
 
         await initCrate(openedItem.data.data.drop);
 
-        setTimeout(doOpenCrate, 400, openedItem.data.data.drop);
+        timeoutID.value = setTimeout(doOpenCrate, 400, openedItem.data.data.drop);
     }
 
     function doOpenCrate(wonItem) {
@@ -137,13 +144,13 @@
             'transform':'translate3d(-'+ landingPosition +'px, 0px, 0px)'
         });
 
-        setTimeout((wonItem) => {
+        timeoutID.value = setTimeout((wonItem) => {
             $('.spin-wrapper .spin-wheel').css({
                 'transition-timing-function':'linear',
                 'transition-duration':'0.2s',
                 'transform':'translate3d(-4758px, 0px, 0px)'
             });
-            setTimeout(postOpenCrate, 400, wonItem);
+            timeoutID.value = setTimeout(postOpenCrate, 400, wonItem);
         }, 6100, wonItem);
     }
 
@@ -159,7 +166,7 @@
         }));
         $winItemTextContainer.append($("<div>", {
             text: wonItem.price.toBalance(2)
-        }).prepend($("<img>", {"src": "/storage/radianite.png", "class": "currency-icon"})));
+        }).prepend($("<img>", {"src": "/storage/chip_stack_black.png", "class": "currency-icon"})));
 
         $(".spin-wrapper .spin-selector").addClass("d-none");
         $wheel.find(":nth-child(81)").append($winItemTextContainer);

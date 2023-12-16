@@ -36,9 +36,15 @@ class CrateBattleController extends Controller
         foreach($battles as $battle) {
             $crate_list = json_decode($battle->crates, true);
             $player_list = json_decode($battle->players, true);
-            $battle->crate_list = Crate::find(array_values($crate_list))->sortBy(function($item) use ($crate_list) {
-                return array_search($item->id, $crate_list);
-            })->values();
+
+            $crates = Crate::whereIn('id', array_values($crate_list));
+            $crates_list = [];
+
+            foreach($crate_list as $key => $crate) {
+                $crates_list[$key] = $crates->get()->first();
+            }
+
+            $battle->crate_list = $crates_list;
             $battle->player_list = User::find(array_values($player_list))->sortBy(function($item) use ($player_list) {
                 return array_search($item->id, $player_list);
             })->values();
@@ -52,9 +58,14 @@ class CrateBattleController extends Controller
 
         $crate_list = json_decode($CrateBattle->crates, true);
         $player_list = json_decode($CrateBattle->players, true);
-        $CrateBattle->crate_list = Crate::find(array_values($crate_list))->sortBy(function($item) use ($crate_list) {
-            return array_search($item->id, $crate_list);
-        })->values();
+        $crates = Crate::whereIn('id', array_values($crate_list));
+        $crates_list = [];
+
+        foreach($crate_list as $key => $crate) {
+            $crates_list[$key] = $crates->get()->first();
+        }
+
+        $CrateBattle->crate_list = $crates_list;
         $CrateBattle->player_list = User::select(["id", "username", "profile_image", "is_bot"])->whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
             return array_search($item->id, $player_list);
         })->values();
@@ -197,7 +208,7 @@ class CrateBattleController extends Controller
 
         broadcast(new CrateBattleCreated($CrateBattle));
 
-        return json_encode(["error" => false, "data" => $CrateBattle->id]);
+        return json_encode(["error" => false, "data" => ['id' => $CrateBattle->id, 'price' => $CrateBattle->price]]);
     }
 
     private function getMaxPlayers($battle_type) {

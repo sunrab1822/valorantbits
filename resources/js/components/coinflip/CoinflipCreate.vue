@@ -28,10 +28,10 @@
                     <div class="row mb-3">
                         <div class="d-flex justify-content-center">
                             <input type="radio" class="btn-check" name="bet_side" v-model="bet_side" value="heads" id="heads" :checked="isCreate" :disabled="!isCreate">
-                            <label class="btn btn-secondary" for="heads">Heads</label>
+                            <label class="btn btn-secondary" for="heads">Black</label>
 
                             <input type="radio" class="btn-check" name="bet_side" v-model="bet_side" value="tails" id="tails" :disabled="!isCreate">
-                            <label class="btn btn-secondary ms-1" for="tails">Tails</label>
+                            <label class="btn btn-secondary ms-1" for="tails">White</label>
                         </div>
                     </div>
 
