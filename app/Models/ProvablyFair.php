@@ -14,7 +14,7 @@ class ProvablyFair extends Model
     protected $seed = null;
     protected $random = null;
 
-    function __construct(int $seed = null)
+    function __construct(string $seed = null)
     {
         $this->seed = $seed;
         $this->random = new Randomizer(new Xoshiro256StarStar($seed));
