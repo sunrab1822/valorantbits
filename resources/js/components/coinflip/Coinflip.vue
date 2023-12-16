@@ -64,7 +64,7 @@
 <script setup>
     import axios from 'axios';
     import { useRoute } from 'vue-router';
-    import { ref } from 'vue';
+    import { ref, onUnmounted } from 'vue';
     import { useUserStore } from '@stores/user';
 
     const userStore = useUserStore();
@@ -77,10 +77,17 @@
     let sideWon = ref(null);
     let createByWinChance = ref(0);
     let opponentWinChance = ref(0);
+    let timeoutID = ref(null);
 
     let actionButtonDisabled = ref(false);
 
     getCoinflip();
+
+    onUnmounted(() => {
+        if(timeoutID.value) {
+            clearTimeout(timeoutID.value);
+        }
+    });
 
     async function getCoinflip(){
         let request = await axios.get('/api/coinflip/' + route.params.id);
@@ -116,7 +123,7 @@
 
     function flipCoin() {
         $('#coin').removeClass();
-        setTimeout(function () {
+        timeoutID.value = setTimeout(function () {
             if(coinflip.value.created_by == "heads") {
                 if (coinflip.value.chance_float <= coinflip.value.created_float) {
                     $('#coin').addClass('heads');
@@ -131,7 +138,7 @@
                 }
             }
 
-            setTimeout(postCoinFlip, 3500, coinflip.value.chance_float);
+            timeoutID.value = setTimeout(postCoinFlip, 3500, coinflip.value.chance_float);
         }, 500);
     }
 

@@ -30,7 +30,7 @@ Aerosol Bucky,95.0
 Immortalized Stinger,30
 Red Alert Bucky,70
 
-*Gezellig*
+*1% Operator*
 Cryostasis Operator,1
 Genesis Bucky,14
 Coalition: Cobra Frenzy,40
@@ -55,7 +55,7 @@ Kingdom Phantom,0.05
 Recon Spectre,0.05
 Songsteel Marshal,5
 Prism Spectre,10
-Schema Odin,15
+Schema Odin,14
 Hue Shift Bulldog,20
 Cavalier Stinger,50
  

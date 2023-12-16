@@ -36,21 +36,21 @@ class CloseCrateBattle implements ShouldQueue
         $this->CrateBattle->game_state = 2;
         $this->CrateBattle->save();
 
-        $player_list = json_decode($this->CrateBattle->players);
-        $result = json_decode($this->CrateBattle->result);
-        $players = User::select(["id", "username", "profile_image", "is_bot"])->whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
+        $player_list = json_decode($this->CrateBattle->players, true);
+        $result = json_decode($this->CrateBattle->result, true);
+        $players = User::whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
             return array_search($item->id, $player_list);
         })->values();
 
         $playerAmounts = [];
 
-        foreach($result as $round) {
-            foreach($result[$round] as $row) {
-                $skin = Skin::find($result[$round][$row]);
-                if(isset($playerAmounts[$row])) {
-                    $playerAmounts[$row] += $skin->price;
+        foreach($result as $k => $round) {
+            foreach($round as $j => $row) {
+                $skin = Skin::find($result[$k][$j]);
+                if(isset($playerAmounts[$j])) {
+                    $playerAmounts[$j] += $skin->price;
                 } else {
-                    $playerAmounts[$row] = $skin->price;
+                    $playerAmounts[$j] = $skin->price;
                 }
             }
         }
@@ -62,26 +62,46 @@ class CloseCrateBattle implements ShouldQueue
 
             if($team_one == $team_two) {
                 if($this->CrateBattle->tie_float < 0.5) {
+                    if(!$players[0]->is_bot) {
+                        $players[0]->balance += $amount_to_give;
+                        $players[0]->save();
+                    }
+
+                    if(!$players[1]->is_bot) {
+                        $players[1]->balance += $amount_to_give;
+                        $players[1]->save();
+                    }
+                } else {
+                    if(!$players[2]->is_bot) {
+                        $players[2]->balance += $amount_to_give;
+                        $players[2]->save();
+                    }
+
+                    if(!$players[3]->is_bot) {
+                        $players[3]->balance += $amount_to_give;
+                        $players[3]->save();
+                    }
+                }
+            } else if($team_one > $team_two) {
+                if(!$players[0]->is_bot) {
                     $players[0]->balance += $amount_to_give;
                     $players[0]->save();
+                }
+
+                if(!$players[1]->is_bot) {
                     $players[1]->balance += $amount_to_give;
                     $players[1]->save();
-                } else {
+                }
+            } else {
+                if(!$players[2]->is_bot) {
                     $players[2]->balance += $amount_to_give;
                     $players[2]->save();
+                }
+
+                if(!$players[3]->is_bot) {
                     $players[3]->balance += $amount_to_give;
                     $players[3]->save();
                 }
-            } else if($team_one > $team_two) {
-                $players[0]->balance += $amount_to_give;
-                $players[0]->save();
-                $players[1]->balance += $amount_to_give;
-                $players[1]->save();
-            } else {
-                $players[2]->balance += $amount_to_give;
-                $players[2]->save();
-                $players[3]->balance += $amount_to_give;
-                $players[3]->save();
             }
         } else {
             $highestAmount = max($playerAmounts);
@@ -91,13 +111,17 @@ class CloseCrateBattle implements ShouldQueue
             $player_index = array_search($highestAmount, $playerAmounts);
 
             if(count($sameAmounts) == 1) {
-                $players[$player_index]->balance += array_sum($playerAmounts);
-                $players[$player_index]->save();
+                if(!$players[$player_index]->is_bot) {
+                    $players[$player_index]->balance += array_sum($playerAmounts);
+                    $players[$player_index]->save();
+                }
             } else {
                 $player_indexes = array_keys($sameAmounts);
                 $won_player_index = floor($this->CrateBattle->tie_float * count($player_indexes));
-                $players[$player_indexes[$won_player_index]]->balance += array_sum($playerAmounts);
-                $players[$player_indexes[$won_player_index]]->save();
+                if(!$players[$player_index]->is_bot) {
+                    $players[$player_indexes[$won_player_index]]->balance += array_sum($playerAmounts);
+                    $players[$player_indexes[$won_player_index]]->save();
+                }
             }
         }
 
