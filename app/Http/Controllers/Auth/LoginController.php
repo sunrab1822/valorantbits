@@ -59,9 +59,10 @@ class LoginController extends Controller
 
 
         if(Auth::attempt(["username" => $request->get("username"), "password" => $request->get("password")], $request->get("remember"))) {
+            $request->session()->regenerate();
             return json_encode(["error" => false, "data" => Auth::user()]);
         } else {
-            return json_encode(["error" => true, "data" => "Invalid username/password"]);
+            return json_encode(["error" => true, "error_type" => "incorrect", "data" => "Invalid username/password"]);
         }
 
         return json_encode(["error" => true, "data" => false]);
