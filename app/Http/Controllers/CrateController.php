@@ -39,8 +39,24 @@ class CrateController extends Controller
     public function getCrate($crate_id) {
         $Crate = Crate::find($crate_id);
         $Crate->contents;
+
         foreach ($Crate->contents as $content){
-            $content->tier;
+            if($content->chance <= 3) {
+                $content->tier = "ultra";
+                continue;
+            } else if($content->chance <= 8) {
+                $content->tier = "exclusive";
+                continue;
+            } else if($content->chance <= 20) {
+                $content->tier = "premium";
+                continue;
+            } else if($content->chance <= 50) {
+                $content->tier = "deluxe";
+                continue;
+            } else if($content->chance <= 100) {
+                $content->tier = "select";
+                continue;
+            }
         }
 
         return response(json_encode(["error" => false, "data" => $Crate]));

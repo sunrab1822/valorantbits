@@ -19,6 +19,11 @@ export const useUserStore = defineStore('user', {
             if(this.user) {
                 this.user.balance = amount;
             }
+        },
+        updateUserVaultBalance(amount) {
+            if(this.user) {
+                this.user.vault_balance = amount;
+            }
         }
     }
 })

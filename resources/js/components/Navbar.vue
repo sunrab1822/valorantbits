@@ -9,6 +9,7 @@
             <div class="d-flex bg-grey rounded align-items-center rounded-2 balance-box mx-auto px-2-5" v-if="userStore.isLoggedIn">
                 <currency></currency>
                 <div class="balance-text nav_balance">{{ userStore.user.balance.toBalance(2) }}</div>
+                <button class="btn btn-sm btn-secondary ms-2" type="button" data-bs-toggle="modal" data-bs-target="#vaultModal">Vault</button>
             </div>
         </div>
         <div class="col-xl-5 col-lg-5">

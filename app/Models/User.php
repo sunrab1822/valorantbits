@@ -62,4 +62,8 @@ class User extends Authenticatable
     public function hasBalance($amount) {
         return $this->balance >= $amount;
     }
+
+    public function hasBalanceVault($amount) {
+        return $this->vault_balance >= $amount;
+    }
 }

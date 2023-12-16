@@ -40,7 +40,7 @@ VALORANT GO! Vol. 1 Phantom,2
 Sakura Vandal,5
 Blush Guardian,12
 
-*Killjoy's Contraption Collection*
+*Killjoy's Contraption*
 Celestial Fan,0.01
 Ion Spectre,1
 Digihex Ares,39

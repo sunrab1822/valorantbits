@@ -14,8 +14,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use function Symfony\Component\String\b;
-
 class CrateBattleController extends Controller
 {
     public function index() {
@@ -155,7 +153,7 @@ class CrateBattleController extends Controller
                 $chances = array_map(function($item){ return $item['chance']; }, $Crate->contents->toArray());
                 $items = array_map(function($item){ return $item['skin_id']; }, $Crate->contents->toArray());
                 for($i = 0; $i < count(array_filter($player_list)); $i++) {
-                    $wonItemId = $this->determineItemOutcome($chances, $items);
+                    $wonItemId = $this->determineItemOutcome($CrateBattle->seed, $chances, $items);
                     $result[$index][$i] = $wonItemId;
                 }
             }
@@ -223,8 +221,9 @@ class CrateBattleController extends Controller
         }
     }
 
-    private function determineItemOutcome($chances, $items) {
-        $rand = rand(0, 10000);
+    private function determineItemOutcome($seed, $chances, $items) {
+        $random = new ProvablyFair($seed);
+        $rand = $random->generateBattleTicket();
         $cumulativeProbability = 0;
         foreach ($chances as $index => $chance) {
             $cumulativeProbability += 10000*($chance/100);

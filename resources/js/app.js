@@ -163,7 +163,7 @@ const userStore = useUserStore();
 
 $(function(){
     $(".nav_balance").on("updateBalance", function(event, amount){
-        showBalancePopup(amount, amount > 0);
+        //showBalancePopup(amount, amount > 0);
         userStore.updateUserBalance(userStore.user.balance + amount);
     });
 });

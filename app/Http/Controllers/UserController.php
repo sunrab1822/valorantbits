@@ -63,4 +63,38 @@ class UserController extends Controller
         if(!Auth::check()) return json_encode(['error' => true, 'data' => "User not found"]);
         return json_encode(['error' => false, 'data' => Auth::user()]);
     }
+
+    public function vaultDeposit(Request $request) {
+        if(!Auth::check()) return json_encode(['error' => true, 'data' => "You are not logged in"]);
+        if(!$request->has("amount")) return json_encode(['error' => true, 'data' => "Invalid request"]);
+        $User = User::find(Auth::id());
+
+        $amount_to_deposit = $request->get("amount") * 100;
+        if(!$User->hasBalance($amount_to_deposit)) return json_encode(['error' => true, 'data' => "Not enough balance to deposit"]);
+        $User->balance -= $amount_to_deposit;
+        $User->vault_balance += $amount_to_deposit;
+        $User->save();
+        return json_encode(['error' => false, 'data' => [
+            "message" => number_format($request->get("amount"), 2) . " has been deposited to Vault",
+            "balance" => $User->balance,
+            "vault_balance" => $User->vault_balance
+        ]]);
+    }
+
+    public function vaultWithdraw(Request $request) {
+        if(!Auth::check()) return json_encode(['error' => true, 'data' => "You are not logged in"]);
+        if(!$request->has("amount")) return json_encode(['error' => true, 'data' => "Invalid request"]);
+        $User = User::find(Auth::id());
+
+        $amount_to_withdraw = $request->get("amount") * 100;
+        if(!$User->hasBalanceVault($amount_to_withdraw)) return json_encode(['error' => true, 'data' => "Not enough balance to withdraw"]);
+        $User->balance += $amount_to_withdraw;
+        $User->vault_balance -= $amount_to_withdraw;
+        $User->save();
+        return json_encode(['error' => false, 'data' => [
+            "message" => number_format($request->get("amount"), 2) . " has been withdrawn from Vault",
+            "balance" => $User->balance,
+            "vault_balance" => $User->vault_balance
+        ]]);
+    }
 }

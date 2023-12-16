@@ -70,6 +70,14 @@ body {
     padding: 0.75rem;
 }
 
+.no-highlight {
+    &:focus {
+        outline: 0 !important;
+        box-shadow: none !important;
+        border-color: var(--bs-border-color) !important;
+    }
+}
+
 .currency-icon {
     width: 24px;
     height: 24px;

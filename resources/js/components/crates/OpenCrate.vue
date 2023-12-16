@@ -30,7 +30,7 @@
         <div>
             <h3>Crate items</h3>
             <div class="row row-cols-xl-4 row-cols-xxl-4 row-cols-xs-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3" style="--bs-gutter-x: 0.5rem; --bs-gutter-y: 0.5rem;">
-                <CrateItem v-if="crate != null" v-for="skin in crate.contents" :tier="skin.tier.devName" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
+                <CrateItem v-if="crate != null" v-for="skin in crate.contents" :tier="skin.tier" :name="skin.name" :image="skin.image" :chance="skin.chance" :price="skin.price"></CrateItem>
             </div>
         </div>
     </div>
@@ -60,12 +60,10 @@
     async function getCrate() {
         let request = await axios("/api/crate/" + route.params.id);
 
-        console.log(request);
-
         if(!request.data.error) {
             crate = request.data.data;
             crate.contents.sort(function(a,b) {
-                return a.tier.rank > b.tier.rank ? -1 : 1;
+                return a.price > b.price ? -1 : 1;
             });
 
             initCrate();

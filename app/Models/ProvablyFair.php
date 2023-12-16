@@ -11,6 +11,15 @@ class ProvablyFair extends Model
 {
     use HasFactory;
 
+    protected $seed = null;
+    protected $random = null;
+
+    function __construct(int $seed)
+    {
+        $this->seed = $seed;
+        $this->random = new Randomizer(new Xoshiro256StarStar($seed));
+    }
+
     public static function generateBattleSeed() {
         $lowercase = "abcdefghijklmnopqrstuvwxyz";
         $uppercase = strtoupper($lowercase);
@@ -46,6 +55,11 @@ class ProvablyFair extends Model
         $random = new Randomizer(new Xoshiro256StarStar($server_seed));
 
         return $random->getInt(0, 999999) / 999999;
+    }
+
+    public function generateBattleTicket() {
+        //$hash = hash('sha256', $server_seed . ":" . $client_seed);
+        return $this->random->getInt(0, 10000);
     }
 
     public static function generateCrateBattleFloat($server_seed) {
