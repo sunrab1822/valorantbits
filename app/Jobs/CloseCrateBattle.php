@@ -91,12 +91,12 @@ class CloseCrateBattle implements ShouldQueue
             $player_index = array_search($highestAmount, $playerAmounts);
 
             if(count($sameAmounts) == 1) {
-                $players[$player_index]->balance = array_sum($playerAmounts);
+                $players[$player_index]->balance += array_sum($playerAmounts);
                 $players[$player_index]->save();
             } else {
                 $player_indexes = array_keys($sameAmounts);
                 $won_player_index = floor($this->CrateBattle->tie_float * count($player_indexes));
-                $players[$player_indexes[$won_player_index]]->balance = array_sum($playerAmounts);
+                $players[$player_indexes[$won_player_index]]->balance += array_sum($playerAmounts);
                 $players[$player_indexes[$won_player_index]]->save();
             }
         }
