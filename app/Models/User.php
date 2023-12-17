@@ -47,13 +47,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function wager($wager_amount, $won_amount, $game_type) {
+    public function wager($wager_amount, $won_amount, $game_type, $game_id) {
         $date_time = Carbon::now();
         DB::table("games_played")->insert([
             "user_id" => $this->id,
             "wager_amount" => $wager_amount,
             "won_amount" => $won_amount,
             "game_type" => $game_type,
+            "game_id" => $game_id,
             "created_at" => $date_time,
             "updated_at" => $date_time
         ]);

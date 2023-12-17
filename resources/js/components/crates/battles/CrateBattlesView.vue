@@ -3,7 +3,7 @@
         <div class="row mb-2">
             <div class="col-md-2 d-flex align-items-center">
                 <button class="btn btn-secondary me-3 d-flex align-items-center" @click="back" style="height: fit-content;">Back</button>
-                <div class="fs-6-1" v-if="crate_battle.crate_list"><currency />{{ crate_battle.crate_list.reduce((a, b) => a + b.price, 0).toBalance(2) }}</div>
+                <div class="fs-6-1" v-if="crate_battle.crate_list"><currency />{{ crate_battle.price.toBalance(2) }}</div>
             </div>
             <div class="col-md-8 text-center">
                 <div class="fs-4" v-if="crate_battle.crate_list">{{ crate_battle.crate_list[currentCrateIndex].name }}</div>
@@ -320,16 +320,14 @@
                 break;
         }
 
-        let hex = (crate_battle.value.seed).hexEncode();
-        if(hex.length % 2) { hex = '0' + hex; }
-        random = new XORShift(BigInt('0x' + hex));
+        random = new XORShift(crate_battle.value.id);
 
         for(let x = 0; x < crate_battle.value.crate_list.length; x++) {
             let crate = crate_battle.value.crate_list[x];
             let chances = {};
             let chance_num = 0;
             Object.values(crate.contents).forEach((value) => {
-                chance_num += Math.round(10000*(value.chance/100));
+                chance_num += Math.round(100000*(value.chance/100));
                 chances[chance_num] = value["skin_id"];
             });
 
@@ -338,7 +336,7 @@
             for(let y = 0; y < numberOfPlayers; y++) {
                 spinItems.value[x][y] = [];
                 for(let i = 0; i < 100; i++) {
-                    let randomNum = getRandomInt(0, 10000);
+                    let randomNum = getRandomInt(0, 100000);
                     for(const [chanceLimit, skin_id] of Object.entries(chances)) {
                         if(randomNum <= chanceLimit) {
                             //console.log(randomNum, chanceLimit);

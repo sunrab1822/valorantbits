@@ -353,8 +353,9 @@ a.no-style {
     color: #6c757d;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: underline;
 
-    :hover {
+    &:hover {
         color: white;
     }
 }

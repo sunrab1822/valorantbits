@@ -151,6 +151,9 @@ class CrateBattleController extends Controller
     public function startGame($CrateBattle, $player_list) {
         $result = [];
 
+        $CrateBattle->seed = ProvablyFair::generateBattleSeed();
+        $CrateBattle->tie_float = ProvablyFair::generateCrateBattleFloat($CrateBattle->seed);
+
         if(count(array_filter($player_list)) == $this->getMaxPlayers($CrateBattle->battle_type)) {
             $crate_list = json_decode($CrateBattle->crates, true);
 
@@ -159,7 +162,7 @@ class CrateBattleController extends Controller
                 $chances = array_map(function($item){ return $item['chance']; }, $Crate->contents->toArray());
                 $items = array_map(function($item){ return $item['skin_id']; }, $Crate->contents->toArray());
                 for($i = 0; $i < count(array_filter($player_list)); $i++) {
-                    $wonItemId = $this->determineItemOutcome($CrateBattle->seed, $chances, $items);
+                    $wonItemId = $this->determineItemOutcome($CrateBattle->seed, $chances, $items, $index+1, $i+1);
                     $result[$index][$i] = $wonItemId;
                 }
             }
@@ -196,8 +199,6 @@ class CrateBattleController extends Controller
         $CrateBattle->battle_type = $type;
         $CrateBattle->price = $total_price;
         $CrateBattle->crates = json_encode($crates);
-        $CrateBattle->seed = ProvablyFair::generateBattleSeed();
-        $CrateBattle->tie_float = ProvablyFair::generateCrateBattleFloat($CrateBattle->seed);
 
         if(in_array($option, ["normal", "group", "terminal"])) {
             $CrateBattle->{"is_" . $option} = true;
@@ -227,12 +228,11 @@ class CrateBattleController extends Controller
         }
     }
 
-    private function determineItemOutcome($seed, $chances, $items) {
-        $random = new ProvablyFair($seed);
-        $rand = $random->generateBattleTicket();
+    private function determineItemOutcome($seed, $chances, $items, $round, $player) {
+        $rand = ProvablyFair::generateBattleTicket(str_pad($seed . ":" . $round . ":" . $player, 32, "\x00"));
         $cumulativeProbability = 0;
         foreach ($chances as $index => $chance) {
-            $cumulativeProbability += 10000*($chance/100);
+            $cumulativeProbability += 100000*($chance/100);
             if ($rand < $cumulativeProbability) {
                 return $items[$index];
             }
