@@ -73,3 +73,4 @@ Ion Frenzy,10
 Coalition: Cobra Judge,15
 Premiere Collision Ares,20
 Red Alert Classic,50
+ 
