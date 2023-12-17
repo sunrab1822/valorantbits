@@ -25,7 +25,7 @@ class TierSeeder extends Seeder
             ],
             [
                 "uuid" => "e046854e-406c-37f4-6607-19a9ba8426fc",
-                "name" => "Deluxe Edition",
+                "name" => "Exclusive Edition",
                 "devName" => "Exclusive",
                 "rank" => 3,
                 "color" => "f5955b",

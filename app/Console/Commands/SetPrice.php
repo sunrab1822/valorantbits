@@ -79,7 +79,7 @@ class SetPrice extends Command
             case 12: //shorty
                 return ['min' => 70, 'max' => 500];
             case 13: //OP
-                return ['min' => 5090, 'max' => 7300];
+                return ['min' => 4730, 'max' => 6890];
             case 14: //guardian
                 return ['min' => 2300, 'max' => 3500];
             case 15: //marshal
@@ -100,13 +100,13 @@ class SetPrice extends Command
             case 0:
                 return 0.1;
             case 1:
-                return 0.7;
+                return 0.6;
             case 2:
                 return 1;
             case 3:
                 return 1.3;
             case 4:
-                return 1.8;
+                return 1.7;
         }
     }
 

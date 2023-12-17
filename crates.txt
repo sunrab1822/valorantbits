@@ -31,14 +31,12 @@ Immortalized Stinger,30
 Red Alert Bucky,70
 
 *1% Operator*
-Cryostasis Operator,1
+Tigris Operator,1
+Blush Guardian,5
+Convex Spectre,10
 Genesis Bucky,14
+Jigsaw Judge,30
 Coalition: Cobra Frenzy,40
-Jigsaw Judge,13
-Convex Spectre,13
-VALORANT GO! Vol. 1 Phantom,2
-Sakura Vandal,5
-Blush Guardian,12
 
 *Killjoy's Contraption*
 Celestial Fan,0.01
@@ -59,7 +57,7 @@ Schema Odin,14
 Hue Shift Bulldog,20
 Cavalier Stinger,50
 
-*5% Poor Classic*
+*5% Classic*
 Forsaken Classic,5
 Kingdom Classic,95
 
@@ -75,4 +73,3 @@ Ion Frenzy,10
 Coalition: Cobra Judge,15
 Premiere Collision Ares,20
 Red Alert Classic,50
- 
