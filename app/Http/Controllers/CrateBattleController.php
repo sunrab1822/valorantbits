@@ -109,6 +109,8 @@ class CrateBattleController extends Controller
         $player_list = json_decode($CrateBattle->players, true);
 
         if(in_array(Auth::user()->id, $player_list)) return json_encode(["error" => true, "data" => "Failed to join"]);
+        $User = User::find(Auth::id());
+        if(!$User->hasBalance($CrateBattle->price)) return json_encode(["error" => true, "data" => "Not enough balance"]);
 
         if($player_list[$request->get("spot")] == null) {
             $player_list[$request->get("spot")] = Auth::user()->id;
@@ -183,6 +185,8 @@ class CrateBattleController extends Controller
         $crates = $request->get("crates");
         $type = $request->get("type");
         $User = User::find(Auth::id());
+
+        if(count($crates) === 0) return json_encode(["error" => true, "data" => "No case selected"]);
 
         $total_price = 0;
         foreach($crates as $crate) {

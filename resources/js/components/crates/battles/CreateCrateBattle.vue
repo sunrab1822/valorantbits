@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-between mb-3">
         <button class="btn btn-secondary" @click="back">Back</button>
-        <button class="btn btn-primary" @click="createBattle">Create</button>
+        <button class="btn btn-primary" @click="createBattle" :disabled="crates.length === 0">Create</button>
     </div>
     <div class="d-flex justify-content-between mb-3">
         <div class="d-flex">
