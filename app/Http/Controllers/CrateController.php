@@ -27,7 +27,7 @@ class CrateController extends Controller
     }
 
     public function getCrateList() {
-        $crates = Crate::all();
+        $crates = Crate::orderBy("price", "DESC")->get();
 
         return response(json_encode(["error" => false, "data" => $crates]));
     }
