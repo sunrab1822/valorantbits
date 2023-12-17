@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger("created_by");
             $table->unsignedBigInteger("price");
             $table->integer("battle_type")->default(1);
-            $table->boolean("is_normal")->default(true);
+            $table->boolean("is_normal")->default(false);
             $table->boolean("is_crazy")->default(false);
             $table->boolean("is_terminal")->default(false);
             $table->boolean("is_group")->default(false);

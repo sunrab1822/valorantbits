@@ -10,6 +10,7 @@
         </main>
     </div>
 
+    <Vault />
     <Login/>
     <Register />
 </template>

@@ -14,8 +14,6 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use function Symfony\Component\String\b;
-
 class CrateBattleController extends Controller
 {
     public function index() {
@@ -72,6 +70,7 @@ class CrateBattleController extends Controller
 
         $wonItems = [];
         $totalEarnings = [];
+        $totalEarningsTerminal = [];
         if($CrateBattle->result != null) {
             $result = json_decode($CrateBattle->result, true);
             for($i = 0; $i < count($result); $i++) {
@@ -84,11 +83,16 @@ class CrateBattleController extends Controller
                     } else {
                         $totalEarnings[$x] = $skin->price;
                     }
+
+                    if($i == count($result) - 1) {
+                        $totalEarningsTerminal[$x] = $skin->price;
+                    }
                 }
             }
         }
         $CrateBattle->wonItems = $wonItems;
         $CrateBattle->totalEarnings = $totalEarnings;
+        $CrateBattle->totalEarningsTerminal = $totalEarningsTerminal;
 
         foreach($CrateBattle->crate_list as $crate) {
             $crate->contents;
@@ -147,6 +151,9 @@ class CrateBattleController extends Controller
     public function startGame($CrateBattle, $player_list) {
         $result = [];
 
+        $CrateBattle->seed = ProvablyFair::generateBattleSeed();
+        $CrateBattle->tie_float = ProvablyFair::generateCrateBattleFloat($CrateBattle->seed);
+
         if(count(array_filter($player_list)) == $this->getMaxPlayers($CrateBattle->battle_type)) {
             $crate_list = json_decode($CrateBattle->crates, true);
 
@@ -155,7 +162,7 @@ class CrateBattleController extends Controller
                 $chances = array_map(function($item){ return $item['chance']; }, $Crate->contents->toArray());
                 $items = array_map(function($item){ return $item['skin_id']; }, $Crate->contents->toArray());
                 for($i = 0; $i < count(array_filter($player_list)); $i++) {
-                    $wonItemId = $this->determineItemOutcome($chances, $items);
+                    $wonItemId = $this->determineItemOutcome($CrateBattle->seed, $chances, $items, $index+1, $i+1);
                     $result[$index][$i] = $wonItemId;
                 }
             }
@@ -192,8 +199,6 @@ class CrateBattleController extends Controller
         $CrateBattle->battle_type = $type;
         $CrateBattle->price = $total_price;
         $CrateBattle->crates = json_encode($crates);
-        $CrateBattle->seed = ProvablyFair::generateBattleSeed();
-        $CrateBattle->tie_float = ProvablyFair::generateCrateBattleFloat($CrateBattle->seed);
 
         if(in_array($option, ["normal", "group", "terminal"])) {
             $CrateBattle->{"is_" . $option} = true;
@@ -223,11 +228,11 @@ class CrateBattleController extends Controller
         }
     }
 
-    private function determineItemOutcome($chances, $items) {
-        $rand = rand(0, 10000);
+    private function determineItemOutcome($seed, $chances, $items, $round, $player) {
+        $rand = ProvablyFair::generateBattleTicket(str_pad($seed . ":" . $round . ":" . $player, 32, "\x00"));
         $cumulativeProbability = 0;
         foreach ($chances as $index => $chance) {
-            $cumulativeProbability += 10000*($chance/100);
+            $cumulativeProbability += 100000*($chance/100);
             if ($rand < $cumulativeProbability) {
                 return $items[$index];
             }

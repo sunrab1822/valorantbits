@@ -43,14 +43,21 @@ class ProvablyFair extends Model
 
     public static function generateCoinflipFloat($client_seed, $server_seed) {
         //$hash = hash('sha256', $server_seed . ":" . $client_seed);
-        $random = new Randomizer(new Xoshiro256StarStar($server_seed));
+        $random = new Randomizer(new Xoshiro256StarStar(hash("sha256", $server_seed, true)));
 
         return $random->getInt(0, 999999) / 999999;
     }
 
+    public static function generateBattleTicket($server_seed) {
+        $random = new Randomizer(new Xoshiro256StarStar(hash("sha256", $server_seed, true)));
+        $num = $random->getInt(0, 100000);
+        print_r($server_seed . " - " . $num . "\r\n");
+        return $num;
+    }
+
     public static function generateCrateBattleFloat($server_seed) {
         //$hash = hash('sha256', $server_seed . ":" . $client_seed);
-        $random = new Randomizer(new Xoshiro256StarStar($server_seed));
+        $random = new Randomizer(new Xoshiro256StarStar(hash("sha256", $server_seed, true)));
 
         return $random->getInt(0, 999999) / 999999;
     }

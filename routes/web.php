@@ -61,6 +61,10 @@ Route::get('/api/coinflips', [CoinflipController::class, 'getCoinflips']);
 Route::post('/api/coinflip', [CoinflipController::class, 'createCoinflip']);
 Route::get('/api/coinflip/{id}', [CoinflipController::class, 'getCoinflip']);
 
+// Vault
+Route::post('/api/vault/deposit', [UserController::class, 'vaultDeposit']);
+Route::post('/api/vault/withdraw', [UserController::class, 'vaultWithdraw']);
+
 // Main Page
 Route::get('/{any}', [HomeController::class, 'index'])->where('any', ".*");
 

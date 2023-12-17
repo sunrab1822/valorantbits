@@ -41,7 +41,7 @@ class CrateBattleRollResult implements ShouldQueue
         if($this->crate_number + 1 < count($this->result)) {
             $this->dispatch($this->CrateBattle, $this->result, $this->crate_number + 1)->delay(now()->addSeconds(8))->onQueue("battle");
         } else {
-            CloseCrateBattle::dispatch($this->CrateBattle)->delay(now()->addSeconds(6))->onQueue("battle");
+            CloseCrateBattle::dispatch($this->CrateBattle)->delay(now()->addSeconds(8))->onQueue("battle");
         }
     }
 }

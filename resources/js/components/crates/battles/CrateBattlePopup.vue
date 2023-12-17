@@ -15,7 +15,7 @@
                             </div>
                         </div>
                         <div class="row row-cols-4 gx-3">
-                            <div class="col px-1 crate-select-card" v-for="(crate, key) in filteredCrates" @click="addCrate(key)">
+                            <div class="col p-1 crate-select-card" v-for="(crate, key) in filteredCrates" @click="addCrate(key)">
                                 <div class="rounded bg-nav-dark d-flex flex-column align-items-center justify-content-center py-4 px-2">
                                     <img :src="crate.image" style="width: 4rem; height: 4rem;" alt="">
                                     <div>{{ crate.name }}</div>

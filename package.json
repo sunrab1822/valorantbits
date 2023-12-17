@@ -24,6 +24,7 @@
         "pusher-js": "^8.3.0",
         "random-seedable": "^1.0.8",
         "vue-router": "^4.2.5",
+        "vue-toast-notification": "^3.1.2",
         "ws": "^8.14.2"
     }
 }

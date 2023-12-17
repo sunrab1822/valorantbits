@@ -1,4 +1,13 @@
 <template>
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <button class="btn btn-secondary" @click="back" >&lsaquo;&nbsp;Back</button>
+        </div>
+        <div class="col-md-6 justify-content-end align-items-center d-flex">
+            <div class="provably-fair-text">Provably Fair</div>
+        </div>
+    </div>
+
     <div class="bg-dark mx-auto rounded p-2" v-if="coinflip">
         <div class="game-state d-flex justify-content-evenly">
             <div class="bg-warning-dark rounded px-2 py-1" v-if="coinflip.game_state == 0">Waiting...</div>
@@ -13,7 +22,7 @@
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <span class="me-2">{{ created_by.level }}</span>
-                        <span>{{ created_by.username }} ({{ createByWinChance.toFixed(2) }}%)</span>
+                        <span>{{ created_by.username }}<span v-if="coinflip.created_float != null"> ({{ createByWinChance.toFixed(2) }}%)</span></span>
                     </div>
                     <div class="d-flex justify-content-center align-items-center">
                         <currency></currency>
@@ -45,7 +54,7 @@
                         <img class="flip-profile-picture mb-2" :src="opponent.profile_image" alt="" :class="{'winner': coinflip.game_state == 2 && sideWon != coinflip.created_by, 'loser': coinflip.game_state == 2 && sideWon == coinflip.created_by}">
                         <div class="d-flex justify-content-center align-items-center">
                             <span class="me-2" v-if="!opponent.is_bot">{{ opponent.level }}</span>
-                            <span>{{ opponent.username }} ({{ opponentWinChance.toFixed(2) }}%)</span>
+                            <span>{{ opponent.username }}<span v-if="coinflip.created_float != null"> ({{ opponentWinChance.toFixed(2) }}%)</span></span>
                             <span class="border border-1 rounded-1 border-primary px-2 bg-dark-red fs-7-1 ms-2 ls-1" v-if="opponent.is_bot">BOT</span>
                         </div>
                         <div class="d-flex justify-content-center align-items-center">
@@ -63,12 +72,13 @@
 
 <script setup>
     import axios from 'axios';
-    import { useRoute } from 'vue-router';
+    import { useRouter, useRoute } from 'vue-router';
     import { ref, onUnmounted } from 'vue';
     import { useUserStore } from '@stores/user';
 
     const userStore = useUserStore();
     const route = useRoute();
+    const router = useRouter();
     window.Echo.channel('Coinflip.' + route.params.id).listen(".coinflip-join", playerJoined);
 
     let coinflip = ref();
@@ -110,6 +120,9 @@
     function playerJoined(data) {
         coinflip.value = data.coinflip;
         opponent.value = data.coinflip["user_" + data.side];
+
+        createByWinChance.value = coinflip.value.created_float * 100;
+        opponentWinChance.value = (1 - coinflip.value.created_float) * 100;
 
         flipCoin();
     }
@@ -170,6 +183,10 @@
             }
         }
 
+    }
+
+    function back() {
+        router.push({name:"coinflip"});
     }
 </script>
 

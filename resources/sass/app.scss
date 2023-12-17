@@ -70,6 +70,14 @@ body {
     padding: 0.75rem;
 }
 
+.no-highlight {
+    &:focus {
+        outline: 0 !important;
+        box-shadow: none !important;
+        border-color: var(--bs-border-color) !important;
+    }
+}
+
 .currency-icon {
     width: 24px;
     height: 24px;
@@ -345,8 +353,9 @@ a.no-style {
     color: #6c757d;
     font-weight: bold;
     cursor: pointer;
+    text-decoration: underline;
 
-    :hover {
+    &:hover {
         color: white;
     }
 }
@@ -408,4 +417,16 @@ a.no-style {
     &:hover {
         background-color: #393939;
     }
+}
+
+.bg-winner {
+    background-color: #085a34;
+}
+
+.vertical-shadow {
+    pointer-events: none;
+    position: absolute;
+    inset: 0px;
+    z-index: 10;
+    background: linear-gradient( 0deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0.3) 100% );
 }
