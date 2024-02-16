@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="vaultModal" tabindex="-1" data-bs-theme="dark" @keydown.enter="login">
+    <div class="modal fade" id="vaultModal" tabindex="-1" data-bs-theme="dark">
         <div class="modal-dialog modal-sm modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

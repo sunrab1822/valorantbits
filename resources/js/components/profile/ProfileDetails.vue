@@ -67,8 +67,8 @@
 
     let wager = ref(0);
     let highest_win = ref(0);
-    let most_won_game = ref("");
-    let most_played_game = ref("");
+    let most_won_game = ref("N/A");
+    let most_played_game = ref("N/A");
     let profit = ref(0);
     let profit_chart = null;
     let profit_chart_select_options = ref([
