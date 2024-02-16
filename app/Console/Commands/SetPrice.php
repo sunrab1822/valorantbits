@@ -29,7 +29,7 @@ class SetPrice extends Command
         $json_data = json_decode(file_get_contents("data.json"), true);
         $skin_names = array_keys($json_data);
 
-        $Skins = Skin::where("category_id", "!=", "19")->get();
+        $Skins = Skin::where("category_id", "!=", "20")->get();
         $key = "";
 
         foreach($Skins as $Skin) {
@@ -82,16 +82,19 @@ class SetPrice extends Command
                 return ['min' => 4730, 'max' => 6890];
             case 14: //guardian
                 return ['min' => 2300, 'max' => 3500];
-            case 15: //marshal
+            case 15: //outlaw
+                return ['min' => 2050, 'max' => 3200];
+            case 16: //marshal
                 return ['min' => 1700, 'max' => 2800];
-            case 16: //spectre
+            case 17: //spectre
                 return ['min' => 1500, 'max' => 2600];
-            case 17: //stinger
+            case 18: //stinger
                 return ['min' => 100, 'max' => 990];
-            case 18: //melee
+            case 19: //melee
                 return ['min' => 6500, 'max' => 8000];
-            case 19: //spray
+            case 20: //spray
                 return ['min' => 0.1, 'max' => 10];
+
         }
     }
 
