@@ -9,6 +9,8 @@ class CrateBattle extends Model
 {
     use HasFactory;
 
+
+
     public static function getNumberOfSpots($type) {
         switch($type) {
             case 1:
@@ -19,5 +21,17 @@ class CrateBattle extends Model
             case 4:
                 return 4;
         }
+    }
+
+    public function determineItemOutcome($seed, $chances, $items, $round, $player) {
+        $rand = ProvablyFair::generateBattleTicket(str_pad($seed . ":" . $round . ":" . $player, 32, "\x00"));
+        $cumulativeProbability = 0;
+        foreach ($chances as $index => $chance) {
+            $cumulativeProbability += 100000*($chance/100);
+            if ($rand < $cumulativeProbability) {
+                return $items[$index];
+            }
+        }
+        return null; // Return null if no item is found
     }
 }

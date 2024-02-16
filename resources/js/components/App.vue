@@ -10,7 +10,7 @@
         </main>
     </div>
 
-    <Vault />
+    <Vault v-if="userStore.isLoggedIn" />
     <Login/>
     <Register />
 </template>

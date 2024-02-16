@@ -47,17 +47,28 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function wager($wager_amount, $won_amount, $game_type, $game_id) {
+    public function wager($wager_amount = null, $won_amount = null, $game_type, $game_id = null) {
+        // Bot check
+        if($this->id < 4) return;
+
         $date_time = Carbon::now();
-        DB::table("games_played")->insert([
-            "user_id" => $this->id,
-            "wager_amount" => $wager_amount,
-            "won_amount" => $won_amount,
-            "game_type" => $game_type,
-            "game_id" => $game_id,
-            "created_at" => $date_time,
-            "updated_at" => $date_time
-        ]);
+
+        if($wager_amount == null) {
+            DB::table("games_played")->where("game_id", $game_id)->where("game_type", $game_type)->update([
+                "won_amount" => $won_amount,
+                "updated_at" => $date_time
+            ]);
+        } else {
+            DB::table("games_played")->insert([
+                "user_id" => $this->id,
+                "wager_amount" => $wager_amount,
+                "won_amount" => $won_amount,
+                "game_type" => $game_type,
+                "game_id" => $game_id,
+                "created_at" => $date_time,
+                "updated_at" => $date_time
+            ]);
+        }
     }
 
     public function hasBalance($amount) {

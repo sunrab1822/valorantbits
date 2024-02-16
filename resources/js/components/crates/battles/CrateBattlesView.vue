@@ -2,19 +2,22 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-md-2 d-flex align-items-center">
-                <button class="btn btn-secondary me-3 d-flex align-items-center" @click="back" style="height: fit-content;">Back</button>
+                <button class="btn btn-secondary me-3 d-flex align-items-center h-75" @click="back" style="height: fit-content;">Back</button>
                 <div class="fs-6-1" v-if="crate_battle.crate_list"><currency />{{ crate_battle.price.toBalance(2) }}</div>
             </div>
-            <div class="col-md-8 text-center">
+            <div class="col-md-8 text-center" v-if="showCrates">
                 <div class="fs-4" v-if="crate_battle.crate_list">{{ crate_battle.crate_list[currentCrateIndex].name }}</div>
                 <div class="fs-5" v-if="crate_battle.crate_list"><currency />{{ crate_battle.crate_list[currentCrateIndex].price.toBalance(2) }}</div>
+            </div>
+            <div class="col-md-8 text-center d-flex align-items-center justify-content-center" v-else>
+                <button class="btn btn-primary d-flex align-items-center h-75" @click="back">Recreate</button>
             </div>
             <div class="col-md-2 text-end ls-1">
                 <div class="fs-6-1">{{ getBattlePlayers() }}</div>
                 <div class="fs-6-1 text-uppercase fw-bold">{{ getBattleType() }}</div>
             </div>
         </div>
-        <div class="row mb-3 gx-0 bg-nav-dark rounded">
+        <div class="row mb-3 gx-0 bg-nav-dark rounded" v-if="showCrates">
             <div class="col d-flex justify-content-center">
                 <div class="w-100 crate-list-image-container">
                     <div class="d-flex crate-list-image" style="transform: translate3d(calc(50% - 24px), 0, 0);">
@@ -97,6 +100,7 @@
     let winnerPlayers = ref([false, false, false, false]);
     let wonAmount = ref(0);
     let timeoutID = ref(null);
+    let showCrates = ref(true);
 
     let random = null;
     const route = useRoute();
@@ -159,7 +163,7 @@
             currentCrateIndex.value = data.crate_number;
             resetSpin();
         }
-        timeoutID.value = setTimeout(doBattle, 400, data.result);
+        timeoutID.value = setTimeout(doBattle, 100, data.result);
     }
 
     async function resetSpin() {
@@ -207,7 +211,7 @@
                     'transform':'translate3d(0px, -12220px, 0px)'
                 });
             });
-            timeoutID.value = setTimeout(postBattle, 400, result);
+            timeoutID.value = setTimeout(postBattle, 100, result);
         }, 6100, result);
     }
 
@@ -372,7 +376,8 @@
                 terminalItemPrices.value = crate_battle.value.totalEarningsTerminal;
             }
             initCrate();
-            if(crate_battle.value.game_state == 1 || crate_battle.value.game_state == 2) {
+            if(crate_battle.value.game_state == 2) {
+                showCrates.value = false;
                 calculateWinners();
             }
         }

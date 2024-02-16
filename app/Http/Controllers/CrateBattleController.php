@@ -120,7 +120,9 @@ class CrateBattleController extends Controller
         $CrateBattle->players = json_encode($player_list);
         $CrateBattle->save();
 
-        $this->startGame($CrateBattle, $player_list);
+        if(count(array_filter($player_list)) == $this->getMaxPlayers($CrateBattle->battle_type)) {
+            $this->startGame($CrateBattle);
+        }
 
         return json_encode(["error" => false, "data" => "Joined"]);
     }
@@ -150,31 +152,19 @@ class CrateBattleController extends Controller
         return json_encode(["error" => false, "data" => "call bots"]);
     }
 
-    public function startGame($CrateBattle, $player_list) {
-        $result = [];
+    public function startGame($CrateBattle) {
+        $player_list = json_decode($CrateBattle->players, true);
 
         $CrateBattle->seed = ProvablyFair::generateBattleSeed();
         $CrateBattle->tie_float = ProvablyFair::generateCrateBattleFloat($CrateBattle->seed);
+        $CrateBattle->game_state = 1;
+        $CrateBattle->save();
 
-        if(count(array_filter($player_list)) == $this->getMaxPlayers($CrateBattle->battle_type)) {
-            $crate_list = json_decode($CrateBattle->crates, true);
+        $CrateBattle->player_list = User::select(["id", "username", "profile_image", "is_bot"])->whereIn("id", array_values($player_list))->get()->sortBy(function($item) use ($player_list) {
+            return array_search($item->id, $player_list);
+        })->values();
 
-            foreach($crate_list as $index => $crate_id) {
-                $Crate = Crate::find($crate_id);
-                $chances = array_map(function($item){ return $item['chance']; }, $Crate->contents->toArray());
-                $items = array_map(function($item){ return $item['skin_id']; }, $Crate->contents->toArray());
-                for($i = 0; $i < count(array_filter($player_list)); $i++) {
-                    $wonItemId = $this->determineItemOutcome($CrateBattle->seed, $chances, $items, $index+1, $i+1);
-                    $result[$index][$i] = $wonItemId;
-                }
-            }
-
-            $CrateBattle->result = json_encode($result);
-            $CrateBattle->game_state = 1;
-            $CrateBattle->save();
-
-            CrateBattleRollResult::dispatch($CrateBattle, $result, 0)->delay(now()->addSeconds(2))->onQueue("battle");
-        }
+        CrateBattleRollResult::dispatch($CrateBattle, 0)->delay(now()->addSeconds(2))->onQueue("battle");
     }
 
     public function createCrateBattle(Request $request) {
@@ -230,17 +220,5 @@ class CrateBattleController extends Controller
             case 4:
                 return 4;
         }
-    }
-
-    private function determineItemOutcome($seed, $chances, $items, $round, $player) {
-        $rand = ProvablyFair::generateBattleTicket(str_pad($seed . ":" . $round . ":" . $player, 32, "\x00"));
-        $cumulativeProbability = 0;
-        foreach ($chances as $index => $chance) {
-            $cumulativeProbability += 100000*($chance/100);
-            if ($rand < $cumulativeProbability) {
-                return $items[$index];
-            }
-        }
-        return null; // Return null if no item is found
     }
 }

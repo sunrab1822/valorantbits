@@ -43,7 +43,7 @@ class CoinflipController extends Controller
 
         $User->balance -= $bet_amount;
         $User->save();
-        //$User->wager($bet_amount, null, GameType::Coinflip);
+        $User->wager($bet_amount, null, GameType::Coinflip, $Coinflip->id);
         $Coinflip->{$bet_side} = $User->id;
         $Coinflip->{$bet_side . "_amount"} = $bet_amount;
 
@@ -135,12 +135,13 @@ class CoinflipController extends Controller
 
         $User->balance -= $bet_amount;
         $User->save();
-        //$User->wager($bet_amount, null, GameType::Coinflip);
         $coinflip->{$bet_side} = $User->id;
         $coinflip->{$bet_side . "_amount"} = $bet_amount;
         $coinflip->created_by = $bet_side;
         $coinflip->seed = ProvablyFair::generateCoinflipSeed();
         $coinflip->save();
+
+        $User->wager($bet_amount, null, GameType::Coinflip, $coinflip->id);
 
         broadcast(new CoinflipCreated($coinflip));
 
