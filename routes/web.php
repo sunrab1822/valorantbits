@@ -46,6 +46,8 @@ Route::post('/api/crate/open', [CrateController::class, 'openCrate'])->middlewar
 Route::get('/api/user', [UserController::class, 'getUser'])->middleware("auth");
 Route::get('/api/user/profile', [UserController::class, 'getUserProfile'])->middleware("auth");
 Route::post('/api/user/profile/profit-chart', [UserController::class, 'getProfitChartData'])->middleware("auth");
+Route::post('/api/user/save-image', [UserController::class, 'saveProfileImage'])->middleware('auth');
+Route::get('/api/images', [UserController::class, 'getProfileImages']);
 
 // Crate Battle
 Route::get('/api/crate-battle/list', [CrateBattleController::class, 'getCrateBattles']);

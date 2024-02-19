@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex justify-content-between mb-4" v-if="user">
         <div class="d-flex">
-            <img class="profile-picture border border-success rounded-circle" :src="user.profile_image" alt="">
+            <img class="profile-picture border border-success rounded-circle" :src="user.profile_image" data-bs-toggle="modal" data-bs-target="#changePictureModal">
             <div class="mt-1 ms-3">
                 <div class="d-flex">
                     <h4>{{ user.username }}</h4>
@@ -43,31 +43,32 @@
             <profile-settings v-else-if="openPartial == 'settings'"></profile-settings>
         </div>
     </div>
-
+    <change-profil-img :images="images"/>
 </template>
 
 <script setup>
     import { ref } from 'vue';
+    import { useUserStore } from '@stores/user';
+
+    const userStore = useUserStore();
     const props = defineProps(["id"]);
 
-    let user = ref(null);
+    let user = userStore.user;
     let joined_date = ref();
     let openPartial = ref("details");
     let required_xp = ref(1000);
     let progressbar_width = ref(0);
     let current_level = ref(0);
+    let images = ref();
 
     (async function() {
-        let request = await axios.get("/api/user");
-        if(!request.data.error) {
-            user.value = request.data.data;
-            joined_date.value = new Date(user.value.created_at).toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric'})
-            current_level.value = (user.value.experience - 1000 < 0) ? 0 : Math.ceil((user.value.experience - 1000) / 250);
+            joined_date.value = new Date(user.created_at).toLocaleDateString("en-us", { year: 'numeric', month: 'long', day: 'numeric'})
+            current_level.value = (user.experience - 1000 < 0) ? 0 : Math.ceil((user.experience - 1000) / 250);
             required_xp.value = 1000 + ((current_level.value) * 250);
-            progressbar_width.value = (user.value.experience / required_xp.value) * 100;
+            progressbar_width.value = (user.experience / required_xp.value) * 100;
 
-            console.log((user.value.experience / required_xp.value) * 100, required_xp.value);
-        }
+            console.log((user.experience / required_xp.value) * 100, required_xp.value);
+
     })();
 
     $(function(){
@@ -75,4 +76,9 @@
             openPartial.value = $(this).data("partial");
         });
     });
+
+    (async function () {
+        let request = await axios.get("/api/images");
+        images.value = request.data;
+    })();
 </script>

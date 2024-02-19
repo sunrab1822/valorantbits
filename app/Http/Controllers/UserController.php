@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -97,4 +98,21 @@ class UserController extends Controller
             "vault_balance" => $User->vault_balance
         ]]);
     }
+
+    public function getProfileImages() {
+        $images = Storage::disk("public")->allFiles("profile_images");
+        return response()->json($images);
+    }
+
+    public function saveProfileImage(Request $request){
+        if(!Auth::check()) return json_encode(['error' => true, 'data' => "You are not logged in"]);
+        if(!$request->has("url")) return json_encode(['error' => true, 'data' => "Invalid request"]);
+
+        $User = auth()->user();
+
+        $User->profile_image = $request->url;
+
+        $User->save();
+    }
+
 }
