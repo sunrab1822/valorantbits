@@ -36,8 +36,9 @@
                 <div>Add Crate</div>
             </div>
         </div>
-        <div class="col-md-3 mb-3" v-for="crate in crates">
-            <div class="crate-card d-flex bg-nav-dark rounded">
+        <div class="col-md-3 mb-3" v-for="(crate, key) in crates">
+            <div class="crate-card d-flex bg-nav-dark rounded position-relative">
+                <span class="position-absolute" style="top: 10px; right: 10px; cursor: pointer;" @click="removeCrate(key)">X</span>
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <img class="" :src="crate.image" alt="" style="max-width: 50%;">
                     <div>{{ crate.name }}</div>
@@ -85,5 +86,9 @@
 
     function addCrateCb(crate) {
         crates.value.push(crate);
+    }
+
+    function removeCrate(index) {
+        crates.value.splice(index, 1);
     }
 </script>

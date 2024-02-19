@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("user_id");
             $table->integer("wager_amount");
-            $table->integer("won_amount");
+            $table->integer("won_amount")->nullable();
             $table->integer("game_type");
+            $table->unsignedBigInteger("game_id")->nullable();
             $table->timestamps();
         });
     }

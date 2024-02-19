@@ -19,10 +19,8 @@
     import { useUserStore } from '@stores/user';
 
     const props = defineProps(['user', 'isAuth']);
-
     const userStore = useUserStore();
 
     userStore.setUser(props.user ? JSON.parse(props.user) : null);
     userStore.setLoggedIn(props.isAuth);
-
 </script>
