@@ -70,6 +70,7 @@ class CrateController extends Controller
         if(!Auth::check()) {
             return response(json_encode(["error" => true, "data" => "Unauthorized"]));
         }
+        if(!$request->has("id")) return json_encode(['error' => true, 'data' => "Invalid request"]);
 
         $clientSeed = $request->get("clientSeed");
         $case_id = $request->get("id");
@@ -81,6 +82,7 @@ class CrateController extends Controller
             if($User->balance < $Crate->price) {
                 return ["error" => true, "data" => "Not enough balance"];
             }
+
 
             $User->balance -= $Crate->price;
 

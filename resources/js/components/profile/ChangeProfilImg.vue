@@ -26,6 +26,7 @@
 import { ref } from 'vue';
     defineProps(['images'])
     import { useUserStore } from '@stores/user';
+    import * as bootstrap from 'bootstrap';
 
     const userStore = useUserStore();
     let selectedUrl = ref()
@@ -41,6 +42,8 @@ import { ref } from 'vue';
         if (selectedUrl.value){
             axios.post("/api/user/save-image", {url : "/storage/"+selectedUrl.value});
             userStore.user.profile_image = "/storage/"+selectedUrl.value;
+
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('changePictureModal')).hide();
         }
     }
 
